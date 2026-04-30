@@ -1,4 +1,4 @@
-DROP database bilabonnement;
+DROP database IF EXISTS bilabonnement;
 CREATE DATABASE IF NOT EXISTS bilabonnement;
 
 USE bilabonnement;
