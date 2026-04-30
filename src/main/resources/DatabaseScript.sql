@@ -1,4 +1,4 @@
-CREATE DATABASE bilabonnement;
+CREATE DATABASE if not exists bilabonnement;
 
 USE bilabonnement;
 
