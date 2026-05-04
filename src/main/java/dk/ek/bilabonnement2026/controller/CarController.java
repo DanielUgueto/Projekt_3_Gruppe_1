@@ -1,6 +1,8 @@
 package dk.ek.bilabonnement2026.controller;
 
 import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.CarModel;
+import dk.ek.bilabonnement2026.repository.CarModelRepository;
 import dk.ek.bilabonnement2026.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class CarController {
 
     @Autowired
     CarService carService;
 
+    @Autowired
+    CarModelRepository carModelRepository;
+
     @GetMapping("/cars/create")
-    public String showCreateCarForm() {
+    public String showCreateCarForm(Model model) {
+        List<CarModel> carModels = carModelRepository.getAllCarModels();
+        model.addAttribute("carModels",carModels);
         return "createCar";
     }
 
