@@ -34,7 +34,11 @@ public class EmployeeController {
 
         Employee employee = new Employee(firstName, lastName, password, workEmail, role);
 
-        employeeService.addEmployeeToDatabase(employee);
+        boolean emailExists = employeeService.addEmployeeToDatabase(employee);
+
+        if (!emailExists){
+            return "addEmployee";
+        }
 
         return "dataRegistration";
     }
