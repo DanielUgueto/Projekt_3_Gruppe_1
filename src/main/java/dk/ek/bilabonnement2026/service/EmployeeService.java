@@ -13,6 +13,7 @@ public class EmployeeService {
 
     public void addEmployeeToDatabase(Employee employee){
         if (employeeRepository.doesEmailExist(employee.getWorkEmail())){ // checks if user already exists
+            System.out.println("User already exists in database");
             return;
         }
 
