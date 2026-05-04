@@ -9,7 +9,6 @@ public class Car {
     private String status;
     private double monthlyPrice;
 
-    public Car(){}
 
     public Car(int carId, int carModelId, String vinNumber, String licensePlate,
                double monthlyPrice, String status, String colour){
@@ -23,7 +22,6 @@ public class Car {
     }
     public Car(int carModelId, String vinNumber, String licensePlate,
                double monthlyPrice, String status, String colour){
-        this.carId = carId;
         this.carModelId = carModelId;
         this.vinNumber = vinNumber;
         this.licensePlate = licensePlate;
