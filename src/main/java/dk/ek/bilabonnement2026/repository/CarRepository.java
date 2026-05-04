@@ -56,8 +56,32 @@ public class CarRepository {
                             resultSet.getString("colour"));
                 }
             }
-            if(car == null){
-                System.out.println("No car with vin number "+vinNumber+" could be found");
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return car;
+    }
+
+    public Car findCarByCarNumber(int carNumber){
+        Car car = null;
+        String sql = "SELECT * FROM car WHERE car_id = ?";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setInt(1,carNumber);
+
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    car = new Car(resultSet.getInt("car_id"),
+                            resultSet.getInt("car_model_id"),
+                            resultSet.getString("vin_number"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDouble("monthly_price"),
+                            resultSet.getString("status"),
+                            resultSet.getString("colour"));
+                }
             }
 
         }catch(SQLException e){
