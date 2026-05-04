@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret kunde</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+</head>
+<body>
+
+<h1>Opret kunde</h1>
+
+<form th:action="@{/customer/register}" method="post" th:object="${customer}">
+
+    <input type="text" th:field="${firstName}" placeholder="Fornavn" required>
+    <input type="text" th:field="${lastName}" placeholder="Efternavn" required>
+    <input type="text" th:field="${driversLicenseNumber}" placeholder="Kørekort" required>
+    <input type="text" th:field="${cprNumber}" placeholder="CPR-nummer" required>
+    <input type="email" th:field="${email}" placeholder="Email adresse" required>
+    <input type="text" th:field="${phoneNumber}" placeholder="Telefon nummer" required>
+
+    <button type="submit">Opret kunde</button>
+
+</form>
+
+
+</body>
+</html>

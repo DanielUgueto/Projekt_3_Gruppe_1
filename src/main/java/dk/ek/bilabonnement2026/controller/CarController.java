@@ -1,6 +1,7 @@
 package dk.ek.bilabonnement2026.controller;
 
-public class CarController {
+public class
+CarController {
 
     //hej
 }
