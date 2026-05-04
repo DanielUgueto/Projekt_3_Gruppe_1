@@ -57,6 +57,7 @@ CREATE TABLE car
     car_id        INT PRIMARY KEY,
     car_model_id  INT            NOT NULL,
     vin_number    VARCHAR(17)    NOT NULL UNIQUE,
+    license_plate VARCHAR(7)     NOT NULL UNIQUE,
     monthly_price DECIMAL(19, 2) NOT NULL,
     status        VARCHAR(255)   NOT NULL,
     colour        VARCHAR(255)   NOT NULL,
@@ -64,9 +65,9 @@ CREATE TABLE car
         FOREIGN KEY (car_model_id) REFERENCES car_model (car_model_id)
 );
 
-CREATE TABLE system_user
+CREATE TABLE employee
 (
-    system_user_id INT PRIMARY KEY,
+    employee_id INT PRIMARY KEY,
     first_name     VARCHAR(255) NOT NULL,
     last_name      VARCHAR(255) NOT NULL,
     password       VARCHAR(255) NOT NULL,
@@ -77,7 +78,7 @@ CREATE TABLE system_user
 CREATE TABLE rental_contract
 (
     rental_contract_id INT PRIMARY KEY,
-    system_user_id     INT          NOT NULL,
+    employee_id     INT          NOT NULL,
     customer_id        INT          NOT NULL,
     car_id             INT          NOT NULL,
     start_date         DATE         NOT NULL,
@@ -85,8 +86,8 @@ CREATE TABLE rental_contract
     pickup_location    VARCHAR(255) NOT NULL,
     status             VARCHAR(255) NOT NULL,
     subscription_type  VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_rental_contract_system_user
-        FOREIGN KEY (system_user_id) REFERENCES system_user (system_user_id),
+    CONSTRAINT fk_rental_contract_employee
+        FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     CONSTRAINT fk_rental_contract_customer
         FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
     CONSTRAINT fk_rental_contract_car
@@ -97,14 +98,14 @@ CREATE TABLE damage_report
 (
     damage_report_id   INT PRIMARY KEY,
     rental_contract_id INT            NOT NULL,
-    system_user_id     INT            NOT NULL,
+    employee_id     INT            NOT NULL,
     created_at         DATE           NOT NULL,
     total_price        DECIMAL(10, 2) NOT NULL,
     description        VARCHAR(255)   NOT NULL,
     CONSTRAINT fk_damage_report_rental_contract
         FOREIGN KEY (rental_contract_id) REFERENCES rental_contract (rental_contract_id),
-    CONSTRAINT fk_damage_report_system_user
-        FOREIGN KEY (system_user_id) REFERENCES system_user (system_user_id)
+    CONSTRAINT fk_damage_report_employee
+        FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
 );
 
 CREATE TABLE damage_category
