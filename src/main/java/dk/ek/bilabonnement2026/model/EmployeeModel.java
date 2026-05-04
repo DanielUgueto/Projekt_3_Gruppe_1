@@ -16,4 +16,24 @@ public class EmployeeModel {
         this.workEmail = workEmail;
         this.role = role;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getWorkEmail() {
+        return workEmail;
+    }
 }
