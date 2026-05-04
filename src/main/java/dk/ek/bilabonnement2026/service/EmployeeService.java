@@ -11,12 +11,13 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public void addEmployeeToDatabase(Employee employee){
+    public boolean addEmployeeToDatabase(Employee employee){
         if (employeeRepository.doesEmailExist(employee.getWorkEmail())){ // checks if user already exists
             System.out.println("User already exists in database");
-            return;
+            return false;
         }
 
         employeeRepository.addEmployeeToDatabase(employee);
+        return true;
     }
 }
