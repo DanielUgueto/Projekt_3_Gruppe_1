@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
@@ -33,5 +34,35 @@ public class CarRepository {
             e.printStackTrace();
         }
 
+    }
+
+    public Car findCarByVinNumber(String vinNumber){
+        Car car = null;
+        String sql = "SELECT * FROM car WHERE vin_number = ?";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1,vinNumber);
+
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    car = new Car(resultSet.getInt("car_id"),
+                            resultSet.getInt("car_model_id"),
+                            resultSet.getString("vin_number"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDouble("monthly_price"),
+                            resultSet.getString("status"),
+                            resultSet.getString("colour"));
+                }
+            }
+            if(car == null){
+                System.out.println("No car with vin number "+vinNumber+" could be found");
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return car;
     }
 }
