@@ -70,7 +70,7 @@ public class EmployeeController {
         if (loggedInEmployee == null){
             return "redirect:/";
         }
-        if (!loggedInEmployee.getRole().equalsIgnoreCase("dataregistration")){ // if there was an admin role they should also be granted access
+        if (!loggedInEmployee.getRole().equalsIgnoreCase("dataregistrering")){ // if there was an admin role they should also be granted access
             return employeeService.redirectByRole(loggedInEmployee); // makes sure only Data people can create accounts
         }
 
