@@ -20,17 +20,29 @@ public class CustomerController {
 
     @GetMapping("/customer/register")
     public String showRegisterCustomer(Model model) {
-        model.addAttribute("customer", new Customer());
+
         return "register-customer";
     }
 
     @PostMapping("/customer/register")
-    public String registerCustomer(@ModelAttribute Customer customer, Model model) {
-        String error=customerService.registerCustomer(customer);
+    public String registerCustomer(
+            @RequestParam("id")  int id,
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("driversLicenseNumber") String driversLicenseNumber,
+            @RequestParam("cprNumber") String cprNumber,
+            @RequestParam("email") String email,
+            @RequestParam("phoneNumber") int phoneNumber,
+            Model model) {
 
-        if (error != null){
-            model.addAttribute("error",error);
-            model.addAttribute("customer",customer);
+        Customer customer = new Customer(id, firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
+
+        String error = customerService.registerCustomer(customer);
+
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("customer", customer);
+            return "register-customer";
         }
 
         return "redirect:/index";

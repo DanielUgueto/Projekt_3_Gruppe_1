@@ -10,14 +10,14 @@
 
 <h1>Opret kunde</h1>
 
-<form th:action="@{/customer/register}" method="post" th:object="${customer}">
+<form th:action="@{/customer/register}" method="post">
 
-    <input type="text" th:field="${firstName}" placeholder="Fornavn" required>
-    <input type="text" th:field="${lastName}" placeholder="Efternavn" required>
-    <input type="text" th:field="${driversLicenseNumber}" placeholder="Kørekort" required>
-    <input type="text" th:field="${cprNumber}" placeholder="CPR-nummer" required>
-    <input type="email" th:field="${email}" placeholder="Email adresse" required>
-    <input type="text" th:field="${phoneNumber}" placeholder="Telefon nummer" required>
+    <input type="text" name="firstName" placeholder="Fornavn" required>
+    <input type="text" name="lastName" placeholder="Efternavn" required>
+    <input type="text" name="driversLicenseNumber" placeholder="Kørekort" required>
+    <input type="text" name="cprNumber" placeholder="CPR-nummer" required>
+    <input type="email" name="email" placeholder="Email adresse" required>
+    <input type="text" name="phoneNumber" placeholder="Telefon nummer" required>
 
     <button type="submit">Opret kunde</button>
 

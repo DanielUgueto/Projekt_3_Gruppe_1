@@ -49,15 +49,16 @@ public class CustomerRepository {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                Customer customer = new Customer();
+                Customer customer = new Customer(
 
-                customer.setId(resultSet.getInt("customer_id"));
-                customer.setFirstName(resultSet.getString("first_name"));
-                customer.setLastName(resultSet.getString("last_name"));
-                customer.setDriversLicenseNumber(resultSet.getString("drivers_license_number"));
-                customer.setCprNumber(resultSet.getString("cpr_number"));
-                customer.setEmail(resultSet.getString("email"));
-                customer.setPhoneNumber(resultSet.getInt("phone_number"));
+                resultSet.getInt("customer_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("drivers_license_number"),
+                resultSet.getString("cpr_number"),
+                resultSet.getString("email"),
+                resultSet.getInt("phone_number")
+                );
 
                 return customer;
             }
