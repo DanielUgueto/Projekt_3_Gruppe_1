@@ -53,4 +53,31 @@ public class EmployeeRepository {
 
         return false;
     }
+
+    public Employee findEmployeeByEmail(String email) {
+        String sql = "Select * FROM employee WHERE work_email = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()){
+                Employee employee = new Employee(rs.getInt("employee_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("password"),
+                        rs.getString("work_email"),
+                        rs.getString("role")
+                );
+
+                return employee;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
