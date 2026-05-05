@@ -38,7 +38,7 @@ public class RentalContractController {
         }
 
         List<Car> cars = carRepository.findCarsByStatus("Ledig");
-        List<Customer> customers = customerRepository.findAll();
+        List<Customer> customers = customerRepository.getAllCustomers();
         model.addAttribute("cars", cars);
         model.addAttribute("customers", customers);
         model.addAttribute("employeeId", employee.getEmployeeId());
@@ -72,7 +72,7 @@ public class RentalContractController {
             return "redirect:/rental-contracts";
         } catch (IllegalArgumentException e) {
             List<Car> cars = carRepository.findCarsByStatus("Ledig");
-            List<Customer> customers = customerRepository.findAll();
+            List<Customer> customers = customerRepository.getAllCustomers();
             model.addAttribute("cars", cars);
             model.addAttribute("customers", customers);
             model.addAttribute("employeeId", employee.getEmployeeId());

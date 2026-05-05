@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class CustomerRepository {
@@ -69,4 +71,27 @@ public class CustomerRepository {
         return null;
     }
 
+    public List<Customer> getAllCustomers() {
+        List<Customer> customerList = new ArrayList<>();
+        String sql = "SELECT * FROM customer";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()){
+
+            while(resultSet.next()){
+                Customer customer = new Customer(resultSet.getInt("customer_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("drivers_license_number"),
+                        resultSet.getString("cpr_number"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("phone_number"));
+                customerList.add(customer);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return customerList;
+    }
 }
