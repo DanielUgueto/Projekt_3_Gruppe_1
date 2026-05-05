@@ -20,4 +20,33 @@ public class EmployeeService {
         employeeRepository.addEmployeeToDatabase(employee);
         return true;
     }
+
+    public String redirectByRole(Employee employee){
+        if (employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dataregistration";
+        }
+        if (employee.getRole().equalsIgnoreCase("skade-udbedring")){
+            return "redirect:/skade-udbedring";
+        }
+        if (employee.getRole().equalsIgnoreCase("forretningsudvikler")){
+            return "redirect:/forretningsudvikler";
+        }
+        return "/index";
+    }
+
+    public Employee login(String email, String password){
+        Employee employee = employeeRepository.findEmployeeByEmail(email);
+
+        if (employee == null){
+            System.out.println("Employee not found");
+            return null;
+        }
+
+        if (!employee.getPassword().equals(password)){
+            System.out.println("Wrong password");
+            return null;
+        }
+
+        return employee;
+    }
 }
