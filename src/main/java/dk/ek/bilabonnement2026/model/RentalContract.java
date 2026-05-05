@@ -27,6 +27,17 @@ public class RentalContract {
         this.subscriptionType = subscriptionType;
     }
 
+    public RentalContract(int employeeId, int customerId, int carId, LocalDate startDate, LocalDate endDate, String pickupLocation, String status, String subscriptionType) {
+        this.employeeId = employeeId;
+        this.customerId = customerId;
+        this.carId = carId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.pickupLocation = pickupLocation;
+        this.status = status;
+        this.subscriptionType = subscriptionType;
+    }
+
     public int getRentalContractId() {
         return rentalContractId;
     }
