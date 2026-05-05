@@ -44,4 +44,8 @@ public class Employee {
     public String getWorkEmail() {
         return workEmail;
     }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
 }
