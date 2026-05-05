@@ -26,7 +26,6 @@ public class CustomerController {
 
     @PostMapping("/customer/register")
     public String registerCustomer(
-            @RequestParam("id")  int id,
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
             @RequestParam("driversLicenseNumber") String driversLicenseNumber,
@@ -35,7 +34,7 @@ public class CustomerController {
             @RequestParam("phoneNumber") int phoneNumber,
             Model model) {
 
-        Customer customer = new Customer(id, firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
+        Customer customer = new Customer(0, firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
 
         String error = customerService.registerCustomer(customer);
 
