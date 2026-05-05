@@ -8,8 +8,8 @@
 <h1>Opret Bil</h1>
 
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
-
-<form action="/cars/create" method="post">
+<section>
+    <form action="/cars/create" method="post">
     
     <label for="carModelId">Bilmodel:</label>
     <select id="carModelId" name="carModelId" required>
@@ -36,5 +36,7 @@
 
     <button type="submit">Opret bil</button>
 </form>
+</section>
+
 </body>
 </html>
