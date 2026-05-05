@@ -20,4 +20,17 @@ public class EmployeeService {
         employeeRepository.addEmployeeToDatabase(employee);
         return true;
     }
+
+    public String redirectByRole(Employee employee){
+        if (employee.getRole().matches("dataregistration")){
+            return "redirect:/dataregistration";
+        }
+        if (employee.getRole().matches("skade-udbedring")){
+            return "redirect:/skade-udbedring";
+        }
+        if (employee.getRole().matches("forretningsudvikler")){
+            return "redirect:/forretningsudvikler";
+        }
+        return "/index";
+    }
 }
