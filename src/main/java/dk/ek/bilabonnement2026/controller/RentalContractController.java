@@ -1,0 +1,83 @@
+package dk.ek.bilabonnement2026.controller;
+
+import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.Customer;
+import dk.ek.bilabonnement2026.model.Employee;
+import dk.ek.bilabonnement2026.model.RentalContract;
+import dk.ek.bilabonnement2026.repository.CarRepository;
+import dk.ek.bilabonnement2026.repository.CustomerRepository;
+import dk.ek.bilabonnement2026.service.RentalContractService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Controller
+public class RentalContractController {
+
+    @Autowired
+    RentalContractService rentalContractService;
+
+    @Autowired
+    CarRepository carRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @GetMapping("/rental-contracts/create")
+    public String showCreateRentalContractForm(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+
+        List<Car> cars = carRepository.findCarsByStatus("Ledig");
+        List<Customer> customers = customerRepository.getAllCustomers();
+        model.addAttribute("cars", cars);
+        model.addAttribute("customers", customers);
+        model.addAttribute("employeeId", employee.getEmployeeId());
+        return "createRentalContract";
+    }
+
+    @PostMapping("/rental-contracts/create")
+    public String createRentalContract(@RequestParam("employeeId") int employeeId,
+                                       @RequestParam("customerId") int customerId,
+                                       @RequestParam("carId") int carId,
+                                       @RequestParam("startDate") String startDate,
+                                       @RequestParam("endDate") String endDate,
+                                       @RequestParam("pickupLocation") String pickupLocation,
+                                       @RequestParam("subscriptionType") String subscriptionType,
+                                       HttpSession session,
+                                       Model model) {
+
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+
+        RentalContract rentalContract = new RentalContract(
+                employeeId, customerId, carId,
+                LocalDate.parse(startDate), LocalDate.parse(endDate),
+                pickupLocation, "Aktiv", subscriptionType
+        );
+
+        try {
+            rentalContractService.createRentalContract(rentalContract);
+            return "redirect:/rental-contracts";
+        } catch (IllegalArgumentException e) {
+            List<Car> cars = carRepository.findCarsByStatus("Ledig");
+            List<Customer> customers = customerRepository.getAllCustomers();
+            model.addAttribute("cars", cars);
+            model.addAttribute("customers", customers);
+            model.addAttribute("employeeId", employee.getEmployeeId());
+            model.addAttribute("fejl", e.getMessage());
+            return "createRentalContract";
+        }
+    }
+}
