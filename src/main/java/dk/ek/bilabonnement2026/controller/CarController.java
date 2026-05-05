@@ -2,8 +2,10 @@ package dk.ek.bilabonnement2026.controller;
 
 import dk.ek.bilabonnement2026.model.Car;
 import dk.ek.bilabonnement2026.model.CarModel;
+import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.repository.CarModelRepository;
 import dk.ek.bilabonnement2026.service.CarService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,11 @@ public class CarController {
     CarModelRepository carModelRepository;
 
     @GetMapping("/cars/create")
-    public String showCreateCarForm(Model model) {
+    public String showCreateCarForm(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
         List<CarModel> carModels = carModelRepository.getAllCarModels();
         model.addAttribute("carModels",carModels);
         return "createCar";
@@ -44,6 +50,8 @@ public class CarController {
             return "redirect:/cars";
         }catch (IllegalArgumentException e){
             model.addAttribute("fejl", e.getMessage());
+            List<CarModel> carModels = carModelRepository.getAllCarModels();
+            model.addAttribute("carModels", carModels);
             return "createCar";
         }
     }
