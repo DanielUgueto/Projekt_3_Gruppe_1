@@ -89,4 +89,19 @@ public class CarRepository {
         }
         return car;
     }
+
+    public void updateCarStatus(Car car) {
+        String sql = "UPDATE car SET status = ? WHERE car_id = ?";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, car.getStatus());
+            statement.setInt(2,car.getCarId());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
