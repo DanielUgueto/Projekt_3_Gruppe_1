@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilføj medarbejder</title>
+</head>
+<body>
+
+<section class="create-employee-box">
+    <form th:action="@{/addEmployee}" method="post">
+        <label for="firstName">Fornavn: </label>
+        <input type="text" id="firstName" name="firstName" required>
+        <label for="lastName">Efternavn: </label>
+        <input type="text" id="lastName" name="lastName" required>
+        <label for="workEmail">Arbejdsemail: </label>
+        <input type="text" id="workEmail" name="workEmail" required>
+        <label for="password">Password: </label>
+        <input type="text" id="password" name="password" required>
+        <label for="role">Rolle: </label>
+        <select name="role" id="role">
+            <option value="dataregistrering">Dataregistrering</option>
+            <option value="skade/udbedring">Skade/udbedring</option>
+            <option value="forretningsudvikler">Forretningsudvikler</option>
+        </select>
+        <button type="submit">Opret bruger</button>
+    </form>
+</section>
+
+</body>
+</html>
