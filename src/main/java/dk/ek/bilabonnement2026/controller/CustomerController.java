@@ -19,13 +19,19 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("/customer/register")
-    public String showRegisterCustomer() {
-
+    public String showRegisterCustomer(Model model) {
+        model.addAttribute("customer", new Customer());
         return "register-customer";
     }
 
     @PostMapping("/customer/register")
     public String registerCustomer(@ModelAttribute Customer customer, Model model) {
+        String error=customerService.registerCustomer(customer);
+
+        if (error != null){
+            model.addAttribute("error",error);
+            model.addAttribute("customer",customer);
+        }
 
         return "redirect:/index";
     }
