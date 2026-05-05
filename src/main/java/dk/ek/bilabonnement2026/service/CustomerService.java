@@ -16,7 +16,7 @@ public class CustomerService {
     public String registerCustomer(Customer customer) {
 
         if (customerRepository.findCustomerByCustomerEmail(customer.getEmail()) != null) {
-            return "Email skal være unikt!";
+            return "Email skal være unik!";
         }
 
         customerRepository.createCustomer(customer);
