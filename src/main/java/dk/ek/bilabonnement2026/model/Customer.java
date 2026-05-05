@@ -1,7 +1,7 @@
 package dk.ek.bilabonnement2026.model;
 
 public class Customer {
-    private int id;
+    private int customerId;
     private String firstName;
     private String lastName;
     private String driversLicenseNumber;
@@ -9,8 +9,8 @@ public class Customer {
     private String email;
     private int phoneNumber;
 
-    public Customer(int id, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
-        this.id = id;
+    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.driversLicenseNumber = driversLicenseNumber;
@@ -19,17 +19,9 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer(String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.driversLicenseNumber = driversLicenseNumber;
-        this.cprNumber = cprNumber;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 
-    public int getId() {
-        return id;
+    public int getCustomerId() {
+        return customerId;
     }
 
     public String getFirstName() {

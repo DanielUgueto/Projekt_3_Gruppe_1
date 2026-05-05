@@ -2,15 +2,15 @@ package dk.ek.bilabonnement2026.model;
 
 public class CustomerAddress {
 
-    private int addressId;
+    private int customerAddressId;
     private int customerId;
     private String zipCode;
     private String streetName;
     private String houseNumber;
     private String floor;
 
-    public CustomerAddress(int addressId, int customerId, String zipCode, String streetName, String houseNumber, String floor) {
-        this.addressId = addressId;
+    public CustomerAddress(int customerAddressId, int customerId, String zipCode, String streetName, String houseNumber, String floor) {
+        this.customerAddressId = customerAddressId;
         this.customerId = customerId;
         this.zipCode = zipCode;
         this.streetName = streetName;
@@ -18,9 +18,7 @@ public class CustomerAddress {
         this.floor = floor;
     }
 
-    public int getAddressId() {
-        return addressId;
-    }
+    public int getCustomerAddressId() { return customerAddressId; }
 
     public int getCustomerId() {
         return customerId;
