@@ -78,7 +78,6 @@ public class EmployeeRepository {
             e.printStackTrace();
         }
 
-        System.out.println("Email not exist");
         return null;
     }
 }
