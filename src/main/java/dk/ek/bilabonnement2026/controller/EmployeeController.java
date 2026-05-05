@@ -42,9 +42,16 @@ public class EmployeeController {
         return employeeService.redirectByRole(employee);
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/addEmployee")
     public String addEmployee(HttpSession session){
         Employee employee = (Employee) session.getAttribute("employee");
+
         if (employee == null){
             return "redirect:/";
         }
@@ -63,15 +70,17 @@ public class EmployeeController {
         if (loggedInEmployee == null){
             return "redirect:/";
         }
+        if (!loggedInEmployee.getRole().equalsIgnoreCase("dataregistration")){ // if there was an admin role they should also be granted access
+            return employeeService.redirectByRole(loggedInEmployee); // makes sure only Data people can create accounts
+        }
 
         Employee employee = new Employee(firstName, lastName, password, workEmail, role);
-
         boolean emailExists = employeeService.addEmployeeToDatabase(employee);
 
         if (!emailExists){
             return "addEmployee";
         }
 
-        return "dataRegistration";
+        return employeeService.redirectByRole(loggedInEmployee);
     }
 }
