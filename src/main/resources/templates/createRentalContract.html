@@ -25,7 +25,7 @@
         <option value="">-- Vælg bil --</option>
         <option th:each="car : ${cars}"
                 th:value="${car.carId}"
-                th:text="${car.vinNumber + ' - ' + car.colour}">
+                th:text="${car.licensePlate + ' - ' + car.colour}">
         </option>
     </select>
 
