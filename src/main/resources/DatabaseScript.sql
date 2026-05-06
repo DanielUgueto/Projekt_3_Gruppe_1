@@ -48,19 +48,21 @@ CREATE TABLE car_model
     model_name      VARCHAR(255) NOT NULL,
     equipment_level VARCHAR(255) NOT NULL,
     shift_gear_type VARCHAR(255) NOT NULL,
+    fuel_type       VARCHAR(255) NOT NULL,
     CONSTRAINT fk_car_model_brand
         FOREIGN KEY (car_brand_id) REFERENCES car_brand (car_brand_id)
 );
 
 CREATE TABLE car
 (
-    car_id        INT PRIMARY KEY AUTO_INCREMENT,
-    car_model_id  INT            NOT NULL,
-    vin_number    VARCHAR(17)    NOT NULL UNIQUE,
-    license_plate VARCHAR(7)     NOT NULL UNIQUE,
-    monthly_price DECIMAL(19, 2) NOT NULL,
-    status        VARCHAR(255)   NOT NULL,
-    colour        VARCHAR(255)   NOT NULL,
+    car_id              INT PRIMARY KEY AUTO_INCREMENT,
+    car_model_id        INT            NOT NULL,
+    vin_number          VARCHAR(17)    NOT NULL UNIQUE,
+    license_plate       VARCHAR(7)     NOT NULL UNIQUE,
+    monthly_price       DECIMAL(19, 2) NOT NULL,
+    status              VARCHAR(255)   NOT NULL,
+    colour              VARCHAR(255)   NOT NULL,
+    registration_date   VARCHAR(255)   NOT NULL,
     CONSTRAINT fk_car_model
         FOREIGN KEY (car_model_id) REFERENCES car_model (car_model_id)
 );
