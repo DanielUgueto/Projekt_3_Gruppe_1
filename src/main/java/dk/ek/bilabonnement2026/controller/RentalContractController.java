@@ -90,6 +90,7 @@ public class RentalContractController {
         List<Car> carList = carRepository.findCarsByStatus("Udlejet");
 
         model.addAttribute("carList",carList);
+        model.addAttribute("employeeId",employee.getEmployeeId());
 
         return "returnCar";
     }

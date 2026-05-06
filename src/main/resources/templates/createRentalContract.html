@@ -8,7 +8,7 @@
 <h1>Opret Lejeaftale</h1>
 
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
-
+<section>
 <form action="/rental-contracts/create" method="post">
 
     <label for="customerId">Kunde:</label>
@@ -50,5 +50,6 @@
     <button type="submit">Opret lejeaftale</button>
 
 </form>
+</section>
 </body>
 </html>
