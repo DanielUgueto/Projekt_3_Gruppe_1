@@ -36,4 +36,26 @@ public class RentalContractService {
         car.setStatus("Udlejet");
         carRepository.updateCarStatus(car);
     }
+
+    public void registerReturnOfCar(int carId){
+
+        Car car = carRepository.findCarByCarNumber(carId);
+        if(car == null){
+            throw new IllegalArgumentException("Bilen eksistere ikke");
+        }
+
+        if(!car.getStatus().equals("Udlejet")){
+            throw new IllegalArgumentException("Bilen er ikke udlejet");
+        }
+
+        RentalContract exsistingContract = rentalContractRepository.findRentalContractByCarId(carId);
+        if(exsistingContract == null){
+            throw new IllegalArgumentException("Der eksistere ikke nogen lejeaftale.");
+        }
+
+            car.setStatus("Tilbageleveret");
+            carRepository.updateCarStatus(car);
+            rentalContractRepository.updateRentalContractStatus(exsistingContract.getRentalContractId(),"Afsluttet");
+
+    }
 }
