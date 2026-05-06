@@ -1,6 +1,7 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.Customer;
+import dk.ek.bilabonnement2026.repository.CustomerAddressRepository;
 import dk.ek.bilabonnement2026.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    CustomerAddressRepository customerAddressRepository;
+
 
     public String registerCustomer(Customer customer) {
 
