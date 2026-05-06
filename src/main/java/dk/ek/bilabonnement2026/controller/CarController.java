@@ -2,8 +2,11 @@ package dk.ek.bilabonnement2026.controller;
 
 import dk.ek.bilabonnement2026.model.Car;
 import dk.ek.bilabonnement2026.model.CarModel;
+import dk.ek.bilabonnement2026.model.CarOverview;
+import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.repository.CarModelRepository;
 import dk.ek.bilabonnement2026.service.CarService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,5 +50,25 @@ public class CarController {
             model.addAttribute("fejl", e.getMessage());
             return "createCar";
         }
+    }
+
+    @GetMapping("/dashboard")
+    public String showCarDashboard(@RequestParam(required = false) String status, HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+
+        ArrayList<CarOverview> list;
+
+        if (status == null || status.isBlank()) {
+            list = carService.findCarsWithDetails();
+        } else {
+            list = carService.findCarsWithDetailsByStatus(status);
+        }
+
+        model.addAttribute("carList", list);
+
+        return "car-dashboard";
     }
 }

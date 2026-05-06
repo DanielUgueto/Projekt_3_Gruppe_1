@@ -32,4 +32,8 @@ public class CarService {
     public ArrayList<CarOverview> findCarsWithDetails() {
         return carRepository.findAllCarsWithDetails();
     }
+
+    public ArrayList<CarOverview> findCarsWithDetailsByStatus(String status){
+        return carRepository.findAllCarsWithDetailsByStatus(status);
+    }
 }

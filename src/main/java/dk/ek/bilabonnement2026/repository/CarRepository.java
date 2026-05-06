@@ -115,7 +115,48 @@ public class CarRepository {
                         rs.getDouble("monthly_price"),
                         rs.getString("shift_gear_type"),
                         rs.getString("status"),
-                        rs.getString("vin_number"));
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
+
+                list.add(carOverview);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public ArrayList<CarOverview> findAllCarsWithDetailsByStatus(String status){
+        String sql = "SELECT * FROM car c " +
+                "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
+                "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
+                "WHERE c.status = ?";
+
+        ArrayList<CarOverview> list = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, status);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()){
+                CarOverview carOverview = new CarOverview(
+                        rs.getString("brand_name"),
+                        rs.getInt("car_id"),
+                        rs.getString("colour"),
+                        rs.getString("equipment_level"),
+                        rs.getString("license_plate"),
+                        rs.getString("model_name"),
+                        rs.getDouble("monthly_price"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("status"),
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
 
                 list.add(carOverview);
             }

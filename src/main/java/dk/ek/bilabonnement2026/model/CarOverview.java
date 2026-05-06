@@ -11,10 +11,12 @@ public class CarOverview {
     private double monthlyPrice;
     private String status;
     private String colour;
+    private String registrationDate;
+    private String fuelType;
 
     public CarOverview(String brandName, int carId, String colour, String equipmentLevel,
                        String licensePlate, String modelName, double monthlyPrice,
-                       String shiftGearType, String status, String vinNumber) {
+                       String shiftGearType, String status, String vinNumber, String registrationDate, String fuelType) {
         this.brandName = brandName;
         this.carId = carId;
         this.colour = colour;
@@ -25,6 +27,8 @@ public class CarOverview {
         this.shiftGearType = shiftGearType;
         this.status = status;
         this.vinNumber = vinNumber;
+        this.registrationDate = registrationDate;
+        this.fuelType = fuelType;
     }
 
     public String getBrandName() {
@@ -65,5 +69,13 @@ public class CarOverview {
 
     public String getVinNumber() {
         return vinNumber;
+    }
+
+    public String getRegistrationDate(){
+        return registrationDate;
+    }
+
+    public String getFuelType(){
+        return fuelType;
     }
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+
+<section>
+    <form th:action="@{/dashboard}" method="get">
+        <select name="status">
+            <option value="">Alle</option>
+            <option value="Ledig">Ledig</option>
+            <option value="Udlejet">Udlejet</option>
+            <option value="Tilbageleveret">Tilbageleveret</option>
+            <option value="Klar til transport">Klar til transport</option>
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+</section>
+
+<div class="dashboard-box">
+    <article class="dashboard-car-info" th:each="car : ${carList}">
+        <div>
+            <h4>
+                <span th:text="${car.brandName}"></span>
+                <span th:text="${car.modelName}"></span>
+            </h4>
+        </div>
+        <div>
+            <span th:text="${car.equipmentLevel}"></span>
+        </div>
+        <div>
+            <span th:text="${car.vinNumber}"></span>
+        </div>
+        <div>
+            <span th:text="${car.licensePlate}"></span>
+        </div>
+        <div>
+            <span th:text="${car.monthlyPrice}"></span>
+        </div>
+        <div>
+            <span th:text="${car.registrationDate}"></span>
+            <span th:text="${car.fuelType}"></span>
+            <span th:text="${car.shiftGearType}"></span>
+            <span th:text="${car.colour}"></span>
+        </div>
+        <div>
+            <span th:text="${car.status}"></span>
+        </div>
+    </article>
+</div>
+
+</body>
+</html>
