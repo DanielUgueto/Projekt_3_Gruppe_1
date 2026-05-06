@@ -177,3 +177,10 @@ INSERT INTO car (car_model_id, vin_number, license_plate, monthly_price, status,
 (30, 'RE300000000000001', 'KC12345', 3799.00, 'Ledig', 'Black', '2024-01-14'),
 (30, 'RE300000000000002', 'KC12346', 3799.00, 'Ledig', 'Green', '2024-03-31'),
 (30, 'RE300000000000003', 'KC12347', 3799.00, 'Ledig', 'White', '2023-11-12');
+
+
+-- zipCodes
+INSERT INTO zip_code (zip_code, city, country) VALUES
+                                                   ('2500', 'Valby','Danmark'),
+                                                   ('4400','Kalundborg','Danmark'),
+                                                   ('2200','Østerbro','Danmark')
