@@ -80,4 +80,35 @@ public class RentalContractController {
             return "createRentalContract";
         }
     }
+
+    @GetMapping("/rental-contracts/return")
+    public String showReturnCarForm(HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+        List<Car> carList = carRepository.findCarsByStatus("Udlejet");
+
+        model.addAttribute("carList",carList);
+
+        return "returnCar";
+    }
+
+    @PostMapping("/rental-contracts/return")
+    public String returnCar(HttpSession session, @RequestParam("carId") int carId, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+        try{
+            rentalContractService.registerReturnOfCar(carId);
+            return "redirect:/rental-contracts";
+        }catch (IllegalArgumentException e){
+            List<Car> carList = carRepository.findCarsByStatus("Udlejet");
+            model.addAttribute("carList",carList);
+            model.addAttribute("fejl", e.getMessage());
+            return "returnCar";
+        }
+
+    }
 }
