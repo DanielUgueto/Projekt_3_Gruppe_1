@@ -1,6 +1,7 @@
 package dk.ek.bilabonnement2026.repository;
 
 import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.CarOverview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -131,5 +132,80 @@ public class CarRepository {
             e.printStackTrace();
         }
         return cars;
+    }
+
+    public ArrayList<CarOverview> findAllCarsWithDetails(){
+        String sql = "SELECT * FROM car " +
+                "JOIN car_model ON car.car_model_id = car_model.car_model_id " +
+                "JOIN car_brand ON car_model.car_brand_id = car_brand.car_brand_id";
+
+        ArrayList<CarOverview> list = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()){
+                CarOverview carOverview = new CarOverview(
+                        rs.getString("brand_name"),
+                        rs.getInt("car_id"),
+                        rs.getString("colour"),
+                        rs.getString("equipment_level"),
+                        rs.getString("license_plate"),
+                        rs.getString("model_name"),
+                        rs.getDouble("monthly_price"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("status"),
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
+
+                list.add(carOverview);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public ArrayList<CarOverview> findAllCarsWithDetailsByStatus(String status){
+        String sql = "SELECT * FROM car c " +
+                "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
+                "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
+                "WHERE c.status = ?";
+
+        ArrayList<CarOverview> list = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, status);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()){
+                CarOverview carOverview = new CarOverview(
+                        rs.getString("brand_name"),
+                        rs.getInt("car_id"),
+                        rs.getString("colour"),
+                        rs.getString("equipment_level"),
+                        rs.getString("license_plate"),
+                        rs.getString("model_name"),
+                        rs.getDouble("monthly_price"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("status"),
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
+
+                list.add(carOverview);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

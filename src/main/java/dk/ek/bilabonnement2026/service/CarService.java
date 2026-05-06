@@ -1,9 +1,12 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class CarService {
@@ -24,5 +27,13 @@ public class CarService {
         }
 
         carRepository.saveCar(car);
+    }
+
+    public ArrayList<CarOverview> findCarsWithDetails() {
+        return carRepository.findAllCarsWithDetails();
+    }
+
+    public ArrayList<CarOverview> findCarsWithDetailsByStatus(String status){
+        return carRepository.findAllCarsWithDetailsByStatus(status);
     }
 }
