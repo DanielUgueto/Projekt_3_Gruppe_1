@@ -59,7 +59,9 @@ public class CarController {
     }
 
     @GetMapping("/dashboard")
-    public String showCarDashboard(@RequestParam(required = false) String status, HttpSession session, Model model){
+    public String showCarDashboard(@RequestParam(required = false) String status,
+                                   @RequestParam(required = false) Integer carId,
+                                   HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null){
             return "redirect:/";
@@ -71,6 +73,17 @@ public class CarController {
             list = carService.findCarsWithDetails();
         } else {
             list = carService.findCarsWithDetailsByStatus(status);
+        }
+
+        if (carId != null) {
+            CarOverview selectedCar = null;
+            for (CarOverview c : list){
+                if (c.getCarId() == carId) {
+                    selectedCar = c;
+                    break;
+                }
+            }
+            model.addAttribute("selectedCar", selectedCar);
         }
 
         model.addAttribute("carList", list);
