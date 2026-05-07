@@ -31,7 +31,7 @@ public class DamageReportController {
             return "redirect:/";
         }
 
-        RentalContract rentalContract = rentalContractRepository.findRentalContractByCarId(rentalContractId);
+        RentalContract rentalContract = rentalContractRepository.findRentalContractById(rentalContractId);
         if (rentalContract == null) {
             return "redirect:/dashboard";
         }

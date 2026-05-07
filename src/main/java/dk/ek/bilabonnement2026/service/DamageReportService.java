@@ -26,8 +26,8 @@ public class DamageReportService {
             throw new IllegalArgumentException("Lejeaftalen findes ikke");
         }
 
-        if (!"Afleveret".equals(rentalContract.getStatus())) {
-            throw new IllegalArgumentException("Bil er ikke afleveret");
+        if (!"Tilbageleveret".equals(rentalContract.getStatus())) {
+            throw new IllegalArgumentException("Bil er ikke tilbageleveret");
         }
 
         DamageReport damageReport = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
