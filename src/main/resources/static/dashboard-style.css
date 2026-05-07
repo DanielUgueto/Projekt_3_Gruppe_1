@@ -1,14 +1,126 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    color: #1a1a1a;
+}
+
 .dashboard-split {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    border: 1px solid black;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.dashboard-car-filter {
+    display: flex;
+    border: 1px solid #c8c8c8;
+    border-radius: 10px;
+    align-items: center;
+    padding: 1em;
+    background-color: #e7e7e7;
+}
+
+.dashboard-split-car,
+.dashboard-split-single-car {
+    background-color: #fcfcfc;
+    border: 1px solid #c8c8c8;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 .dashboard-split-car {
-    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.dashboard-split-single-car {
-    border: 1px solid black;
+.dashboard-car-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.dashboard-car-info {
+    border: 1px solid #c8c8c8;
+    border-radius: 10px;
+    background-color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.dashboard-car-info:hover {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px) scale(1.01);
+}
+
+.dashboard-car-info a {
+    display: block;
+    color: #1a1a1a;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.dashboard-car-info a:hover {
+    background-color: #f0f0f0;
+}
+
+.dashboard-car-info h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.dashboard-car-info div {
+    margin-bottom: 8px;
+}
+
+.dashboard-split-single-car article {
+    border: 1px solid #c8c8c8;
+    padding: 15px;
+    background-color: #ffffff;
+    min-height: 300px;
+}
+
+.selected-car-header {
+    margin-bottom: 20px;
+}
+
+.selected-car-section {
+    margin-bottom: 15px;
+    border-top: 1px solid #d0d0d0;
+    padding-top: 10px;
+}
+
+select,
+button {
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #b8b8b8;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 6px;
+}
+
+select:hover {
+    background-color: #f0f0f0;
+    border-color: #9f9f9f;
+}
+
+button {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #2a2a2a;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3a3a3a;
+    border-color: #3a3a3a;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }

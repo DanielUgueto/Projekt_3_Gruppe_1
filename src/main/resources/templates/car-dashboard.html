@@ -9,7 +9,7 @@
 
 <div class="dashboard-split">
     <div class="dashboard-split-car">
-        <section>
+        <section class="dashboard-car-filter">
             <form th:action="@{/dashboard}" method="get">
                 <select name="status">
                     <option value="">Alle</option>
@@ -24,8 +24,7 @@
 
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="car : ${carList}">
-                <a th:href="@{/dashboard}">
-                    <input type="hidden" name="carId" th:value="${car.carId}">
+                <a th:href="@{/dashboard(carId=${car.carId})}">
                     <div>
                         <h4>
                             <span th:text="${car.brandName}"></span>
