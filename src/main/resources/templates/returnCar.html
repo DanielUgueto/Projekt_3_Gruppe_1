@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Retuner bil</title>
+</head>
+<body>
+<h1>Retuner bil</h1>
+
+<p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
+<section>
+    <form action="/rental-contracts/return" method="post">
+        <label for="carId"> bil:</label>
+        <select id="carId" name="carId" required>
+            <option value="">-- vælg bil --</option>
+            <option th:each="car : ${carList}"
+            th:value="${car.carId}"
+            th:text="${car.licensePlate + ' ' + car.status}"></option>
+        </select>
+
+
+        <button type="submit">Retuner bil</button>
+    </form>
+</section>
+</body>
+</html>
