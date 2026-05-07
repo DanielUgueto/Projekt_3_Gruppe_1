@@ -27,10 +27,10 @@ public class CustomerRepository {
 
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
-            statement.setString(3, customer.getDriversLicenseNumber());
+            statement.setInt(3, customer.getDriversLicenseNumber());
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
-            statement.setString(6, customer.getPhoneNumber());
+            statement.setInt(6, customer.getPhoneNumber());
 
 
             statement.executeUpdate();
@@ -57,10 +57,10 @@ public class CustomerRepository {
                 resultSet.getInt("customer_id"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
-                resultSet.getString("drivers_license_number"),
+                resultSet.getInt("drivers_license_number"),
                 resultSet.getString("cpr_number"),
                 resultSet.getString("email"),
-                resultSet.getString("phone_number")
+                resultSet.getInt("phone_number")
                 );
 
                 return customer;
@@ -84,10 +84,10 @@ public class CustomerRepository {
                 Customer customer = new Customer(resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
-                        resultSet.getString("drivers_license_number"),
+                        resultSet.getInt("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getString("phone_number"));
+                        resultSet.getInt("phone_number"));
                 customerList.add(customer);
             }
         }catch (SQLException e){
