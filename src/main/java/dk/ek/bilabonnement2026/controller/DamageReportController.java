@@ -2,8 +2,8 @@ package dk.ek.bilabonnement2026.controller;
 
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.model.RentalContract;
-import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import dk.ek.bilabonnement2026.service.DamageReportService;
+import dk.ek.bilabonnement2026.service.RentalContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class DamageReportController {
     @Autowired
     DamageReportService damageReportService;
     @Autowired
-    RentalContractRepository rentalContractRepository;
+    RentalContractService rentalContractService;
 
     @GetMapping("/damage-reports/create/{rentalContractId}")
     public String showCreateDamageReportForm(@PathVariable int rentalContractId, HttpSession session, Model model) {
@@ -31,7 +31,7 @@ public class DamageReportController {
             return "redirect:/";
         }
 
-        RentalContract rentalContract = rentalContractRepository.findRentalContractById(rentalContractId);
+        RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
         if (rentalContract == null) {
             return "redirect:/dashboard";
         }
@@ -59,7 +59,7 @@ public class DamageReportController {
             return "redirect:/";
 
         } catch (IllegalArgumentException e) {
-            RentalContract rentalContract = rentalContractRepository.findRentalContractByCarId(rentalContractId);
+            RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
             model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("employeeId", employeeId);
             model.addAttribute("createdAt", LocalDate.now());

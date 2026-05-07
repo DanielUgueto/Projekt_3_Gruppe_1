@@ -58,4 +58,9 @@ public class RentalContractService {
             rentalContractRepository.updateRentalContractStatus(exsistingContract.getRentalContractId(),"Afsluttet");
 
     }
+
+    public RentalContract getRentalContractByContractId(int contractId){
+        RentalContract rentalContract = rentalContractRepository.findRentalContractById(contractId);
+        return rentalContract;
+    }
 }
