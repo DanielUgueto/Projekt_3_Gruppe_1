@@ -19,6 +19,16 @@
     <input type="email" name="email" placeholder="Email adresse" required>
     <input type="text" name="phoneNumber" placeholder="Telefon nummer" required>
 
+    <input type="text" name="streetName" placeholder="Vejnavn" required>
+    <input type="text" name="houseNumber" placeholder="Husnummer" required>
+    <input type="text" name="floor" placeholder="Etage">
+
+    <select name="zipCode" required>
+        <option value="">-- vælg postnummer --</option>
+        <option th:each="zip : ${zipCodes}"
+        th:value="${zip.zipCode}"
+        th:text="${zip.zipCode + ' ' + zip.city}"></option>
+    </select>
     <button type="submit">Opret kunde</button>
 
 </form>
