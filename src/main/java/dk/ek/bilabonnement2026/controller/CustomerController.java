@@ -28,7 +28,7 @@ public class CustomerController {
     public String registerCustomer(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("driversLicenseNumber") String driversLicenseNumber,
+            @RequestParam("driversLicenseNumber") int driversLicenseNumber,
             @RequestParam("cprNumber") String cprNumber,
             @RequestParam("email") String email,
             @RequestParam("phoneNumber") int phoneNumber,
