@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Skade og Udbedring</title>
+</head>
+<body>
+
+<h1>Skade og Udbedring</h1>
+
+<p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
+
+<div>
+    <article th:each="car : ${carList}">
+        <div>
+            <h4>
+                <span th:text="${car.brandName}"></span>
+                <span th:text="${car.modelName}"></span>
+            </h4>
+        </div>
+        <div>
+            <span th:text="${car.equipmentLevel}"></span>
+        </div>
+        <div>
+            <span th:text="${car.vinNumber}"></span>
+        </div>
+        <div>
+            <span th:text="${car.licensePlate}"></span>
+        </div>
+        <div>
+            <span th:text="${car.colour}"></span>
+        </div>
+        <div>
+            <span th:text="${car.status}"></span>
+        </div>
+        <div>
+            <a th:href="@{/damage-reports/create/{id}(id=${car.rentalContractId})}">Opret skadesrapport</a>
+        </div>
+    </article>
+</div>
+
+</body>
+</html>

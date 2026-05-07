@@ -1,10 +1,7 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.*;
-import dk.ek.bilabonnement2026.repository.DamageCategoryRepository;
-import dk.ek.bilabonnement2026.repository.DamageReportRepository;
-import dk.ek.bilabonnement2026.repository.DamageRepository;
-import dk.ek.bilabonnement2026.repository.RentalContractRepository;
+import dk.ek.bilabonnement2026.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,8 @@ public class DamageReportService {
 
     @Autowired
     DamageRepository damageRepository;
+    @Autowired
+    CarRepository carRepository;
 
 
     public void createDamageReport(int rentalContractId, int employeeId, String description, List<DamageCategory> selectedDamages) {
@@ -52,6 +51,10 @@ public class DamageReportService {
         damageReportRepository.saveDamageReport(damageReport);
 
         DamageReport savedReport = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
+
+        Car car = carRepository.findCarByCarNumber(rentalContract.getCarId());
+        car.setStatus("Klar til transport");
+        carRepository.updateCarStatus(car);
 
         for (DamageCategory category : selectedDamages) {
             damageRepository.save(new Damage(savedReport.getDamageReportId(), category.getDamageCategoryId()));

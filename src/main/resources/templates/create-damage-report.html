@@ -31,7 +31,7 @@
     <h2>Valgte skader</h2>
     <p th:if="${#lists.isEmpty(selectedDamages)}">Ingen skader tilføjet endnu.</p>
     <p th:each="damage : ${selectedDamages}" th:text="${damage.name} + ' — ' + ${damage.standardPrice} + ' kr.'"></p>
-    <p>Samlet pris: <span th:text="${totalPrice}"></span> kr.</p>
+    <p>Samlet pris:<span th:text="${totalPrice}"></span> kr.</p>
 </section>
 
 
