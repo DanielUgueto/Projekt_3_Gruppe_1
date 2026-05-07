@@ -29,7 +29,7 @@ public class EmployeeService {
             return "redirect:/skade-udbedring";
         }
         if (employee.getRole().equalsIgnoreCase("forretningsudvikler")){
-            return "redirect:/forretningsudvikler";
+            return "redirect:/business-dashboard";
         }
         return "/index";
     }
