@@ -7,9 +7,9 @@ public class Customer {
     private String driversLicenseNumber;
     private String cprNumber;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, String phoneNumber) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +44,7 @@ public class Customer {
         return email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 }

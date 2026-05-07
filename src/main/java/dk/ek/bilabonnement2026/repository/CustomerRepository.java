@@ -18,6 +18,7 @@ public class CustomerRepository {
     @Autowired
     DataSource dataSource;
 
+
     public void createCustomer(Customer customer) {
         String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number) VALUES(?,?,?,?,?,?)";
 
@@ -29,7 +30,7 @@ public class CustomerRepository {
             statement.setString(3, customer.getDriversLicenseNumber());
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
-            statement.setInt(6, customer.getPhoneNumber());
+            statement.setString(6, customer.getPhoneNumber());
 
 
             statement.executeUpdate();
@@ -37,8 +38,8 @@ public class CustomerRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 
     public Customer findCustomerByCustomerEmail(String email) {
 
@@ -59,7 +60,7 @@ public class CustomerRepository {
                 resultSet.getString("drivers_license_number"),
                 resultSet.getString("cpr_number"),
                 resultSet.getString("email"),
-                resultSet.getInt("phone_number")
+                resultSet.getString("phone_number")
                 );
 
                 return customer;
@@ -86,7 +87,7 @@ public class CustomerRepository {
                         resultSet.getString("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number"));
+                        resultSet.getString("phone_number"));
                 customerList.add(customer);
             }
         }catch (SQLException e){

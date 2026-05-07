@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret skadesrapport</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<h1>Opret skadesrapport</h1>
+
+<form th:action="@{/damage-reports/create/{rentalContractId}(rentalContractId=${rentalContract.rentalContractId})}" method="post">
+
+
+    <label>Lejeaftale nummer:</label>
+    <p type="number" name="rentalContractId" th:value="${rentalContract.rentalContractId}" readonly></p>
+
+    <label>Medarbejder ID:</label>
+    <p type="number" name="employeeId" th:value="${employeeId}" readonly></p>
+
+    <label>Oprettelses dato:</label>
+    <p type="date" name="createdAt" th:value="${createdAt}" readonly></p>
+
+    <label>Total pris:</label>
+    <input type="number" step="0.01" name="totalPrice" th:value="0.00" placeholder="Total pris" required>
+
+    <label>Rapport:</label>
+    <input type="text" name="description" placeholder="Tilføj beskrivelse" required>
+
+
+    <p th:if="${fejl}" th:text="${fejl}" style="color:red;"></p>
+
+    <button type="submit">Opret skadesrapport</button>
+
+</form>
+
+</body>
+</html>
