@@ -48,7 +48,10 @@ public class DamageReportController {
         }
 
         List<DamageCategory> selectedDamages = (List<DamageCategory>) session.getAttribute("selectedDamages");
-        double totalPrice = selectedDamages.stream().mapToDouble(DamageCategory::getStandardPrice).sum();
+        double totalPrice = 0;
+        for (DamageCategory category : selectedDamages) {
+            totalPrice += category.getStandardPrice();
+        }
 
         model.addAttribute("rentalContract", rentalContract);
         model.addAttribute("employeeId", employee.getEmployeeId());
@@ -99,7 +102,10 @@ public class DamageReportController {
 
         } catch (IllegalArgumentException e) {
             RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
-            double totalPrice = selectedDamages.stream().mapToDouble(DamageCategory::getStandardPrice).sum();
+            double totalPrice = 0;
+            for (DamageCategory category : selectedDamages) {
+                totalPrice += category.getStandardPrice();
+            }
 
             model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("employeeId", employeeId);

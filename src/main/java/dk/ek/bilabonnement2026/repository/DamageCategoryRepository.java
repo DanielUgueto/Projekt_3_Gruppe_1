@@ -18,45 +18,45 @@ public class DamageCategoryRepository {
     @Autowired
     DataSource dataSource;
 
-    public List<DamageCategory> getAllDamageCategories(){
+    public List<DamageCategory> getAllDamageCategories() {
         List<DamageCategory> categoryList = new ArrayList<>();
         String sql = "SELECT * FROM damage_category";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 categoryList.add(new DamageCategory(resultSet.getInt("damage_category_id"),
                         resultSet.getString("name"),
                         resultSet.getDouble("standard_price"),
                         resultSet.getString("description")));
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return categoryList;
     }
 
-    public DamageCategory findById(int damageCategoryId){
+    public DamageCategory findById(int damageCategoryId) {
         String sql = "SELECT * FROM damage_category WHERE damage_category_id = ?";
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery()){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
 
-            statement.setInt(1,damageCategoryId);
+            statement.setInt(1, damageCategoryId);
 
-            if(resultSet.next()){
-                return new DamageCategory(resultSet.getInt("damage_category_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("standard_price"),
-                        resultSet.getString("description"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new DamageCategory(resultSet.getInt("damage_category_id"),
+                            resultSet.getString("name"),
+                            resultSet.getDouble("standard_price"),
+                            resultSet.getString("description"));
+                }
             }
-
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
