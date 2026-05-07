@@ -3,52 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
 
-<section>
-    <form th:action="@{/dashboard}" method="get">
-        <select name="status">
-            <option value="">Alle</option>
-            <option value="Ledig">Ledig</option>
-            <option value="Udlejet">Udlejet</option>
-            <option value="Tilbageleveret">Tilbageleveret</option>
-            <option value="Klar til transport">Klar til transport</option>
-        </select>
-        <button type="submit">Filtrer</button>
-    </form>
-</section>
+<div class="dashboard-split">
+    <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
+            <form th:action="@{/dashboard}" method="get">
+                <select name="status">
+                    <option value="">Alle</option>
+                    <option value="Ledig">Ledig</option>
+                    <option value="Udlejet">Udlejet</option>
+                    <option value="Tilbageleveret">Tilbageleveret</option>
+                    <option value="Klar til transport">Klar til transport</option>
+                </select>
+                <button type="submit">Filtrer</button>
+            </form>
+        </section>
 
-<div class="dashboard-box">
-    <article class="dashboard-car-info" th:each="car : ${carList}">
-        <div>
-            <h4>
-                <span th:text="${car.brandName}"></span>
-                <span th:text="${car.modelName}"></span>
-            </h4>
+        <div class="dashboard-car-box">
+            <article class="dashboard-car-info" th:each="car : ${carList}">
+                <a th:href="@{/dashboard(carId=${car.carId})}">
+                    <div>
+                        <h4>
+                            <span th:text="${car.brandName}"></span>
+                            <span th:text="${car.modelName}"></span>
+                        </h4>
+                    </div>
+                    <div>
+                        <span th:text="${car.equipmentLevel}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.vinNumber}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.licensePlate}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.monthlyPrice}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.registrationDate}"></span>
+                        <span th:text="${car.fuelType}"></span>
+                        <span th:text="${car.shiftGearType}"></span>
+                        <span th:text="${car.colour}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.status}"></span>
+                    </div>
+                </a>
+            </article>
         </div>
-        <div>
-            <span th:text="${car.equipmentLevel}"></span>
-        </div>
-        <div>
-            <span th:text="${car.vinNumber}"></span>
-        </div>
-        <div>
-            <span th:text="${car.licensePlate}"></span>
-        </div>
-        <div>
-            <span th:text="${car.monthlyPrice}"></span>
-        </div>
-        <div>
-            <span th:text="${car.registrationDate}"></span>
-            <span th:text="${car.fuelType}"></span>
-            <span th:text="${car.shiftGearType}"></span>
-            <span th:text="${car.colour}"></span>
-        </div>
-        <div>
-            <span th:text="${car.status}"></span>
-        </div>
-    </article>
+    </div>
+
+    <div class="dashboard-split-single-car">
+        <article class="selected-car-panel" th:if="${selectedCar != null}">
+            <header class="selected-car-header">
+                <h2>
+                    <span th:text="${selectedCar.brandName}"></span>
+                    <span th:text="${selectedCar.modelName}"></span>
+                </h2>
+                <p th:text="${selectedCar.equipmentLevel}"></p>
+            </header>
+
+            <section class="selected-car-section">
+                <h3>Biloplysninger</h3>
+                <p><strong>Stelnummer:</strong> <span th:text="${selectedCar.vinNumber}"></span></p>
+                <p><strong>Nummerplade:</strong> <span th:text="${selectedCar.licensePlate}"></span></p>
+                <p><strong>Farve:</strong> <span th:text="${selectedCar.colour}"></span></p>
+                <p><strong>Registreringsdato:</strong> <span th:text="${selectedCar.registrationDate}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <h3>Tekniske oplysninger</h3>
+                <p><strong>Brændstof:</strong> <span th:text="${selectedCar.fuelType}"></span></p>
+                <p><strong>Geartype:</strong> <span th:text="${selectedCar.shiftGearType}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <h3>Status og pris</h3>
+                <p><strong>Status:</strong> <span th:text="${selectedCar.status}"></span></p>
+                <p><strong>Månedlig pris:</strong> <span th:text="${selectedCar.monthlyPrice}"></span> kr.</p>
+            </section>
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedCar == null}">
+            <h2>Ingen bil valgt</h2>
+            <p>Vælg en bil i oversigten til venstre for at se detaljer her.</p>
+        </article>
+    </div>
 </div>
 
 </body>
