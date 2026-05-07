@@ -32,7 +32,7 @@ public class DamageReportService {
             throw new IllegalArgumentException("Lejeaftalen findes ikke");
         }
 
-        if (!"Tilbageleveret".equals(rentalContract.getStatus())) {
+        if (!"Afsluttet".equals(rentalContract.getStatus())) {
             throw new IllegalArgumentException("Bilen er ikke tilbageleveret");
         }
 
