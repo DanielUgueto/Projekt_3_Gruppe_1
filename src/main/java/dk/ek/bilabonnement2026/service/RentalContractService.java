@@ -56,6 +56,9 @@ public class RentalContractService {
             car.setStatus("Tilbageleveret");
             carRepository.updateCarStatus(car);
             rentalContractRepository.updateRentalContractStatus(exsistingContract.getRentalContractId(),"Afsluttet");
+    }
 
+    public double calculateMonthlyRevenue(){
+        return rentalContractRepository.calculateMonthlyRevenue();
     }
 }

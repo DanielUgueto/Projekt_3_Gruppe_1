@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business info</title>
+</head>
+<body>
+
+<main class="dashboard-page">
+
+    <header class="dashboard-header">
+        <h1>Business Dashboard</h1>
+        <p>Overblik over forretningens nøgletal</p>
+    </header>
+
+    <section class="dashboard-summary">
+        <article class="dashboard-card revenue-card">
+            <h2>Månedlig indtægt</h2>
+            <p class="dashboard-value">
+                <span th:text="${monthlyRevenue}">0</span> kr.
+            </p>
+            <p class="dashboard-description">
+                Samlet månedlig lejeindtægt fra aktive lejeaftaler
+            </p>
+        </article>
+
+        <article class="dashboard-card placeholder-card">
+            <h2>Kommende widget</h2>
+            <p>Plads til flere nøgletal senere</p>
+        </article>
+
+        <article class="dashboard-card placeholder-card">
+            <h2>Kommende widget</h2>
+            <p>Plads til flere nøgletal senere</p>
+        </article>
+    </section>
+
+    <section class="dashboard-content">
+        <article class="dashboard-panel">
+            <h2>Detaljer</h2>
+            <p>Her kan du senere vise flere data, fx lister, statusoverblik eller ekstra forretningsstatistik.</p>
+        </article>
+    </section>
+
+</main>
+
+</body>
+</html>
