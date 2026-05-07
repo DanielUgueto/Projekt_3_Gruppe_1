@@ -4,12 +4,12 @@ public class Customer {
     private int customerId;
     private String firstName;
     private String lastName;
-    private String driversLicenseNumber;
+    private int driversLicenseNumber;
     private String cprNumber;
     private String email;
     private int phoneNumber;
 
-    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+    public Customer(int customerId, String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,7 +32,7 @@ public class Customer {
         return lastName;
     }
 
-    public String getDriversLicenseNumber() {
+    public int getDriversLicenseNumber() {
         return driversLicenseNumber;
     }
 

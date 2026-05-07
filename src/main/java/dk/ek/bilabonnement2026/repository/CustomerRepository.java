@@ -18,6 +18,7 @@ public class CustomerRepository {
     @Autowired
     DataSource dataSource;
 
+
     public void createCustomer(Customer customer) {
         String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number) VALUES(?,?,?,?,?,?)";
 
@@ -26,7 +27,7 @@ public class CustomerRepository {
 
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
-            statement.setString(3, customer.getDriversLicenseNumber());
+            statement.setInt(3, customer.getDriversLicenseNumber());
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
             statement.setInt(6, customer.getPhoneNumber());
@@ -37,8 +38,8 @@ public class CustomerRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 
     public Customer findCustomerByCustomerEmail(String email) {
 
@@ -56,7 +57,7 @@ public class CustomerRepository {
                 resultSet.getInt("customer_id"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
-                resultSet.getString("drivers_license_number"),
+                resultSet.getInt("drivers_license_number"),
                 resultSet.getString("cpr_number"),
                 resultSet.getString("email"),
                 resultSet.getInt("phone_number")
@@ -83,7 +84,7 @@ public class CustomerRepository {
                 Customer customer = new Customer(resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
-                        resultSet.getString("drivers_license_number"),
+                        resultSet.getInt("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
                         resultSet.getInt("phone_number"));
