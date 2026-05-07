@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class DamageReportService {
@@ -69,5 +70,13 @@ public class DamageReportService {
 
         double newTotal = damageReport.getTotalPrice() + category.getStandardPrice();
         damageReportRepository.updateTotalPrice(damageReportId,newTotal);
+    }
+
+    public DamageReport getDamageReportById(int damageReportId){
+        return damageReportRepository.findDamageReportByDamageReportId(damageReportId);
+    }
+
+    public List<Damage> getAllDamagesOnDamageReportByDamageReportId(int damageReportId){
+        return damageRepository.findByDamageReportId(damageReportId);
     }
 }

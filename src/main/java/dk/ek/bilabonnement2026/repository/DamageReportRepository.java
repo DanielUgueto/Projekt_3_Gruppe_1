@@ -61,6 +61,33 @@ public class DamageReportRepository {
         return null;
     }
 
+    public DamageReport findDamageReportByDamageReportId(int damageReportId) {
+        String sql = "SELECT * FROM damage_report WHERE damage_report_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, damageReportId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new DamageReport(
+                            resultSet.getInt("damage_report_id"),
+                            resultSet.getInt("rental_contract_id"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getDate("created_at").toLocalDate(),
+                            resultSet.getDouble("total_price"),
+                            resultSet.getString("description")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<DamageReport> findAllDamageReports() {
         List<DamageReport> reports = new ArrayList<>();
         String sql = "SELECT * FROM damage_report";
