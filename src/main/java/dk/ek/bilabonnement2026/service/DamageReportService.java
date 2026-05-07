@@ -1,8 +1,12 @@
 package dk.ek.bilabonnement2026.service;
 
+import dk.ek.bilabonnement2026.model.Damage;
+import dk.ek.bilabonnement2026.model.DamageCategory;
 import dk.ek.bilabonnement2026.model.DamageReport;
 import dk.ek.bilabonnement2026.model.RentalContract;
+import dk.ek.bilabonnement2026.repository.DamageCategoryRepository;
 import dk.ek.bilabonnement2026.repository.DamageReportRepository;
+import dk.ek.bilabonnement2026.repository.DamageRepository;
 import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,12 @@ public class DamageReportService {
 
     @Autowired
     RentalContractRepository rentalContractRepository;
+
+    @Autowired
+    DamageCategoryRepository damageCategoryRepository;
+
+    @Autowired
+    DamageRepository damageRepository;
 
 
     public void createDamageReport(int rentalContractId, int employeeId, double totalPrice, String description) {
@@ -40,5 +50,24 @@ public class DamageReportService {
         );
 
         damageReportRepository.saveDamageReport(damageReport);
+    }
+
+    public void registrerDamage(int damageReportId, int damageCategoryId){
+
+        DamageReport damageReport = damageReportRepository.findDamageReportByRentalContractId(damageReportId);
+        if(damageReport == null){
+            throw new IllegalArgumentException("Skadesrapporten findes ikke");
+        }
+
+        DamageCategory category = damageCategoryRepository.findById(damageCategoryId);
+        if(category == null){
+            throw new IllegalArgumentException("Skadekategorien findes ikke");
+        }
+
+        Damage damage = new Damage(damageReportId, damageCategoryId);
+        damageRepository.save(damage);
+
+        double newTotal = damageReport.getTotalPrice() + category.getStandardPrice();
+        damageReportRepository.updateTotalPrice(damageReportId,newTotal);
     }
 }

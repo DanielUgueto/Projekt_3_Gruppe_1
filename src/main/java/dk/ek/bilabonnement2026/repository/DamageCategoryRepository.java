@@ -38,4 +38,27 @@ public class DamageCategoryRepository {
         }
         return categoryList;
     }
+
+    public DamageCategory findById(int damageCategoryId){
+        String sql = "SELECT * FROM damage_category WHERE damage_category_id = ?";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery()){
+
+            statement.setInt(1,damageCategoryId);
+
+            if(resultSet.next()){
+                return new DamageCategory(resultSet.getInt("damage_category_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("standard_price"),
+                        resultSet.getString("description"));
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

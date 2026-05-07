@@ -84,4 +84,20 @@ public class DamageReportRepository {
         }
         return reports;
     }
+
+    public void updateTotalPrice(int damageReportId, double newTotalPrice) {
+        String sql = "UPDATE damage_report SET total_price = ? WHERE damage_report_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, newTotalPrice);
+            statement.setInt(2, damageReportId);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
