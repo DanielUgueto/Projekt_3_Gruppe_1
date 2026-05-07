@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/login-style.css}">
 </head>
 <body>
 
-<section>
-    <form th:action="@{/login}" method="post">
-        <label for="email">Email: </label>
-        <input type="text" id="email" name="email" placeholder="Skriv din email">
-        <label for="password">Password: </label>
-        <input type="text" id="password" name="password" placeholder="Skriv dit password">
-        <button type="submit">Login</button>
-    </form>
-</section>
+<main class="login-page">
+    <section class="login-panel">
+        <header>
+            <h1>Login</h1>
+            <p>Log ind for at få adgang til biludlejningssystemet.</p>
+        </header>
+
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" placeholder="Skriv din e-mail">
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Skriv dit password">
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Kun medarbejdere med gyldig adgang kan logge ind.</p>
+    </section>
+</main>
 
 </body>
 </html>

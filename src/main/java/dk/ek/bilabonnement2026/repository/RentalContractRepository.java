@@ -152,4 +152,24 @@ public class RentalContractRepository {
         }
     }
 
+    public double calculateMonthlyRevenue(){
+        String sql = "SELECT monthly_price FROM rental_contract JOIN car ON rental_contract.car_id = car.car_id WHERE rental_contract.status = ?";
+
+        double monthlyRevenue = 0;
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "Aktiv");
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()){
+                monthlyRevenue += rs.getDouble("monthly_price");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return monthlyRevenue;
+    }
 }
