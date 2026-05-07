@@ -1,9 +1,6 @@
 package dk.ek.bilabonnement2026.service;
 
-import dk.ek.bilabonnement2026.model.Damage;
-import dk.ek.bilabonnement2026.model.DamageCategory;
-import dk.ek.bilabonnement2026.model.DamageReport;
-import dk.ek.bilabonnement2026.model.RentalContract;
+import dk.ek.bilabonnement2026.model.*;
 import dk.ek.bilabonnement2026.repository.DamageCategoryRepository;
 import dk.ek.bilabonnement2026.repository.DamageReportRepository;
 import dk.ek.bilabonnement2026.repository.DamageRepository;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,13 +22,10 @@ public class DamageReportService {
     RentalContractRepository rentalContractRepository;
 
     @Autowired
-    DamageCategoryRepository damageCategoryRepository;
-
-    @Autowired
     DamageRepository damageRepository;
 
 
-    public void createDamageReport(int rentalContractId, int employeeId, double totalPrice, String description) {
+    public void createDamageReport(int rentalContractId, int employeeId, String description, List<DamageCategory> selectedDamages) {
 
         RentalContract rentalContract = rentalContractRepository.findRentalContractById(rentalContractId);
         if (rentalContract == null) {
@@ -38,45 +33,28 @@ public class DamageReportService {
         }
 
         if (!"Tilbageleveret".equals(rentalContract.getStatus())) {
-            throw new IllegalArgumentException("Bil er ikke tilbageleveret");
+            throw new IllegalArgumentException("Bilen er ikke tilbageleveret");
         }
 
-        DamageReport damageReport = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
-        if (damageReport != null) {
+        DamageReport existing = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
+        if (existing != null) {
             throw new IllegalArgumentException("Der findes allerede en skadesrapport på denne lejeaftale");
         }
 
-        damageReport = new DamageReport(
+        double totalPrice = 0;
+        for (DamageCategory category : selectedDamages) {
+            totalPrice += category.getStandardPrice();
+        }
+
+        DamageReport damageReport = new DamageReport(
                 rentalContractId, employeeId, LocalDate.now(), totalPrice, description
         );
-
         damageReportRepository.saveDamageReport(damageReport);
-    }
 
-    public void registrerDamage(int damageReportId, int damageCategoryId){
+        DamageReport savedReport = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
 
-        DamageReport damageReport = damageReportRepository.findDamageReportByRentalContractId(damageReportId);
-        if(damageReport == null){
-            throw new IllegalArgumentException("Skadesrapporten findes ikke");
+        for (DamageCategory category : selectedDamages) {
+            damageRepository.save(new Damage(savedReport.getDamageReportId(), category.getDamageCategoryId()));
         }
-
-        DamageCategory category = damageCategoryRepository.findById(damageCategoryId);
-        if(category == null){
-            throw new IllegalArgumentException("Skadekategorien findes ikke");
-        }
-
-        Damage damage = new Damage(damageReportId, damageCategoryId);
-        damageRepository.save(damage);
-
-        double newTotal = damageReport.getTotalPrice() + category.getStandardPrice();
-        damageReportRepository.updateTotalPrice(damageReportId,newTotal);
-    }
-
-    public DamageReport getDamageReportById(int damageReportId){
-        return damageReportRepository.findDamageReportByDamageReportId(damageReportId);
-    }
-
-    public List<Damage> getAllDamagesOnDamageReportByDamageReportId(int damageReportId){
-        return damageRepository.findByDamageReportId(damageReportId);
     }
 }

@@ -16,4 +16,8 @@ public class DamageCategoryService {
     public List<DamageCategory> getAllDamageCategories(){
         return damageCategoryRepository.getAllDamageCategories();
     }
+
+    public DamageCategory getDamageCategoryById(int damageCategoryId){
+        return damageCategoryRepository.findById(damageCategoryId);
+    }
 }

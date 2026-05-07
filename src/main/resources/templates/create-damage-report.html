@@ -2,37 +2,50 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Opret skadesrapport</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Opret Skadesrapport</title>
 </head>
 <body>
+<h1>Opret Skadesrapport</h1>
 
-<h1>Opret skadesrapport</h1>
-
-<form th:action="@{/damage-reports/create/{rentalContractId}(rentalContractId=${rentalContract.rentalContractId})}" method="post">
-
-
-    <label>Lejeaftale nummer:</label>
-    <p type="number" name="rentalContractId" th:value="${rentalContract.rentalContractId}" readonly></p>
-
-    <label>Medarbejder ID:</label>
-    <p type="number" name="employeeId" th:value="${employeeId}" readonly></p>
-
-    <label>Oprettelses dato:</label>
-    <p type="date" name="createdAt" th:value="${createdAt}" readonly></p>
-
-    <label>Total pris:</label>
-    <input type="number" step="0.01" name="totalPrice" th:value="0.00" placeholder="Total pris" required>
-
-    <label>Rapport:</label>
-    <input type="text" name="description" placeholder="Tilføj beskrivelse" required>
+<p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
 
 
-    <p th:if="${fejl}" th:text="${fejl}" style="color:red;"></p>
+<section>
+    <form th:action="@{/damage-reports/add-damage/{id}(id=${rentalContract.rentalContractId})}" method="post">
 
-    <button type="submit">Opret skadesrapport</button>
+        <label for="damageCategoryId">Skadekategori:</label>
+        <select id="damageCategoryId" name="damageCategoryId" required>
+            <option value="">-- Vælg kategori --</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.damageCategoryId}"
+                    th:text="${category.name} + ' — ' + ${category.standardPrice} + ' kr.'">
+            </option>
+        </select>
 
-</form>
+        <button type="submit">Tilføj skade</button>
+    </form>
+</section>
+
+
+<section>
+    <h2>Valgte skader</h2>
+    <p th:if="${#lists.isEmpty(selectedDamages)}">Ingen skader tilføjet endnu.</p>
+    <p th:each="damage : ${selectedDamages}" th:text="${damage.name} + ' — ' + ${damage.standardPrice} + ' kr.'"></p>
+    <p>Samlet pris: <span th:text="${totalPrice}"></span> kr.</p>
+</section>
+
+
+<section>
+    <form th:action="@{/damage-reports/create/{id}(id=${rentalContract.rentalContractId})}" method="post">
+
+        <input type="hidden" name="employeeId" th:value="${employeeId}">
+
+        <label for="description">Beskrivelse:</label>
+        <input type="text" id="description" name="description" required>
+
+        <button type="submit">Opret skadesrapport</button>
+    </form>
+</section>
 
 </body>
 </html>
