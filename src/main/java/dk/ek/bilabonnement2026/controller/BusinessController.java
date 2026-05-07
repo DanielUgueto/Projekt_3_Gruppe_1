@@ -14,7 +14,7 @@ public class BusinessController {
     @Autowired
     RentalContractService rentalContractService;
 
-    @GetMapping("/business-info")
+    @GetMapping("/business-dashboard")
     public String showBusinessInfo(HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
