@@ -126,7 +126,7 @@ public class RentalContractRepository {
                         resultSet.getString("status"),
                         resultSet.getString("colour"),
                         resultSet.getString("registration_date"),
-                        resultSet.getString("fule_type"),
+                        resultSet.getString("fuel_type"),
                         resultSet.getInt("rental_contract_id")));
             }
 

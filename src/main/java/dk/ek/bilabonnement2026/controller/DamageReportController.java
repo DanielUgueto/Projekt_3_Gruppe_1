@@ -118,4 +118,14 @@ public class DamageReportController {
             return "create-damage-report";
         }
     }
+
+    @GetMapping("/damage-dashboard")
+    public String showDamageDashboard(HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+        model.addAttribute("carList", rentalContractService.getReturnedCarsWithContract());
+        return "damage-dashboard";
+    }
 }

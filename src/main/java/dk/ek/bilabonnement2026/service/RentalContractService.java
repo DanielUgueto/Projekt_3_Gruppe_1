@@ -1,11 +1,14 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.RentalContract;
 import dk.ek.bilabonnement2026.repository.CarRepository;
 import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RentalContractService {
@@ -62,5 +65,9 @@ public class RentalContractService {
     public RentalContract getRentalContractByContractId(int contractId){
         RentalContract rentalContract = rentalContractRepository.findRentalContractById(contractId);
         return rentalContract;
+    }
+
+    public List<CarOverview> getReturnedCarsWithContract(){
+        return rentalContractRepository.findReturnedCarsWithContract();
     }
 }
