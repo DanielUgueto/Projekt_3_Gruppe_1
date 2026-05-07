@@ -54,12 +54,6 @@ body {
     box-sizing: border-box;
 }
 
-.login-panel input:focus {
-    outline: none;
-    border-color: #8f8f8f;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
-}
-
 .login-panel button {
     width: 120px;
     padding: 10px 0;
