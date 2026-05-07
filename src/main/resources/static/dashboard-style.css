@@ -1,0 +1,14 @@
+.dashboard-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    border: 1px solid black;
+}
+
+.dashboard-split-car {
+    border: 1px solid black;
+}
+
+.dashboard-split-single-car {
+    border: 1px solid black;
+}
