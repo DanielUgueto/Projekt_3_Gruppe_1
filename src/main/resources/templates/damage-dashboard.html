@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Skade og Udbedring</title>
-    <link rel="stylesheet" th:href="@{style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
+<div class="dashboard-greeting">
+    <h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
 
-<h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
+</div>
+
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
