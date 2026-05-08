@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Skade og Udbedring</title>
-    <link rel="stylesheet" th:href="@{style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
+<div class="dashboard-greeting">
+    <h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
 
-<h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
+</div>
+
 <div class="dashboard-split">
     <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
         <form th:action="@{/damage-dashboard}" method="get">
             <select name="filter">
                 <option value="afventer" th:selected="${filter == 'afventer'}">Afventer rapport</option>
@@ -20,10 +24,10 @@
             </select>
             <button type="submit">Filtrer</button>
         </form>
+        </section>
 
+        <p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
         <div class="dashboard-car-box">
-            <p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
-
             <article class="dashboard-car-info" th:each="car : ${carList}">
                 <a th:href="@{/damage-dashboard(carId=${car.carId}, filter=${filter})}">
                     <div>

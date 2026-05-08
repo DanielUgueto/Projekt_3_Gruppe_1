@@ -1,0 +1,100 @@
+
+h1 {
+    font-size: 22px;
+    margin: 0 0 20px 0;
+}
+
+section {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-muted);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+section h2 {
+    font-size: 15px;
+    margin: 0 0 12px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-muted);
+}
+
+
+form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+label {
+    font-size: 14px;
+    color: var(--color-dark);
+}
+
+select,
+button {
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 6px;
+}
+
+select:hover {
+    background-color: var(--color-bg);
+}
+
+button {
+    background-color: var(--color-dark);
+    color: var(--color-surface);
+    border: 1px solid var(--color-dark);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+input[type="text"] {
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted);
+    border-radius: 6px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    flex: 1;
+    min-width: 200px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--color-dark);
+}
+
+
+section p {
+    font-size: 13px;
+    margin: 4px 0;
+    color: var(--color-dark);
+}
+
+.damage-report-box{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.damage-report-form {
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-muted);
+    border-radius: 10px;
+    padding: 20px;
+}
