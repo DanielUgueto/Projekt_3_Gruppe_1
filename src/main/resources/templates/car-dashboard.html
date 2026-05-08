@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
+
+<div th:replace="~{fragments/header :: header}"></div>
 
 <div class="dashboard-split">
     <div class="dashboard-split-car">

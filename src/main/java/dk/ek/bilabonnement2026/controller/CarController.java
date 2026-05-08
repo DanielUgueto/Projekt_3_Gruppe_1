@@ -44,8 +44,9 @@ public class CarController {
                             @RequestParam("colour") String colour,
                             @RequestParam("status") String status,
                             @RequestParam("monthlyPrice") double monthlyPrice,
+                            @RequestParam("registration_date") String registrationDate,
                             Model model){
-        Car car = new Car(carModelId,vinNumber,licensePlate,monthlyPrice,status,colour);
+        Car car = new Car(carModelId,vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
 
         try{
             carService.createCar(car);

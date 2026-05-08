@@ -26,7 +26,7 @@ public class EmployeeService {
             return "redirect:/dashboard/dataregistrering";
         }
         if (employee.getRole().equalsIgnoreCase("skade-udbedring")){
-            return "redirect:/damage-dashboard";
+            return "redirect:/dashboard/damage";
         }
         if (employee.getRole().equalsIgnoreCase("forretningsudvikler")){
             return "redirect:/dashboard/forretningsudvikling";

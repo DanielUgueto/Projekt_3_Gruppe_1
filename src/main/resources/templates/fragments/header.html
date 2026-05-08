@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header class="site-header" th:fragment="header">
+  <div class="site-header-inner">
+    <a class="site-logo" th:href="@{/dashboard}">Biludlejning</a>
+
+    <nav class="site-nav">
+      <a th:href="@{/dashboard/dataregistrering}">Dataregistrering</a>
+      <a th:href="@{/dashboard/damage}">Skade/Udbedring</a>
+      <a th:href="@{/dashboard/forretningsudvikling}">Forretningsudvikler</a>
+      <a th:href="@{/logout}">Log ud</a>
+    </nav>
+  </div>
+</header>
+
+</body>
+</html>
