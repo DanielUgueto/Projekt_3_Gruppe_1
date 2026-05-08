@@ -13,7 +13,7 @@
 <h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
 <div class="dashboard-split">
     <div class="dashboard-split-car">
-        <form th:action="@{/damage-dashboard}" method="get">
+        <form th:action="@{/dashboard/damage}" method="get">
             <select name="filter">
                 <option value="afventer" th:selected="${filter == 'afventer'}">Afventer rapport</option>
                 <option value="udførte" th:selected="${filter == 'udførte'}">Udførte rapporter</option>
@@ -25,7 +25,7 @@
             <p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
 
             <article class="dashboard-car-info" th:each="car : ${carList}">
-                <a th:href="@{/damage-dashboard(carId=${car.carId}, filter=${filter})}">
+                <a th:href="@{/dashboard/damage(carId=${car.carId}, filter=${filter})}">
                     <div>
                         <h4>
                             <span th:text="${car.brandName}"></span>
