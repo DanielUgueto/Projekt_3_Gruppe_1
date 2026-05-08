@@ -116,7 +116,7 @@ public class DamageReportController {
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("fejl", e.getMessage());
 
-            return "create-damage-report";
+            return "damage-dashboard";
         }
     }
 
@@ -130,6 +130,7 @@ public class DamageReportController {
         List<CarOverview> carList = rentalContractService.getReturnedCarsWithContractByFilter(filter);
         model.addAttribute("carList", carList);
         model.addAttribute("filter", filter);
+        model.addAttribute("employee",employee);
 
         if(carId != null){
             CarOverview selectedCar = null;

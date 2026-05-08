@@ -1,5 +1,9 @@
 USE bilabonnement;
 
+INSERT INTO employee (employee_id, first_name, last_name, password, work_email, role) VALUES (1, 'rune', 'runesen','demo','demo1','dataregistrering'),
+                                                                                             (2, 'daniel', 'danielsen','demo','demo2','skade-udbedring'),
+                                                                                             (3, 'nico', 'nicosen','demo','demo3','forretningsudvikler');
+
 
 -- Brands
 INSERT INTO car_brand (brand_name)
@@ -208,3 +212,5 @@ INSERT INTO damage_category (name, standard_price, description)
 VALUES ('Ridset dør', 1500.00, 'Ridser på bildør'),
        ('Knust rude', 3000.00, 'Beskadiget forrude'),
        ('Bule', 2000.00, 'Bule på karrosseri');
+
+
