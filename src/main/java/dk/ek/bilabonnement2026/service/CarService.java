@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CarService {
@@ -35,5 +36,9 @@ public class CarService {
 
     public ArrayList<CarOverview> findCarsWithDetailsByStatus(String status){
         return carRepository.findAllCarsWithDetailsByStatus(status);
+    }
+
+    public List<Car> findCarsByStatus(String status){
+        return carRepository.findCarsByStatus(status);
     }
 }

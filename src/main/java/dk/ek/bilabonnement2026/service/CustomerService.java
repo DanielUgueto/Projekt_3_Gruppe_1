@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -28,6 +29,10 @@ public class CustomerService {
         address.setCustomerId(savedCustomer.getCustomerId());
         customerAddressRepository.saveCustomerAddress(address);
         return null;
+    }
+
+    public List<Customer> getAllCustomers(){
+        return customerRepository.getAllCustomers();
     }
 }
 
