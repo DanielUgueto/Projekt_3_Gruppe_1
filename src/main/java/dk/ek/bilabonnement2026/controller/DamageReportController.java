@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.controller;
 
+import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.DamageCategory;
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.model.RentalContract;
@@ -120,12 +121,26 @@ public class DamageReportController {
     }
 
     @GetMapping("/damage-dashboard")
-    public String showDamageDashboard(HttpSession session, Model model){
+    public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if(employee == null){
             return "redirect:/";
         }
-        model.addAttribute("carList", rentalContractService.getReturnedCarsWithContract());
+
+        List<CarOverview> carList = rentalContractService.getReturnedCarsWithContractByFilter(filter);
+        model.addAttribute("carList", carList);
+        model.addAttribute("filter", filter);
+
+        if(carId != null){
+            CarOverview selectedCar = null;
+            for(CarOverview car : carList){
+                if(car.getCarId() == carId){
+                    selectedCar = car;
+                    break;
+                }
+            }
+            model.addAttribute("selectedCar", selectedCar);
+        }
         return "damage-dashboard";
     }
 }

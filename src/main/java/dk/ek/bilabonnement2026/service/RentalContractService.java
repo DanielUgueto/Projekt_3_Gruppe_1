@@ -8,6 +8,7 @@ import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,7 +71,18 @@ public class RentalContractService {
         return rentalContract;
     }
 
-    public List<CarOverview> getReturnedCarsWithContract(){
-        return rentalContractRepository.findReturnedCarsWithContract();
+    public List<CarOverview> getReturnedCarsWithContractByFilter(String filter){
+        List<CarOverview> allCars = rentalContractRepository.findReturnedCarsWithContract();
+        List<CarOverview> filteredCars = new ArrayList<>();
+
+        for(CarOverview car : allCars){
+            if(filter.equals("afventer") && car.getStatus().equals("Tilbageleveret")){
+                filteredCars.add(car);
+            } else if (filter.equals("udførte") && car.getStatus().equals("Klar til transport")) {
+                filteredCars.add(car);
+
+            }
+        }
+        return filteredCars;
     }
 }

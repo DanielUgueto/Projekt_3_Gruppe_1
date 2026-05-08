@@ -107,6 +107,7 @@ public class RentalContractRepository {
             JOIN car_model cm ON c.car_model_id = cm.car_model_id
             JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
             WHERE rc.status = 'Afsluttet'
+            AND c.status IN ('Tilbageleveret', 'Klar til transport')
             """;
 
         try (Connection connection = dataSource.getConnection();
