@@ -5,6 +5,7 @@ import dk.ek.bilabonnement2026.model.CustomerAddress;
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.model.ZipCode;
 import dk.ek.bilabonnement2026.service.CustomerService;
+import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.ZipCodeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CustomerController {
     CustomerService customerService;
     @Autowired
     ZipCodeService zipCodeService;
+    @Autowired
+    EmployeeService employeeService;
 
 
     @GetMapping("/customer/register")
@@ -68,6 +71,6 @@ public class CustomerController {
             return "register-customer";
         }
 
-        return "redirect:/index";
+        return employeeService.redirectByRole(employee);
     }
 }
