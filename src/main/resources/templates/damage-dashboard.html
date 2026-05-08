@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
-
+<h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <form th:action="@{/damage-dashboard}" method="get">

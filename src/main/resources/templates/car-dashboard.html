@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-style.css}">
 </head>
 <body>
@@ -12,7 +12,8 @@
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
             <form th:action="@{/dashboard}" method="get">
-                <select name="status">
+                <label for="status">Filtrer efter bilens status: </label>
+                <select name="status" id="status">
                     <option value="">Alle</option>
                     <option value="Ledig">Ledig</option>
                     <option value="Udlejet">Udlejet</option>

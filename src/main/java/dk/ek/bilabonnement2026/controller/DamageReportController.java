@@ -130,6 +130,7 @@ public class DamageReportController {
         List<CarOverview> carList = rentalContractService.getReturnedCarsWithContractByFilter(filter);
         model.addAttribute("carList", carList);
         model.addAttribute("filter", filter);
+        model.addAttribute("employee",employee);
 
         if(carId != null){
             CarOverview selectedCar = null;

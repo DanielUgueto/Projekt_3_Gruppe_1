@@ -23,13 +23,13 @@ public class EmployeeService {
 
     public String redirectByRole(Employee employee){
         if (employee.getRole().equalsIgnoreCase("dataregistrering")){
-            return "redirect:/dataregistration";
+            return "redirect:/dashboard/dataregistrering";
         }
         if (employee.getRole().equalsIgnoreCase("skade-udbedring")){
-            return "redirect:/skade-udbedring";
+            return "redirect:/damage-dashboard";
         }
         if (employee.getRole().equalsIgnoreCase("forretningsudvikler")){
-            return "redirect:/dashboard";
+            return "redirect:/dashboard/forretningsudvikling";
         }
         return "/index";
     }
