@@ -2,14 +2,18 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/create-damageReport-style.css}">
     <title>Opret Skadesrapport</title>
 </head>
 <body>
-<h1>Opret Skadesrapport</h1>
+
 
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
 
-
+<div class="damage-report-box">
+    <div class="damage-report-form">
+        <h1>Opret Skadesrapport</h1>
 <section>
     <form th:action="@{/damage-reports/add-damage/{id}(id=${rentalContract.rentalContractId})}" method="post">
 
@@ -31,7 +35,7 @@
     <h2>Valgte skader</h2>
     <p th:if="${#lists.isEmpty(selectedDamages)}">Ingen skader tilføjet endnu.</p>
     <p th:each="damage : ${selectedDamages}" th:text="${damage.name} + ' — ' + ${damage.standardPrice} + ' kr.'"></p>
-    <p>Samlet pris:<span th:text="${totalPrice}"></span> kr.</p>
+    <p>Samlet pris: <span th:text="${totalPrice}"></span> kr.</p>
 </section>
 
 
@@ -46,6 +50,7 @@
         <button type="submit">Opret skadesrapport</button>
     </form>
 </section>
-
+    </div>
+</div>
 </body>
 </html>
