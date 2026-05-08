@@ -17,7 +17,7 @@
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
-        <form th:action="@{/damage-dashboard}" method="get">
+        <form th:action="@{/dashboard/damage}" method="get">
             <select name="filter">
                 <option value="afventer" th:selected="${filter == 'afventer'}">Afventer rapport</option>
                 <option value="udførte" th:selected="${filter == 'udførte'}">Udførte rapporter</option>
@@ -29,7 +29,7 @@
         <p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="car : ${carList}">
-                <a th:href="@{/damage-dashboard(carId=${car.carId}, filter=${filter})}">
+                <a th:href="@{/dashboard/damage(carId=${car.carId}, filter=${filter})}">
                     <div>
                         <h4>
                             <span th:text="${car.brandName}"></span>
