@@ -71,11 +71,8 @@
                 <h3>Tekniske oplysninger</h3>
                 <p><strong>Brændstof:</strong> <span th:text="${selectedCar.fuelType}"></span></p>
                 <p><strong>Geartype:</strong> <span th:text="${selectedCar.shiftGearType}"></span></p>
-            </section>
-
-            <section class="selected-car-section">
-                <h3>Status</h3>
                 <p><strong>Status:</strong> <span th:text="${selectedCar.status}"></span></p>
+                <p><strong>Lejeaftale nr.:</strong> <span th:text="${selectedCar.rentalContractId}"></span></p>
             </section>
 
             <section class="selected-car-section" th:if="${selectedCar.status.equals('Tilbageleveret')}">
