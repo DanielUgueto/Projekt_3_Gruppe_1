@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div th:replace="~{fragments/header :: header}"></div>
+
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <form th:action="@{/damage-dashboard}" method="get">
