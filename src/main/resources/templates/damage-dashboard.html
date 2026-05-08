@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Skade og Udbedring</title>
+    <link rel="stylesheet" th:href="@{style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
+</head>
+<body>
+
+<div class="dashboard-split">
+    <div class="dashboard-split-car">
+        <form th:action="@{/damage-dashboard}" method="get">
+            <select name="filter">
+                <option value="afventer" th:selected="${filter == 'afventer'}">Afventer rapport</option>
+                <option value="udførte" th:selected="${filter == 'udførte'}">Udførte rapporter</option>
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+
+        <div class="dashboard-car-box">
+            <p th:if="${#lists.isEmpty(carList)}">Ingen tilbageleverede biler afventer gennemgang.</p>
+
+            <article class="dashboard-car-info" th:each="car : ${carList}">
+                <a th:href="@{/damage-dashboard(carId=${car.carId}, filter=${filter})}">
+                    <div>
+                        <h4>
+                            <span th:text="${car.brandName}"></span>
+                            <span th:text="${car.modelName}"></span>
+                        </h4>
+                    </div>
+                    <div>
+                        <span th:text="${car.equipmentLevel}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.vinNumber}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.licensePlate}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.colour}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${car.status}"></span>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </div>
+
+    <div class="dashboard-split-single-car">
+        <article class="selected-car-panel" th:if="${selectedCar != null}">
+            <header class="selected-car-header">
+                <h2>
+                    <span th:text="${selectedCar.brandName}"></span>
+                    <span th:text="${selectedCar.modelName}"></span>
+                </h2>
+                <p th:text="${selectedCar.equipmentLevel}"></p>
+            </header>
+
+            <section class="selected-car-section">
+                <h3>Biloplysninger</h3>
+                <p><strong>Stelnummer:</strong> <span th:text="${selectedCar.vinNumber}"></span></p>
+                <p><strong>Nummerplade:</strong> <span th:text="${selectedCar.licensePlate}"></span></p>
+                <p><strong>Farve:</strong> <span th:text="${selectedCar.colour}"></span></p>
+                <p><strong>Registreringsdato:</strong> <span th:text="${selectedCar.registrationDate}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <h3>Tekniske oplysninger</h3>
+                <p><strong>Brændstof:</strong> <span th:text="${selectedCar.fuelType}"></span></p>
+                <p><strong>Geartype:</strong> <span th:text="${selectedCar.shiftGearType}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedCar.status}"></span></p>
+                <p><strong>Lejeaftale nr.:</strong> <span th:text="${selectedCar.rentalContractId}"></span></p>
+            </section>
+
+            <section class="selected-car-section" th:if="${selectedCar.status.equals('Tilbageleveret')}">
+                <a th:href="@{/damage-reports/create/{id}(id=${selectedCar.rentalContractId})}">
+                    Opret skadesrapport
+                </a>
+            </section>
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedCar == null}">
+            <h2>Ingen bil valgt</h2>
+            <p>Vælg en bil i oversigten til venstre for at se detaljer her.</p>
+        </article>
+    </div>
+</div>
+
+</body>
+</html>

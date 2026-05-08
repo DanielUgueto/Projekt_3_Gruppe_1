@@ -1,11 +1,15 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.Car;
+import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.RentalContract;
 import dk.ek.bilabonnement2026.repository.CarRepository;
 import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RentalContractService {
@@ -60,5 +64,25 @@ public class RentalContractService {
 
     public double calculateMonthlyRevenue(){
         return rentalContractRepository.calculateMonthlyRevenue();
+    }
+
+    public RentalContract getRentalContractByContractId(int contractId){
+        RentalContract rentalContract = rentalContractRepository.findRentalContractById(contractId);
+        return rentalContract;
+    }
+
+    public List<CarOverview> getReturnedCarsWithContractByFilter(String filter){
+        List<CarOverview> allCars = rentalContractRepository.findReturnedCarsWithContract();
+        List<CarOverview> filteredCars = new ArrayList<>();
+
+        for(CarOverview car : allCars){
+            if(filter.equals("afventer") && car.getStatus().equals("Tilbageleveret")){
+                filteredCars.add(car);
+            } else if (filter.equals("udførte") && car.getStatus().equals("Klar til transport")) {
+                filteredCars.add(car);
+
+            }
+        }
+        return filteredCars;
     }
 }
