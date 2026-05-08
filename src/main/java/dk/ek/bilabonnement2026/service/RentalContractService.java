@@ -56,7 +56,7 @@ public class RentalContractService {
             throw new IllegalArgumentException("Der eksistere ikke nogen lejeaftale.");
         }
 
-            carRepository.updateCarStatus(car.getCarId(), "Udlejet");
+            carRepository.updateCarStatus(car.getCarId(), "Tilbageleveret");
             rentalContractRepository.updateRentalContractStatus(exsistingContract.getRentalContractId(),"Afsluttet");
     }
 

@@ -99,7 +99,7 @@ public class DamageReportController {
 
             session.removeAttribute("selectedDamages");
 
-            return "redirect:/damage-dashboard";
+            return "redirect:/dashboard/damage";
 
         } catch (IllegalArgumentException e) {
             RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);

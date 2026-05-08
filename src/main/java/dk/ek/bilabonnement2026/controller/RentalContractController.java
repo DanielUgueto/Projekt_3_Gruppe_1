@@ -107,7 +107,7 @@ public class RentalContractController {
         }
         try{
             rentalContractService.registerReturnOfCar(carId);
-            return "redirect:/rental-contracts";
+            return employeeService.redirectByRole(employee);
         }catch (IllegalArgumentException e){
             List<Car> carList = carService.findCarsByStatus("Udlejet");
             model.addAttribute("carList",carList);
