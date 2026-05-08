@@ -6,6 +6,8 @@ import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.model.RentalContract;
 import dk.ek.bilabonnement2026.repository.CarRepository;
 import dk.ek.bilabonnement2026.repository.CustomerRepository;
+import dk.ek.bilabonnement2026.service.CarService;
+import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.RentalContractService;
 import jakarta.servlet.http.HttpSession;
@@ -24,12 +26,10 @@ public class RentalContractController {
 
     @Autowired
     RentalContractService rentalContractService;
-
     @Autowired
-    CarRepository carRepository;
-
+    CarService carService;
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @Autowired
     EmployeeService employeeService;
@@ -41,8 +41,8 @@ public class RentalContractController {
             return "redirect:/";
         }
 
-        List<Car> cars = carRepository.findCarsByStatus("Ledig");
-        List<Customer> customers = customerRepository.getAllCustomers();
+        List<Car> cars = carService.findCarsByStatus("Ledig");
+        List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("cars", cars);
         model.addAttribute("customers", customers);
         model.addAttribute("employeeId", employee.getEmployeeId());
@@ -75,8 +75,8 @@ public class RentalContractController {
             rentalContractService.createRentalContract(rentalContract);
             return employeeService.redirectByRole(employee);
         } catch (IllegalArgumentException e) {
-            List<Car> cars = carRepository.findCarsByStatus("Ledig");
-            List<Customer> customers = customerRepository.getAllCustomers();
+            List<Car> cars = carService.findCarsByStatus("Ledig");
+            List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("cars", cars);
             model.addAttribute("customers", customers);
             model.addAttribute("employeeId", employee.getEmployeeId());
@@ -91,7 +91,7 @@ public class RentalContractController {
         if(employee == null){
             return "redirect:/";
         }
-        List<Car> carList = carRepository.findCarsByStatus("Udlejet");
+        List<Car> carList = carService.findCarsByStatus("Udlejet");
 
         model.addAttribute("carList",carList);
         model.addAttribute("employeeId",employee.getEmployeeId());
@@ -109,7 +109,7 @@ public class RentalContractController {
             rentalContractService.registerReturnOfCar(carId);
             return "redirect:/rental-contracts";
         }catch (IllegalArgumentException e){
-            List<Car> carList = carRepository.findCarsByStatus("Udlejet");
+            List<Car> carList = carService.findCarsByStatus("Udlejet");
             model.addAttribute("carList",carList);
             model.addAttribute("fejl", e.getMessage());
             return "returnCar";

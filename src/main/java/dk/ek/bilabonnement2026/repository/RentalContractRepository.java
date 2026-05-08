@@ -1,11 +1,14 @@
 package dk.ek.bilabonnement2026.repository;
 
+import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.RentalContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class RentalContractRepository {
@@ -90,6 +93,48 @@ public class RentalContractRepository {
             e.printStackTrace();
         }
         return rentalContract;
+    }
+
+    public List<CarOverview> findReturnedCarsWithContract() {
+        List<CarOverview> cars = new ArrayList<>();
+        String sql = """
+            SELECT c.car_id, cb.brand_name, cm.model_name, cm.equipment_level,
+                   cm.shift_gear_type, cm.fuel_type, c.vin_number, c.license_plate,
+                   c.monthly_price, c.status, c.colour, c.registration_date,
+                   rc.rental_contract_id
+            FROM rental_contract rc
+            JOIN car c ON rc.car_id = c.car_id
+            JOIN car_model cm ON c.car_model_id = cm.car_model_id
+            JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
+            WHERE rc.status = 'Afsluttet'
+            AND c.status IN ('Tilbageleveret', 'Klar til transport')
+            """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                cars.add(new CarOverview(
+                   resultSet.getInt("car_id"),
+                        resultSet.getString("brand_name"),
+                        resultSet.getString("model_name"),
+                        resultSet.getString("equipment_level"),
+                        resultSet.getString("shift_gear_type"),
+                        resultSet.getString("vin_number"),
+                        resultSet.getString("license_plate"),
+                        resultSet.getDouble("monthly_price"),
+                        resultSet.getString("status"),
+                        resultSet.getString("colour"),
+                        resultSet.getString("registration_date"),
+                        resultSet.getString("fuel_type"),
+                        resultSet.getInt("rental_contract_id")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cars;
     }
 
     public void updateRentalContractStatus(int rentalContractId, String newStatus) {

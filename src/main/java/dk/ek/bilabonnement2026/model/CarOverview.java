@@ -13,6 +13,25 @@ public class CarOverview {
     private String colour;
     private String registrationDate;
     private String fuelType;
+    private int rentalContractId;
+
+    public CarOverview(int carId, String brandName, String modelName, String equipmentLevel,
+                       String shiftGearType, String vinNumber, String licensePlate, double monthlyPrice, String status,
+                       String colour, String registrationDate, String fuelType, int rentalContractId) {
+        this.carId = carId;
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.equipmentLevel = equipmentLevel;
+        this.shiftGearType = shiftGearType;
+        this.vinNumber = vinNumber;
+        this.licensePlate = licensePlate;
+        this.monthlyPrice = monthlyPrice;
+        this.status = status;
+        this.colour = colour;
+        this.registrationDate = registrationDate;
+        this.fuelType = fuelType;
+        this.rentalContractId = rentalContractId;
+    }
 
     public CarOverview(String brandName, int carId, String colour, String equipmentLevel,
                        String licensePlate, String modelName, double monthlyPrice,
@@ -77,5 +96,9 @@ public class CarOverview {
 
     public String getFuelType(){
         return fuelType;
+    }
+
+    public int getRentalContractId() {
+        return rentalContractId;
     }
 }
