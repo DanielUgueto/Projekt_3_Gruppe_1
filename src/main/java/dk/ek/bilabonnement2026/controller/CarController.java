@@ -58,7 +58,7 @@ public class CarController {
         }
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/car/dashboard")
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
                                    HttpSession session, Model model){

@@ -8,6 +8,7 @@ import dk.ek.bilabonnement2026.repository.CarRepository;
 import dk.ek.bilabonnement2026.repository.CustomerRepository;
 import dk.ek.bilabonnement2026.service.CarService;
 import dk.ek.bilabonnement2026.service.CustomerService;
+import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.RentalContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RentalContractController {
     CarService carService;
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @GetMapping("/rental-contracts/create")
     public String showCreateRentalContractForm(HttpSession session, Model model) {
@@ -69,7 +73,7 @@ public class RentalContractController {
 
         try {
             rentalContractService.createRentalContract(rentalContract);
-            return "redirect:/rental-contracts";
+            return employeeService.redirectByRole(employee);
         } catch (IllegalArgumentException e) {
             List<Car> cars = carService.findCarsByStatus("Ledig");
             List<Customer> customers = customerService.getAllCustomers();
