@@ -8,10 +8,11 @@ public class Car {
     private String colour;
     private String status;
     private double monthlyPrice;
+    private String registrationDate;
 
 
     public Car(int carId, int carModelId, String vinNumber, String licensePlate,
-               double monthlyPrice, String status, String colour){
+               double monthlyPrice, String status, String colour, String registrationDate) {
         this.carId = carId;
         this.carModelId = carModelId;
         this.vinNumber = vinNumber;
@@ -19,15 +20,17 @@ public class Car {
         this.monthlyPrice = monthlyPrice;
         this.status = status;
         this.colour = colour;
+        this.registrationDate = registrationDate;
     }
     public Car(int carModelId, String vinNumber, String licensePlate,
-               double monthlyPrice, String status, String colour){
+               double monthlyPrice, String status, String colour, String registrationDate) {
         this.carModelId = carModelId;
         this.vinNumber = vinNumber;
         this.licensePlate = licensePlate;
         this.monthlyPrice = monthlyPrice;
         this.status = status;
         this.colour = colour;
+        this.registrationDate = registrationDate;
     }
 
     public int getCarId() {
@@ -53,12 +56,10 @@ public class Car {
     public String getStatus() {
         return status;
     }
-    public void setStatus(String status){
-        this.status = status;
-    }
 
     public double getMonthlyPrice() {
         return monthlyPrice;
     }
 
+    public String getRegistrationDate() {return registrationDate;}
 }

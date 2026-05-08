@@ -18,9 +18,11 @@ public class CarRepository {
 
     @Autowired
     DataSource dataSource;
+
+
     public void saveCar(Car car){
-        String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price)"
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price, registration_date)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
 
@@ -30,6 +32,7 @@ public class CarRepository {
             statement.setString(4, car.getColour());
             statement.setString(5, car.getStatus());
             statement.setDouble(6,car.getMonthlyPrice());
+            statement.setString(7, car.getRegistrationDate());
 
             statement.executeUpdate();
 
@@ -56,7 +59,8 @@ public class CarRepository {
                             resultSet.getString("license_plate"),
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
-                            resultSet.getString("colour"));
+                            resultSet.getString("colour"),
+                            resultSet.getString("registration_date"));
                 }
             }
 
@@ -83,7 +87,8 @@ public class CarRepository {
                             resultSet.getString("license_plate"),
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
-                            resultSet.getString("colour"));
+                            resultSet.getString("colour"),
+                            resultSet.getString("registration_date"));
                 }
             }
 
@@ -125,7 +130,8 @@ public class CarRepository {
                             resultSet.getString("license_plate"),
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
-                            resultSet.getString("colour")));
+                            resultSet.getString("colour"),
+                            resultSet.getString("registration_date")));
                 }
             }
         }catch (SQLException e){
