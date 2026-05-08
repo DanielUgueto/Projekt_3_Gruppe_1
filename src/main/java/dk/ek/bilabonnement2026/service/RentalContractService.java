@@ -37,8 +37,7 @@ public class RentalContractService {
 
         rentalContractRepository.saveRentalContract(rentalContract);
 
-        car.setStatus("Udlejet");
-        carRepository.updateCarStatus(car);
+        carRepository.updateCarStatus(car.getCarId(), "Udlejet");
     }
 
     public void registerReturnOfCar(int carId){
@@ -57,8 +56,7 @@ public class RentalContractService {
             throw new IllegalArgumentException("Der eksistere ikke nogen lejeaftale.");
         }
 
-            car.setStatus("Tilbageleveret");
-            carRepository.updateCarStatus(car);
+            carRepository.updateCarStatus(car.getCarId(), "Udlejet");
             rentalContractRepository.updateRentalContractStatus(exsistingContract.getRentalContractId(),"Afsluttet");
     }
 

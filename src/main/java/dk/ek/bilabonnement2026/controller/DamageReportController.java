@@ -116,7 +116,7 @@ public class DamageReportController {
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("fejl", e.getMessage());
 
-            return "create-damage-report";
+            return "damage-dashboard";
         }
     }
 
