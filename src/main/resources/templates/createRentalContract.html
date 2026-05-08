@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret Lejeaftale</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
 <h1>Opret Lejeaftale</h1>
 
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>

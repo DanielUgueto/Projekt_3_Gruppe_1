@@ -120,7 +120,7 @@ public class DamageReportController {
         }
     }
 
-    @GetMapping("/damage-dashboard")
+    @GetMapping("/dashboard/damage")
     public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if(employee == null){

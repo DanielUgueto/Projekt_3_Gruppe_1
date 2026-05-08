@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Tilføj medarbejder</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+
+<div th:replace="~{fragments/header :: header}"></div>
 
 <section class="create-employee-box">
     <form th:action="@{/addEmployee}" method="post">

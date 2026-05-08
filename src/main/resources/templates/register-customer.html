@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div th:replace="~{fragments/header :: header}"></div>
+
 <h1>Opret kunde</h1>
 
 <form th:action="@{/customer/register}" method="post">
