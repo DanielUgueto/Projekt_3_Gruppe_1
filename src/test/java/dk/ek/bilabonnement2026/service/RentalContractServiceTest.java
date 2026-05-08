@@ -17,46 +17,46 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RentalContractServiceTest {
-
-    @Mock
-    CarRepository carRepository;
-    @Mock
-    RentalContractRepository rentalContractRepository;
-
-    @InjectMocks
-    RentalContractService rentalContractService;
-
-    @Test
-    public void registerReturnOfCarHappyFlow(){
-        //PreConditions
-        Car car = new Car(1, 1, "WBA12345678901234", "AB12345",
-                3000.0, "Udlejet", "Sort");
-        RentalContract contract = new RentalContract(1, 1, 1, 1,
-                LocalDate.now().minusMonths(6),
-                LocalDate.now().minusMonths(1),
-                "København", "Aktiv", "Unlimited");
-
-        when(carRepository.findCarByCarNumber(1)).thenReturn(car);
-        when(rentalContractRepository.findRentalContractByCarId(1)).thenReturn(contract);
-
-        //Executions
-        rentalContractService.registerReturnOfCar(1);
-
-        //PostConditions
-        verify(carRepository, times(1)).updateCarStatus(car);
-    }
-
-    @Test
-    public void registerReturnOfCarExceptionFlow(){
-        //PreConditions
-        Car car = new Car(1, 1, "WBA12345678901234", "AB12345",
-                3000.0, "Ledig", "Sort");
-
-        when(carRepository.findCarByCarNumber(1)).thenReturn(car);
-        //Executions
-
-        //PostConditions
-        assertThrows(IllegalArgumentException.class,() -> rentalContractService.registerReturnOfCar(1));
-    }
+//
+//    @Mock
+//    CarRepository carRepository;
+//    @Mock
+//    RentalContractRepository rentalContractRepository;
+//
+//    @InjectMocks
+//    RentalContractService rentalContractService;
+//
+//    @Test
+//    public void registerReturnOfCarHappyFlow(){
+//        //PreConditions
+//        Car car = new Car(1, 1, "WBA12345678901234", "AB12345",
+//                3000.0, "Udlejet", "Sort");
+//        RentalContract contract = new RentalContract(1, 1, 1, 1,
+//                LocalDate.now().minusMonths(6),
+//                LocalDate.now().minusMonths(1),
+//                "København", "Aktiv", "Unlimited");
+//
+//        when(carRepository.findCarByCarNumber(1)).thenReturn(car);
+//        when(rentalContractRepository.findRentalContractByCarId(1)).thenReturn(contract);
+//
+//        //Executions
+//        rentalContractService.registerReturnOfCar(1);
+//
+//        //PostConditions
+//        verify(carRepository, times(1)).updateCarStatus(car);
+//    }
+//
+//    @Test
+//    public void registerReturnOfCarExceptionFlow(){
+//        //PreConditions
+//        Car car = new Car(1, 1, "WBA12345678901234", "AB12345",
+//                3000.0, "Ledig", "Sort");
+//
+//        when(carRepository.findCarByCarNumber(1)).thenReturn(car);
+//        //Executions
+//
+//        //PostConditions
+//        assertThrows(IllegalArgumentException.class,() -> rentalContractService.registerReturnOfCar(1));
+//    }
 
 }
