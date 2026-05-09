@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Tilføj medarbejder</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{add-employee-style.css}">
 </head>
 <body>
 
@@ -11,20 +12,30 @@
 
 <section class="create-employee-box">
     <form th:action="@{/addEmployee}" method="post">
-        <label for="firstName">Fornavn: </label>
-        <input type="text" id="firstName" name="firstName" required>
-        <label for="lastName">Efternavn: </label>
-        <input type="text" id="lastName" name="lastName" required>
-        <label for="workEmail">Arbejdsemail: </label>
-        <input type="text" id="workEmail" name="workEmail" required>
-        <label for="password">Password: </label>
-        <input type="text" id="password" name="password" required>
-        <label for="role">Rolle: </label>
-        <select name="role" id="role">
-            <option value="dataregistrering">Dataregistrering</option>
-            <option value="skade-udbedring">Skade/udbedring</option>
-            <option value="forretningsudvikler">Forretningsudvikler</option>
-        </select>
+        <div class="input-field">
+            <label for="firstName"><strong>Fornavn: </strong></label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="input-field">
+            <label for="lastName"><strong>Efternavn: </strong></label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+       <div class="input-field">
+           <label for="workEmail"><strong>Arbejdsemail: </strong></label>
+           <input type="text" id="workEmail" name="workEmail" required>
+       </div>
+        <div class="input-field">
+            <label for="password"><strong>Password: </strong></label>
+            <input type="text" id="password" name="password" required>
+        </div>
+        <div class="input-field">
+            <label for="role"><strong>Rolle: </strong></label>
+            <select name="role" id="role">
+                <option value="dataregistrering">Dataregistrering</option>
+                <option value="skade-udbedring">Skade/udbedring</option>
+                <option value="forretningsudvikler">Forretningsudvikler</option>
+            </select>
+        </div>
         <button type="submit">Opret bruger</button>
     </form>
 </section>

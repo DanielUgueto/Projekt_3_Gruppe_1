@@ -1,0 +1,49 @@
+.create-employee-box {
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    border: 1px solid black;
+    display: flex;
+}
+
+.create-employee-box form {
+    border: 1px solid var(--color-muted);
+    background-color: var(--color-surface);
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 3em;
+}
+
+.input-field {
+    display: grid;
+    margin-bottom: 1em;
+}
+
+.create-employee-box select, input{
+    width: 240px;
+    padding: 11px 14px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-sizing: border-box;
+}
+
+.create-employee-box button {
+    width: 120px;
+    padding: 10px 0;
+    font-size: 14px;
+    border: 1px solid var(--color-dark);
+    border-radius: 8px;
+    background-color: var(--color-dark);
+    color: var(--color-surface);
+    cursor: pointer;
+}
+
+.create-employee-box button:hover {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
