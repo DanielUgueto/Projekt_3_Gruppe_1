@@ -1,0 +1,26 @@
+.dashboard-data-create-container {
+    margin: 30px;
+}
+
+.create-box {
+    margin-bottom: 15px;
+}
+
+.create-box a {
+    display: inline-block;
+    padding: 12px 18px;
+    border: 1px solid var(--color-muted);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.create-box a:hover {
+    background-color: var(--color-bg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+}
+
+.create-box p {
+    margin: 0;
+}

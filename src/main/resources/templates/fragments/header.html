@@ -4,12 +4,13 @@
 
 <header class="site-header" th:fragment="header">
   <div class="site-header-inner">
-    <a class="site-logo" th:href="@{/dashboard}">Biludlejning</a>
+    <a class="site-logo" th:href="@{/}">Biludlejning</a>
 
     <nav class="site-nav">
       <a th:href="@{/dashboard/dataregistrering}">Dataregistrering</a>
       <a th:href="@{/dashboard/damage}">Skade/Udbedring</a>
       <a th:href="@{/dashboard/forretningsudvikling}">Forretningsudvikler</a>
+      <a th:href="@{/car/dashboard}">Bil overblik</a>
       <a th:href="@{/logout}">Log ud</a>
     </nav>
   </div>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret kunde</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{/add-employee-style.css}">
 
 </head>
 <body>
@@ -12,29 +13,51 @@
 
 <h1>Opret kunde</h1>
 
-<form th:action="@{/customer/register}" method="post">
+<section class="create-employee-box">
+    <form th:action="@{/customer/register}" method="post">
+        <div class="input-field">
+            <input type="text" name="firstName" placeholder="Fornavn" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="lastName" placeholder="Efternavn" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="driversLicenseNumber" placeholder="Kørekort" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="cprNumber" placeholder="CPR-nummer" required>
+        </div>
+        <div class="input-field">
+            <input type="email" name="email" placeholder="Email adresse" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="phoneNumber" placeholder="Telefon nummer" required>
+        </div>
 
-    <input type="text" name="firstName" placeholder="Fornavn" required>
-    <input type="text" name="lastName" placeholder="Efternavn" required>
-    <input type="text" name="driversLicenseNumber" placeholder="Kørekort" required>
-    <input type="text" name="cprNumber" placeholder="CPR-nummer" required>
-    <input type="email" name="email" placeholder="Email adresse" required>
-    <input type="text" name="phoneNumber" placeholder="Telefon nummer" required>
 
-    <input type="text" name="streetName" placeholder="Vejnavn" required>
-    <input type="text" name="houseNumber" placeholder="Husnummer" required>
-    <input type="text" name="floor" placeholder="Etage">
+        <div class="input-field">
+            <input type="text" name="streetName" placeholder="Vejnavn" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="houseNumber" placeholder="Husnummer" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="floor" placeholder="Etage">
+        </div>
 
-    <select name="zipCode" required>
-        <option value="">-- vælg postnummer --</option>
-        <option th:each="zip : ${zipCodes}"
-        th:value="${zip.zipCode}"
-        th:text="${zip.zipCode + ' ' + zip.city}"></option>
-    </select>
-    <button type="submit">Opret kunde</button>
 
-</form>
+        <div class="input-field">
+            <select name="zipCode" required>
+                <option value="">-- vælg postnummer --</option>
+                <option th:each="zip : ${zipCodes}"
+                        th:value="${zip.zipCode}"
+                        th:text="${zip.zipCode + ' ' + zip.city}"></option>
+            </select>
+        </div>
 
+        <button type="submit">Opret kunde</button>
+    </form>
+</section>
 
 </body>
 </html>
