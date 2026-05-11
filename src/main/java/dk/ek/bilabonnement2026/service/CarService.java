@@ -30,11 +30,11 @@ public class CarService {
         carRepository.saveCar(car);
     }
 
-    public ArrayList<CarOverview> findCarsWithDetails() {
+    public List<CarOverview> findCarsWithDetails() {
         return carRepository.findAllCarsWithDetails();
     }
 
-    public ArrayList<CarOverview> findCarsWithDetailsByStatus(String status){
+    public List<CarOverview> findCarsWithDetailsByStatus(String status){
         return carRepository.findAllCarsWithDetailsByStatus(status);
     }
 

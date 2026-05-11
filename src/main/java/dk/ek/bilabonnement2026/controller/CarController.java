@@ -68,7 +68,7 @@ public class CarController {
             return "redirect:/";
         }
 
-        ArrayList<CarOverview> list;
+        List<CarOverview> list;
 
         if (status == null || status.isBlank()) {
             list = carService.findCarsWithDetails();
