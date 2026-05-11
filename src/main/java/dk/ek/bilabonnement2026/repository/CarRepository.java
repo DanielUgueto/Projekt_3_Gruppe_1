@@ -140,12 +140,12 @@ public class CarRepository {
         return cars;
     }
 
-    public ArrayList<CarOverview> findAllCarsWithDetails(){
+    public List<CarOverview> findAllCarsWithDetails(){
         String sql = "SELECT * FROM car " +
                 "JOIN car_model ON car.car_model_id = car_model.car_model_id " +
                 "JOIN car_brand ON car_model.car_brand_id = car_brand.car_brand_id";
 
-        ArrayList<CarOverview> list = new ArrayList<>();
+        List<CarOverview> list = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -176,13 +176,13 @@ public class CarRepository {
         return list;
     }
 
-    public ArrayList<CarOverview> findAllCarsWithDetailsByStatus(String status){
+    public List<CarOverview> findAllCarsWithDetailsByStatus(String status){
         String sql = "SELECT * FROM car c " +
                 "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
                 "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
                 "WHERE c.status = ?";
 
-        ArrayList<CarOverview> list = new ArrayList<>();
+        List<CarOverview> list = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
