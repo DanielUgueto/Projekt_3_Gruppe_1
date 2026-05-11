@@ -2,6 +2,7 @@ package dk.ek.bilabonnement2026.repository;
 
 import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.RentalContract;
+import dk.ek.bilabonnement2026.model.RentalContractOverview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -98,17 +99,17 @@ public class RentalContractRepository {
     public List<CarOverview> findReturnedCarsWithContract() {
         List<CarOverview> cars = new ArrayList<>();
         String sql = """
-            SELECT c.car_id, cb.brand_name, cm.model_name, cm.equipment_level,
-                   cm.shift_gear_type, cm.fuel_type, c.vin_number, c.license_plate,
-                   c.monthly_price, c.status, c.colour, c.registration_date,
-                   rc.rental_contract_id
-            FROM rental_contract rc
-            JOIN car c ON rc.car_id = c.car_id
-            JOIN car_model cm ON c.car_model_id = cm.car_model_id
-            JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
-            WHERE rc.status = 'Afsluttet'
-            AND c.status IN ('Tilbageleveret', 'Klar til transport')
-            """;
+                SELECT c.car_id, cb.brand_name, cm.model_name, cm.equipment_level,
+                       cm.shift_gear_type, cm.fuel_type, c.vin_number, c.license_plate,
+                       c.monthly_price, c.status, c.colour, c.registration_date,
+                       rc.rental_contract_id
+                FROM rental_contract rc
+                JOIN car c ON rc.car_id = c.car_id
+                JOIN car_model cm ON c.car_model_id = cm.car_model_id
+                JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
+                WHERE rc.status = 'Afsluttet'
+                AND c.status IN ('Tilbageleveret', 'Klar til transport')
+                """;
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -116,7 +117,7 @@ public class RentalContractRepository {
 
             while (resultSet.next()) {
                 cars.add(new CarOverview(
-                   resultSet.getInt("car_id"),
+                        resultSet.getInt("car_id"),
                         resultSet.getString("brand_name"),
                         resultSet.getString("model_name"),
                         resultSet.getString("equipment_level"),
@@ -153,24 +154,91 @@ public class RentalContractRepository {
         }
     }
 
-    public double calculateMonthlyRevenue(){
+    public double calculateMonthlyRevenue() {
         String sql = "SELECT monthly_price FROM rental_contract JOIN car ON rental_contract.car_id = car.car_id WHERE rental_contract.status = ?";
 
         double monthlyRevenue = 0;
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, "Aktiv");
             ResultSet rs = statement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 monthlyRevenue += rs.getDouble("monthly_price");
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return monthlyRevenue;
+    }
+
+    public List<RentalContractOverview> findAllRentalContractOverviews(String statusFilter) {
+        /*
+        rentalContractId -> rental_contract
+        customerFirstName -> customer
+        customerLastName -> customer
+        brandName -> car_brand
+        modelName -> car_model
+        licensePlate -> car
+        startDate -> rental_contract
+        endDate -> rental_contract
+        status -> rental_contract
+        monthlyPrice -> rental_contract
+
+        rental_contract = rc
+        customer = cu
+        car_brand = cb
+        car_model = cm
+        car = c
+
+        5 tabels total to join
+*/
+
+        List<RentalContractOverview> rentalContractOverviewList = new ArrayList<>();
+
+        String sql = """ 
+                SELECT rc.rental_contract_id, rc.start_date, rc.end_date, rc.status, rc.pickup_location,
+                       cu.first_name, cu.last_name, c.license_plate, c.monthly_price, cb.brand_name, cm.model_name
+                FROM rental_contract rc 
+                JOIN customer cu ON rc.customer_id = cu.customer_id
+                JOIN car c ON rc.car_id = c.car_id
+                JOIN car_model cm ON c.car_model_id = cm.car_model_id
+                JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
+                """;
+
+        if (statusFilter != null && !statusFilter.isBlank()) {
+            sql += " WHERE rc.status = ?";
+        }
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            if (statusFilter != null && !statusFilter.isBlank()) {
+                statement.setString(1, statusFilter);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    rentalContractOverviewList.add(new RentalContractOverview(resultSet.getInt("rental_contract_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("brand_name"),
+                            resultSet.getString("model_name"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDate("start_date").toLocalDate(),
+                            resultSet.getDate("end_date").toLocalDate(),
+                            resultSet.getString("status"),
+                            resultSet.getString("pickup_location"),
+                            resultSet.getDouble("monthly_price")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentalContractOverviewList;
     }
 }
