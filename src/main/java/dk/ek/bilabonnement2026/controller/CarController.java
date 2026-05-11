@@ -59,7 +59,7 @@ public class CarController {
         }
     }
 
-    @GetMapping("/car/dashboard")
+    @GetMapping("/dashboard/car")
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
                                    HttpSession session, Model model){
@@ -87,6 +87,7 @@ public class CarController {
             model.addAttribute("selectedCar", selectedCar);
         }
 
+        model.addAttribute("employee", employee);
         model.addAttribute("carList", list);
 
         return "car-dashboard";
