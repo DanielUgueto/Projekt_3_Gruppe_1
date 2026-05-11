@@ -13,7 +13,7 @@
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
-            <form th:action="@{/car/dashboard}" method="get">
+            <form th:action="@{/dashboard/car}" method="get">
                 <label for="status">Filtrer efter bilens status: </label>
                 <select name="status" id="status">
                     <option value="">Alle</option>
@@ -28,7 +28,7 @@
 
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="car : ${carList}">
-                <a th:href="@{/car/dashboard(carId=${car.carId})}">
+                <a th:href="@{/dashboard/car(carId=${car.carId})}">
                     <div>
                         <h4>
                             <span th:text="${car.brandName}"></span>
@@ -96,6 +96,10 @@
             <h2>Ingen bil valgt</h2>
             <p>Vælg en bil i oversigten til venstre for at se detaljer her.</p>
         </article>
+
+        <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')}">
+
+        </div>
     </div>
 </div>
 
