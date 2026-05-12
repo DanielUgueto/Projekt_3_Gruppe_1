@@ -13,18 +13,28 @@
 <div class="dashboard-split">
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
-            <form th:action="@{/dashboard/car}" method="get">
-                <label for="status">Filtrer efter bilens status: </label>
-                <select name="status" id="status">
-                    <option value="">Alle</option>
-                    <option value="Ledig">Ledig</option>
-                    <option value="Udlejet">Udlejet</option>
-                    <option value="Tilbageleveret">Tilbageleveret</option>
-                    <option value="Klar til transport">Klar til transport</option>
-                    <option value="Udgået">Udgået</option>
-                </select>
-                <button type="submit">Filtrer</button>
-            </form>
+            <div>
+                <form th:action="@{/dashboard/car}" method="get">
+                    <label for="status">Filtrer efter bilens status: </label>
+                    <select name="status" id="status">
+                        <option value="">Alle</option>
+                        <option value="Ledig">Ledig</option>
+                        <option value="Udlejet">Udlejet</option>
+                        <option value="Tilbageleveret">Tilbageleveret</option>
+                        <option value="Klar til transport">Klar til transport</option>
+                        <option value="Udgået">Udgået</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </form>
+            </div>
+
+            <div>
+                <form th:action="@{/dashboard/car}" method="get">
+                    <label for="vinNumber">Søg efter stelnummer: </label>
+                    <input type="text" name="vinNumber" id="vinNumber">
+                    <button type="submit">Filtrer</button>
+                </form>
+            </div>
         </section>
 
         <div class="dashboard-car-box">
