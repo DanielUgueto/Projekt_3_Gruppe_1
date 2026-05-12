@@ -14,6 +14,7 @@
     align-items: center;
     padding: 1em;
     background-color: #f1f1f1;
+    gap: 20px;
 }
 
 .dashboard-split-car,
