@@ -99,7 +99,7 @@ public class CarController {
             }
 
             if (selectedCar == null){
-                model.addAttribute("notFound", "Kunne ikke finde bil med matchende stelnummer");
+                model.addAttribute("notFound", "Kunne ikke finde bil med matchende stelnummer!");
             }
             model.addAttribute("selectedCar", selectedCar);
         }
