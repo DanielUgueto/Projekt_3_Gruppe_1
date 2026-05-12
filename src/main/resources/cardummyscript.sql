@@ -188,13 +188,6 @@ VALUES ('Anders', 'Jensen', 12345678, '010190-1234', 'demo@email.com', 12345678)
        ('Mette', 'Hansen', 87654321, '020285-5678', 'demo2@email.com', 87654321);
 
 
--- zipCodes
-INSERT INTO zip_code (zip_code, city, country)
-VALUES ('2500', 'Valby', 'Danmark'),
-       ('4400', 'Kalundborg', 'Danmark'),
-       ('2200', 'Østerbro', 'Danmark');
-
-
 -- Customer Addresses
 INSERT INTO customer_address (customer_id, zip_code, street_name, house_number, floor)
 VALUES (1, '2500', 'Demovej', '1', 'st'),
@@ -205,7 +198,6 @@ VALUES (1, '2500', 'Demovej', '1', 'st'),
 INSERT INTO rental_contract (employee_id, customer_id, car_id, start_date, end_date, pickup_location, status, subscription_type)
 VALUES (1, 1, 1, '2024-01-01', '2024-06-01', 'København', 'Afsluttet', 'Limited'),
        (1, 2, 2, '2024-02-01', '2024-07-01', 'København', 'Aktiv', 'Limited');
-
 
 
 INSERT INTO damage_category (name, standard_price, description)
