@@ -88,4 +88,7 @@ public class RentalContractService {
     public List<RentalContractOverview> getAllRentalContractOverviews(String statusFilter){
         return rentalContractRepository.findAllRentalContractOverviews(statusFilter);
     }
+    public RentalContractOverview getRentalContractOverviewById(int contractId){
+        return rentalContractRepository.findRentalContractOverviewById(contractId);
+    }
 }
