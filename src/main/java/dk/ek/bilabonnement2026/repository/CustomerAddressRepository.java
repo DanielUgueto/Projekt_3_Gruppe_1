@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
@@ -34,5 +35,31 @@ public class CustomerAddressRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public CustomerAddress findCustomerAddressByCustomerId(int customerId) {
+        String sql = "SELECT * FROM customer_address WHERE customer_id = ?";
+        CustomerAddress customerAddress = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    customerAddress = new CustomerAddress(resultSet.getInt("customer_address_id"),
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("zip_code"),
+                            resultSet.getString("street_name"),
+                            resultSet.getString("house_number"),
+                            resultSet.getString("floor"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerAddress;
     }
 }
