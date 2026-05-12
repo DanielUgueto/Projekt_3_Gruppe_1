@@ -127,4 +127,27 @@ public class CustomerRepository {
         }
         return customerList;
     }
+
+    public void updateCustomer(Customer customer){
+        String sql = """
+                UPDATE customer
+                SET first_name = ?, last_name = ?, cpr_number = ?, email = ?, phone_number = ?
+                WHERE customer_id = ?
+                """;
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(6,customer.getCustomerId());
+
+            statement.setString(1,customer.getFirstName());
+            statement.setString(2, customer.getLastName());
+            statement.setString(3, customer.getCprNumber());
+            statement.setString(4, customer.getEmail());
+            statement.setInt(5, customer.getPhoneNumber());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
