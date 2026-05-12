@@ -90,6 +90,13 @@
                 <p><strong>Status:</strong> <span th:text="${selectedCar.status}"></span></p>
                 <p><strong>Månedlig pris:</strong> <span th:text="${selectedCar.monthlyPrice}"></span> kr.</p>
             </section>
+
+            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')}">
+                <form th:action="@{/dashboard/car/remove(carId=${selectedCar.carId})}" method="post"
+                      onsubmit="return confirm('Er du sikker på, at du vil sætte bilens status som udgået?')">
+                    <button type="submit">Sæt bil som udgået</button>
+                </form>
+            </div>
         </article>
 
         <article class="selected-car-placeholder" th:if="${selectedCar == null}">
@@ -97,9 +104,7 @@
             <p>Vælg en bil i oversigten til venstre for at se detaljer her.</p>
         </article>
 
-        <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')}">
 
-        </div>
     </div>
 </div>
 

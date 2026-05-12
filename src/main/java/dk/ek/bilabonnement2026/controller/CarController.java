@@ -92,4 +92,15 @@ public class CarController {
 
         return "car-dashboard";
     }
+
+    @PostMapping("/dashboard/car/remove")
+    public String setCarStatusAsExpired(@RequestParam("carId") int carId, HttpSession session){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dashboard/car";
+        }
+
+        carService.changeCarStatusToExpired(carId);
+        return "car-dashboard";
+    }
 }
