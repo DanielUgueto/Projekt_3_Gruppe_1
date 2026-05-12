@@ -241,4 +241,46 @@ public class RentalContractRepository {
         }
         return rentalContractOverviewList;
     }
+
+    public RentalContractOverview findRentalContractOverviewById(int contractId) {
+
+        RentalContractOverview rentalContractOverview = null;
+        String sql = """ 
+                SELECT rc.rental_contract_id, rc.start_date, rc.end_date, rc.status, rc.pickup_location,
+                       cu.first_name, cu.last_name, c.license_plate, c.monthly_price, cb.brand_name, cm.model_name
+                FROM rental_contract rc 
+                JOIN customer cu ON rc.customer_id = cu.customer_id
+                JOIN car c ON rc.car_id = c.car_id
+                JOIN car_model cm ON c.car_model_id = cm.car_model_id
+                JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id
+                WHERE rc.rental_contract_id = ?
+                """;
+
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)
+             ) {
+            statement.setInt(1,contractId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                  rentalContractOverview = new RentalContractOverview(resultSet.getInt("rental_contract_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("brand_name"),
+                            resultSet.getString("model_name"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDate("start_date").toLocalDate(),
+                            resultSet.getDate("end_date").toLocalDate(),
+                            resultSet.getString("status"),
+                            resultSet.getString("pickup_location"),
+                            resultSet.getDouble("monthly_price"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentalContractOverview;
+    }
 }
