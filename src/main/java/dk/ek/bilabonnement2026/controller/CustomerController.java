@@ -36,9 +36,6 @@ public class CustomerController {
             return "redirect:/";
         }
 
-        List<ZipCode> zipCodes = zipCodeService.getAllZipCodes();
-        model.addAttribute("zipCodes", zipCodes);
-
         return "register-customer";
     }
 
@@ -60,14 +57,17 @@ public class CustomerController {
             return "redirect:/";
         }
 
+        if (!zipCodeService.zipcodeExists(zipCode)) {
+            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
+            return "register-customer";
+        }
+
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
         CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
         String error = customerService.registerCustomer(customer,customerAddress);
 
         if (error != null) {
-            List<ZipCode> zipCodes = zipCodeService.getAllZipCodes();
             model.addAttribute("error", error);
-            model.addAttribute("zipCodes",zipCodes);
             return "register-customer";
         }
 
