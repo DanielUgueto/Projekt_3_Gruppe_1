@@ -63,6 +63,7 @@ public class CarController {
     @GetMapping("/dashboard/car")
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
+                                   @RequestParam(required = false) String vinNumber,
                                    HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null){
@@ -77,10 +78,21 @@ public class CarController {
             list = carService.findCarsWithDetailsByStatus(status);
         }
 
+        CarOverview selectedCar = null;
+
         if (carId != null) {
-            CarOverview selectedCar = null;
             for (CarOverview c : list){
                 if (c.getCarId() == carId) {
+                    selectedCar = c;
+                    break;
+                }
+            }
+            model.addAttribute("selectedCar", selectedCar);
+        }
+
+        if (vinNumber != null){
+            for (CarOverview c : list){
+                if (c.getVinNumber().equals(vinNumber)) {
                     selectedCar = c;
                     break;
                 }
