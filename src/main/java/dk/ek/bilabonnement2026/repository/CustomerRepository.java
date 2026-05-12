@@ -150,4 +150,68 @@ public class CustomerRepository {
             e.printStackTrace();
         }
     }
+
+    public Customer findCustomerByCustomerCprNumber(String cprNumber) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE cpr_number = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setString(1, cprNumber);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    customer = new Customer(
+
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+    public Customer findCustomerByCustomerPhoneNumber(int phoneNumber) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE phone_number = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setInt(1, phoneNumber);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    customer = new Customer(
+
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
 }
