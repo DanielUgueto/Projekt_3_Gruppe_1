@@ -35,6 +35,14 @@ public class CustomerService {
         return customerRepository.getAllCustomers();
     }
 
+    public Customer getCustomerByCustomerId(int customerId){
+        return customerRepository.findCustomerByCustomerId(customerId);
+    }
+
+    public CustomerAddress getCustomerAddressByCustomerId(int customerId){
+        return customerAddressRepository.findCustomerAddressByCustomerId(customerId);
+    }
+
     public String updateCustomer(Customer customer, CustomerAddress customerAddress){
         //tjekke kunden er der
         Customer existingCustomer = customerRepository.findCustomerByCustomerId(customer.getCustomerId());
