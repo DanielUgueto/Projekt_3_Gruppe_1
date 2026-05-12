@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rental contract overview</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/rental-contract-overview-style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main>
+    <header>
+        <h1>Overblik over lejekontrakter</h1>
+    </header>
+
+    <section class="filter-section">
+        <form action="/rental-contracts/overview" method="get">
+            <label for="filterOptions">Filtre</label>
+            <select name="status" id="filterOptions">
+                <option value="" th:selected="${selectedStatus == ''}">Alle</option>
+                <option value="Aktiv" th:selected="${selectedStatus == 'Aktiv'}">Aktive</option>
+                <option value="Afsluttet" th:selected="${selectedStatus == 'Afsluttet'}">Afsluttet</option>
+                <option value="Annulleret" th:selected="${selectedStatus == 'Annulleret'}">Annulleret</option>
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+    </section>
+
+    <section th:if="${#lists.isEmpty(rentalContracts)}">
+        <p>Der er ingen kontrakter at vise</p>
+    </section>
+
+    <section class="card-grid" th:if="${not #lists.isEmpty(rentalContracts)}">
+        <a class="contract-card" th:each="contract : ${rentalContracts}"
+           th:href="@{/rental-contracts/{id}(id=${contract.rentalContractId})}">
+            <span class="contract-id" th:text="'#' + ${contract.rentalContractId}"></span>
+            <h2 class="customer-name" th:text="${contract.customerFirstName}+ ' '+${contract.customerLastName}"></h2>
+
+            <div class="car-info">
+                <p th:text="${contract.brandName}+' '+${contract.modelName}"></p>
+                <p th:text="${contract.licensePlate}"></p>
+            </div>
+
+            <span class="status-badge" th:text="${contract.status}"></span>
+
+        </a>
+    </section>
+</main>
+</body>
+</html>
