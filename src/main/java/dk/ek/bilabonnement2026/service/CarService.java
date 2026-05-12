@@ -46,17 +46,18 @@ public class CarService {
         return carRepository.findCarsByStatus(status);
     }
 
-    public void changeCarStatusToExpired(int carId){
+    public boolean changeCarStatusToExpired(int carId){
         Car car = carRepository.findCarByCarNumber(carId);
 
         if (rentalContractRepository.findRentalContractByCarId(carId) != null){ // make sure no active rental agreement is in place
-            return;
+            return false;
         }
 
         if (!car.getStatus().equalsIgnoreCase("Ledig")) { // check car status to make sure it's not already rented
-            return;
+             return false;
         }
 
         carRepository.updateCarStatus(carId, "Udgået");
+        return true;
     }
 }
