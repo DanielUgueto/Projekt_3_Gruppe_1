@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rental contract overview</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-split">
+    <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
+            <form th:action="@{/rental-contracts/overview}" method="get">
+                <label for="status">Filtrer efter kontraktens status: </label>
+                <select name="status" id="status">
+                    <option value="" th:selected="${selectedStatus == null or selectedStatus == ''}">Alle</option>
+                    <option value="Aktiv" th:selected="${selectedStatus == 'Aktiv'}">Aktive</option>
+                    <option value="Afsluttet" th:selected="${selectedStatus == 'Afsluttet'}">Afsluttet</option>
+                    <option value="Annulleret" th:selected="${selectedStatus == 'Annulleret'}">Annulleret</option>
+                </select>
+                <button type="submit">Filtrer</button>
+            </form>
+        </section>
+
+        <div class="dashboard-car-box">
+            <article class="dashboard-car-info" th:each="contract : ${rentalContracts}">
+                <a th:href="@{/rental-contracts/overview(contractId=${contract.rentalContractId}, status=${selectedStatus})}">
+
+                    <span class="contract-id" th:text="'#' + ${contract.rentalContractId}"></span>
+                    <h2 class="customer-name" th:text="${contract.customerFirstName}+ ' '+${contract.customerLastName}"></h2>
+
+                    <div class="car-info">
+                        <p th:text="${contract.brandName}+' '+${contract.modelName}"></p>
+                        <p th:text="${contract.licensePlate}"></p>
+                    </div>
+
+                    <span class="status-badge" th:text="${contract.status}"></span>
+
+                </a>
+            </article>
+        </div>
+    </div>
+
+    <div class="dashboard-split-single-car">
+
+        <article class="selected-car-panel" th:if="${selectedContract != null}">
+            <header class="selected-car-header">
+                <h2>Aftale #<span th:text="${selectedContract.rentalContractId}"></span></h2>
+                <p th:text="${selectedContract.customerFirstName}+ ' '+${selectedContract.customerLastName}"></p>
+            </header>
+
+            <section class="selected-car-section">
+                <h3>Bil</h3>
+                <p><strong>Mærke og model:</strong>
+                    <span th:text="${selectedContract.brandName}+ ' ' +${selectedContract.modelName}"></span>
+                </p>
+                <p><strong>Nummerplade:</strong> <span th:text="${selectedContract.licensePlate}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <h3>Aftale-detaljer</h3>
+                <p><strong>Startdato:</strong>
+                <span th:text="${selectedContract.startDate}"></span></p>
+                <p><strong>Slutdato:</strong>
+                    <span th:text="${selectedContract.endDate}"></span></p>
+                <p><strong>Afhentningssted:</strong> <span th:text="${selectedContract.pickupLocation}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <h3>Status og pris</h3>
+                <p><strong>Status:</strong> <span th:text="${selectedContract.status}"></span></p>
+                <p><strong>Månedlig pris:</strong> <span th:text="${selectedContract.monthlyPrice}"></span> kr.</p>
+            </section>
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedContract == null}">
+            <h2>Ingen kontrakt valgt</h2>
+            <p>Vælg en kontrakt i oversigten til venstre for at se detaljer.</p>
+        </article>
+
+    </div>
+
+</div>
+
+</body>
+</html>

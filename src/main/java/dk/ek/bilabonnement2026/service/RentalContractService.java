@@ -3,6 +3,7 @@ package dk.ek.bilabonnement2026.service;
 import dk.ek.bilabonnement2026.model.Car;
 import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.model.RentalContract;
+import dk.ek.bilabonnement2026.model.RentalContractOverview;
 import dk.ek.bilabonnement2026.repository.CarRepository;
 import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,12 @@ public class RentalContractService {
             }
         }
         return filteredCars;
+    }
+
+    public List<RentalContractOverview> getAllRentalContractOverviews(String statusFilter){
+        return rentalContractRepository.findAllRentalContractOverviews(statusFilter);
+    }
+    public RentalContractOverview getRentalContractOverviewById(int contractId){
+        return rentalContractRepository.findRentalContractOverviewById(contractId);
     }
 }
