@@ -62,4 +62,26 @@ public class CustomerAddressRepository {
         }
         return customerAddress;
     }
+
+    public void updateCustomerAddress(CustomerAddress customerAddress){
+        String sql = """
+UPDATE customer_address
+SET zip_code = ?, street_name = ?, house_number = ?, floor = ?
+WHERE customer_id = ?
+""";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1,customerAddress.getZipCode());
+            statement.setString(2, customerAddress.getStreetName());
+            statement.setString(3, customerAddress.getHouseNumber());
+            statement.setString(4, customerAddress.getFloor());
+            statement.setInt(5,customerAddress.getCustomerId());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
