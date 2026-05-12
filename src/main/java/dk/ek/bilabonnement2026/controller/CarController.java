@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class CarController {
         }
     }
 
-    @GetMapping("/car/dashboard")
+    @GetMapping("/dashboard/car")
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
                                    HttpSession session, Model model){
@@ -87,8 +88,30 @@ public class CarController {
             model.addAttribute("selectedCar", selectedCar);
         }
 
+        model.addAttribute("employee", employee);
         model.addAttribute("carList", list);
 
         return "car-dashboard";
+    }
+
+    @PostMapping("/dashboard/car/remove")
+    public String setCarStatusAsExpired(@RequestParam("carId") int carId, HttpSession session, RedirectAttributes redirectAttributes){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dashboard/car";
+        }
+
+        boolean statusUpdated = carService.changeCarStatusToExpired(carId);
+
+        if (!statusUpdated) {
+            redirectAttributes.addFlashAttribute("error", "Bilens status kunne ikke ændres til udgået!");
+        } else {
+            redirectAttributes.addFlashAttribute("success", "Bilens status blev ændret til udgået.");
+        }
+
+        return "redirect:/dashboard/car?carId=" + carId;
     }
 }

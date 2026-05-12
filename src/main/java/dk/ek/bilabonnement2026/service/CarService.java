@@ -3,6 +3,7 @@ package dk.ek.bilabonnement2026.service;
 import dk.ek.bilabonnement2026.model.Car;
 import dk.ek.bilabonnement2026.model.CarOverview;
 import dk.ek.bilabonnement2026.repository.CarRepository;
+import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class CarService {
 
     @Autowired
     CarRepository carRepository;
+
+    @Autowired
+    RentalContractRepository rentalContractRepository;
 
     public void createCar(Car car){
         Car validatorCar = carRepository.findCarByVinNumber(car.getVinNumber());
@@ -40,5 +44,20 @@ public class CarService {
 
     public List<Car> findCarsByStatus(String status){
         return carRepository.findCarsByStatus(status);
+    }
+
+    public boolean changeCarStatusToExpired(int carId){
+        Car car = carRepository.findCarByCarNumber(carId);
+
+        if (rentalContractRepository.findRentalContractByCarId(carId) != null){ // make sure no active rental agreement is in place
+            return false;
+        }
+
+        if (!car.getStatus().equalsIgnoreCase("Ledig")) { // check car status to make sure it's not already rented
+             return false;
+        }
+
+        carRepository.updateCarStatus(carId, "Udgået");
+        return true;
     }
 }
