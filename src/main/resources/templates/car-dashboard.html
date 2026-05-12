@@ -21,6 +21,7 @@
                     <option value="Udlejet">Udlejet</option>
                     <option value="Tilbageleveret">Tilbageleveret</option>
                     <option value="Klar til transport">Klar til transport</option>
+                    <option value="Udgået">Udgået</option>
                 </select>
                 <button type="submit">Filtrer</button>
             </form>
@@ -96,6 +97,11 @@
                       onsubmit="return confirm('Er du sikker på, at du vil sætte bilens status som udgået?')">
                     <button type="submit">Sæt bil som udgået</button>
                 </form>
+            </div>
+
+            <div>
+                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                <p th:if="${success != null}" th:text="${success}" style="color:green;"></p>
             </div>
         </article>
 
