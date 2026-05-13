@@ -111,7 +111,9 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber);
+        Customer existing = customerService.getCustomerByCustomerId(customerId);
+        Boolean isActive = existing != null ? existing.getStatus() : true;
+        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber, isActive);
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
         if (!zipCodeService.zipcodeExists(zipCode)) {

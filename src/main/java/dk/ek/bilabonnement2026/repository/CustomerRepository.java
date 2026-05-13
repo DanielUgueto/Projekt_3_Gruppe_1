@@ -188,4 +188,50 @@ public class CustomerRepository {
         }
         return customer;
     }
+
+    public void setCustomerStatusInactive(int customerId) {
+        String sql = "UPDATE customer SET is_active = false WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public Customer findCustomerByCustomerId(int customerId) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    customer = new Customer(
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number"),
+                            resultSet.getBoolean("is_active")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+
 }

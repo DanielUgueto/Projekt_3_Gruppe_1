@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medarbejder dashboard</title>
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+<div class="dashboard-split">
+
+    <!--    denne sektion har intet prefix til tlf nummer så jeg kommenterede det ud-->
+
+    <!--    <div class="dashboard-split-car">-->
+    <!--        <div class="dashboard-car-box">-->
+    <!--            <article class="dashboard-car-info" th:each="customer : ${customerList}">-->
+    <!--                <a th:href="@{/customer/dashboard(customerId=${customer.customerId})}">-->
+    <!--                    <div>-->
+    <!--                        <h4>-->
+    <!--                            <span th:text="${customer.firstName}"></span>-->
+    <!--                            <span th:text="${customer.lastName}"></span>-->
+    <!--                        </h4>-->
+    <!--                    </div>-->
+    <!--                    <div>-->
+    <!--                        <span th:text="${customer.email}"></span>-->
+    <!--                    </div>-->
+    <!--                    <div>-->
+    <!--                        <span th:text="${customer.phoneNumber}"></span>-->
+    <!--                    </div>-->
+    <!--                </a>-->
+    <!--            </article>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <!--    denne version har +45 prefix til tlf nummer men det er en hardcoded placeholder for nu-->
+
+    <div class="dashboard-split-car">
+        <div class="dashboard-car-box">
+            <article class="dashboard-car-info" th:each="customer : ${customerList}">
+                <a th:href="@{/customer/dashboard(customerId=${customer.customerId})}">
+                    <div>
+                        <h4>
+                            <span th:text="${customer.firstName}"></span>
+                            <span th:text="${customer.lastName}"></span>
+                        </h4>
+                    </div>
+                    <div>
+                        <span th:text="${customer.email}"></span>
+                    </div>
+                    <div>
+                        <span>+45 </span><span th:text="${customer.phoneNumber}"></span>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </div>
+
+
+    <div class="dashboard-split-single-car">
+        <article class="selected-car-panel" th:if="${selectedCustomer != null}">
+            <header class="selected-car-header">
+                <h2>
+                    <span th:text="${selectedCustomer.firstName}"></span>
+                    <span th:text="${selectedCustomer.lastName}"></span>
+                </h2>
+                <p><strong>Kørekort-nummer:</strong> <span th:text="${selectedCustomer.driversLicenseNumber}"></span>
+                </p>
+                <p><strong>CPR-nummer:</strong> <span th:text="${selectedCustomer.cprNumber}"></span></p>
+            </header>
+
+            <section class="selected-car-section">
+                <h3>Kunde oplysninger</h3>
+                <p><strong>Fornavn:</strong> <span th:text="${selectedCustomer.firstName}"></span></p>
+                <p><strong>Efternavn:</strong> <span th:text="${selectedCustomer.lastName}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${selectedCustomer.email}"></span></p>
+                <p><strong>Tlf-nummer:</strong><span> +45 </span> <span
+                        th:text="${selectedCustomer.phoneNumber}"></span></p>
+            </section>
+
+            <section class="selected-car-section">
+                <form th:action="@{/customer/delete}" method="post">
+                    <input type="hidden" name="customerId" th:value="${selectedCustomer.customerId}">
+
+                    <p th:if="${deleteError != null}" style="color: red;" th:text="${deleteError}"></p>
+
+                    <button class="delete-btn" type="submit">Slet kunde</button>
+                </form>
+            </section>
+
+
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedCustomer == null}">
+            <h2>Ingen kunde valgt</h2>
+            <p>Vælg en kunde i oversigten til venstre for at se detaljer her.</p>
+        </article>
+    </div>
+</div>
+</body>
+</html>
