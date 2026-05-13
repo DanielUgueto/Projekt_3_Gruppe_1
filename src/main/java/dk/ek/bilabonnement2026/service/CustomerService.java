@@ -72,6 +72,7 @@ public class CustomerService {
             }
         }
 
+        // der må godt være flere kunder på en adresse. fix
         CustomerAddress existingAddress = customerAddressRepository.findCustomerAddressByCustomerId(customerAddress.getCustomerId());
         if(existingAddress == null){
             return "Adressen eksisterer ikke";
