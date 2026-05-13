@@ -204,24 +204,33 @@ public class CarController {
 
         List<CarBrand> brands = carBrandService.getAllCarBrands();
         Integer carBrandId = null;
-        for (CarBrand brand : brands) {
+        for (CarBrand brand : brands) { // checking if brand already exists
             if (brand.getBrandName().equalsIgnoreCase(brandName)) {
                 carBrandId = brand.getCarBrandId();
                 break;
             }
         }
 
-        if (carBrandId == null) {
+        if (carBrandId == null) { // if brand doesn't exist we have to add it.
             carBrandService.saveBrand(brandName);
 
             CarBrand savedBrand = carBrandService.getCarBrandByBrandName(brandName);
             if (savedBrand == null) {
-                redirectAttributes.addFlashAttribute("brandError", "Bilmærket kunne ikke gemmes!");
+                // this should never be able to happen and if it does then I'm pretty sure we won't be able
+                // to load any HTML pages, because the database most likely doesn't work anymore.
+                redirectAttributes.addFlashAttribute("error", "Bilmærket kunne ikke gemmes!");
                 return "redirect:/dashboard/car/edit?carId=" + carId;
             }
 
             carBrandId = savedBrand.getCarBrandId();
         }
+
+        CarModel carModel = carModelService.getCarModelByCarModelId(carModelId);
+        if (carModel == null) {
+            redirectAttributes.addFlashAttribute("error", "Bil modellen kunne ikke findes!");
+            return "redirect:/dashboard/car/edit?carId=" + carId;
+        }
+
 
 
         Car car = new Car(carId, carModelId, vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
