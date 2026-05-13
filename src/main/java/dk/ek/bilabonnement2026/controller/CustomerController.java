@@ -63,12 +63,73 @@ public class CustomerController {
         }
 
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
-        CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
-        String error = customerService.registerCustomer(customer,customerAddress);
+        CustomerAddress customerAddress = new CustomerAddress(0, zipCode, streetName, houseNumber, floor);
+        String error = customerService.registerCustomer(customer, customerAddress);
 
         if (error != null) {
             model.addAttribute("error", error);
             return "register-customer";
+        }
+
+        return employeeService.redirectByRole(employee);
+    }
+
+    @GetMapping("/customer/edit")
+    public String showEditCustomer(@RequestParam int customerId,
+                                   HttpSession session,
+                                   Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        Customer customer = customerService.getCustomerByCustomerId(customerId);
+        if (customer == null) {
+            return employeeService.redirectByRole(employee);
+        }
+        CustomerAddress customerAddress = customerService.getCustomerAddressByCustomerId(customerId);
+        if (customerAddress == null) {
+            return employeeService.redirectByRole(employee);
+        }
+
+        model.addAttribute("selectedCustomer", customer);
+        model.addAttribute("selectedCustomerAddress", customerAddress);
+
+        return "edit-customer";
+    }
+
+    @PostMapping("/customer/edit")
+    public String updateCustomer(@RequestParam int customerId,
+                                 @RequestParam("firstName") String firstName,
+                                 @RequestParam("lastName") String lastName,
+                                 @RequestParam("email") String email,
+                                 @RequestParam("phoneNumber") int phoneNumber,
+                                 @RequestParam("cprNumber") String cprNumber,
+                                 @RequestParam("zipCode") String zipCode,
+                                 @RequestParam("streetName") String streetName,
+                                 @RequestParam("houseNumber") String houseNumber,
+                                 @RequestParam("floor") String floor,
+                                 HttpSession session,
+                                 Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber);
+        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
+
+        if (!zipCodeService.zipcodeExists(zipCode)) {
+            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
+            model.addAttribute("selectedCustomer", customer);
+            model.addAttribute("selectedCustomerAddress", customerAddress);
+            return "edit-customer";
+        }
+
+        String error = customerService.updateCustomer(customer, customerAddress);
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("selectedCustomer", customer);
+            model.addAttribute("selectedCustomerAddress", customerAddress);
+            return "edit-customer";
         }
 
         return employeeService.redirectByRole(employee);

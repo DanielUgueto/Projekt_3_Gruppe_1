@@ -54,13 +54,13 @@ public class CustomerRepository {
             if (resultSet.next()) {
                 Customer customer = new Customer(
 
-                resultSet.getInt("customer_id"),
-                resultSet.getString("first_name"),
-                resultSet.getString("last_name"),
-                resultSet.getInt("drivers_license_number"),
-                resultSet.getString("cpr_number"),
-                resultSet.getString("email"),
-                resultSet.getInt("phone_number")
+                        resultSet.getInt("customer_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getInt("drivers_license_number"),
+                        resultSet.getString("cpr_number"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("phone_number")
                 );
 
                 return customer;
@@ -72,15 +72,47 @@ public class CustomerRepository {
         return null;
     }
 
+    public Customer findCustomerByCustomerId(int customerId) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setInt(1, customerId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    customer = new Customer(
+
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
         String sql = "SELECT * FROM customer";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Customer customer = new Customer(resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
@@ -90,9 +122,96 @@ public class CustomerRepository {
                         resultSet.getInt("phone_number"));
                 customerList.add(customer);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return customerList;
+    }
+
+    public void updateCustomer(Customer customer){
+        String sql = """
+                UPDATE customer
+                SET first_name = ?, last_name = ?, cpr_number = ?, email = ?, phone_number = ?
+                WHERE customer_id = ?
+                """;
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(6,customer.getCustomerId());
+
+            statement.setString(1,customer.getFirstName());
+            statement.setString(2, customer.getLastName());
+            statement.setString(3, customer.getCprNumber());
+            statement.setString(4, customer.getEmail());
+            statement.setInt(5, customer.getPhoneNumber());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public Customer findCustomerByCustomerCprNumber(String cprNumber) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE cpr_number = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setString(1, cprNumber);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    customer = new Customer(
+
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+    public Customer findCustomerByCustomerPhoneNumber(int phoneNumber) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE phone_number = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setInt(1, phoneNumber);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    customer = new Customer(
+
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
     }
 }
