@@ -41,4 +41,39 @@ public class CarBrandRepository {
 
         return list;
     }
+
+    public void saveBrand(String brandName) {
+        String sql = "INSERT INTO car_brand (brand_name) VALUES (?)";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, brandName);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public CarBrand getCarBrandByBrandName(String brandName) {
+        String sql = "SELECT * FROM car_brand WHERE brand_name = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, brandName);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new CarBrand(
+                        rs.getInt("car_brand_id"),
+                        rs.getString("brand_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
