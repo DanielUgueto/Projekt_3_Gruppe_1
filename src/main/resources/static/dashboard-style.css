@@ -135,3 +135,13 @@ button:hover {
 .dashboard-greeting{
     margin-left: 2em;
 }
+
+.delete-btn{
+    background-color: red;
+    border-color: red;
+}
+
+.delete-btn:hover{
+    background-color: darkred;
+    border-color: darkred;
+}
