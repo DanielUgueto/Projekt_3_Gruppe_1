@@ -59,7 +59,7 @@ public class CustomerController {
             return "register-customer";
         }
 
-        Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
+        Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
         CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
         String error = customerService.registerCustomer(customer,customerAddress);
 
@@ -73,14 +73,29 @@ public class CustomerController {
 
     @PostMapping("/customer/delete")
     public String deleteCustomer(@RequestParam("customerId") int customerId,
-                                 HttpSession session) {
+                                 HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
         }
-        customerService.setCustomerStatusInactive(customerId);
+        String error = customerService.setCustomerStatusInactive(customerId);
+        if (error != null) {
+            List<Customer> list = customerService.getAllCustomers();
+            Customer selectedCustomer = null;
+            for (Customer c : list) {
+                if (c.getCustomerId() == customerId) {
+                    selectedCustomer = c;
+                    break;
+                }
+            }
+            model.addAttribute("customerList", list);
+            model.addAttribute("selectedCustomer", selectedCustomer);
+            model.addAttribute("deleteError", error);
+            return "customer-dashboard";
+        }
         return "redirect:/customer/dashboard";
     }
+
 
     @GetMapping("/customer/dashboard")
     public String showCustomerDashboard(@RequestParam(required = false) String status,
@@ -108,6 +123,5 @@ public class CustomerController {
 
         return "customer-dashboard";
     }
-
 
 }

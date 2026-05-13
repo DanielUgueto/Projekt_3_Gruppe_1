@@ -20,7 +20,7 @@ public class CustomerRepository {
 
 
     public void createCustomer(Customer customer) {
-        String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number, is_active) VALUES(?,?,?,?,?,?,?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class CustomerRepository {
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
             statement.setInt(6, customer.getPhoneNumber());
-
+            statement.setBoolean(7, true);
 
             statement.executeUpdate();
 
@@ -54,13 +54,14 @@ public class CustomerRepository {
             if (resultSet.next()) {
                 Customer customer = new Customer(
 
-                resultSet.getInt("customer_id"),
-                resultSet.getString("first_name"),
-                resultSet.getString("last_name"),
-                resultSet.getInt("drivers_license_number"),
-                resultSet.getString("cpr_number"),
-                resultSet.getString("email"),
-                resultSet.getInt("phone_number")
+                        resultSet.getInt("customer_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getInt("drivers_license_number"),
+                        resultSet.getString("cpr_number"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("phone_number"),
+                        resultSet.getBoolean("is_active")
                 );
 
                 return customer;
@@ -73,7 +74,7 @@ public class CustomerRepository {
     }
 
     public void setCustomerStatusInactive(int customerId) {
-        String sql = "UPDATE customer SET status = 'inactive' WHERE customer_id = ?";
+        String sql = "UPDATE customer SET is_active = false WHERE customer_id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -88,24 +89,26 @@ public class CustomerRepository {
 
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
-        String sql = "SELECT * FROM customer WHERE status != 'inactive' OR status IS NULL";
+        String sql = "SELECT * FROM customer WHERE is_active = true";
 
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Customer customer = new Customer(resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
                         resultSet.getInt("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number"));
+                        resultSet.getInt("phone_number"),
+                        resultSet.getBoolean("is_active"));
                 customerList.add(customer);
             }
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return customerList;

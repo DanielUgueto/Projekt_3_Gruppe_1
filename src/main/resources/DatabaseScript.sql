@@ -19,7 +19,7 @@ CREATE TABLE customer
     cpr_number             VARCHAR(20)  NOT NULL UNIQUE,
     email                  VARCHAR(255) NOT NULL,
     phone_number           INT,
-    status                 VARCHAR(255)
+    is_active              BOOLEAN
 );
 
 CREATE TABLE customer_address
@@ -56,14 +56,14 @@ CREATE TABLE car_model
 
 CREATE TABLE car
 (
-    car_id              INT PRIMARY KEY AUTO_INCREMENT,
-    car_model_id        INT            NOT NULL,
-    vin_number          VARCHAR(17)    NOT NULL UNIQUE,
-    license_plate       VARCHAR(7)     NOT NULL UNIQUE,
-    monthly_price       DECIMAL(19, 2) NOT NULL,
-    status              VARCHAR(255)   NOT NULL,
-    colour              VARCHAR(255)   NOT NULL,
-    registration_date   VARCHAR(255)   NOT NULL,
+    car_id            INT PRIMARY KEY AUTO_INCREMENT,
+    car_model_id      INT            NOT NULL,
+    vin_number        VARCHAR(17)    NOT NULL UNIQUE,
+    license_plate     VARCHAR(7)     NOT NULL UNIQUE,
+    monthly_price     DECIMAL(19, 2) NOT NULL,
+    status            VARCHAR(255)   NOT NULL,
+    colour            VARCHAR(255)   NOT NULL,
+    registration_date VARCHAR(255)   NOT NULL,
     CONSTRAINT fk_car_model
         FOREIGN KEY (car_model_id) REFERENCES car_model (car_model_id)
 );
