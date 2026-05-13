@@ -68,7 +68,7 @@ public class CustomerController {
         return employeeService.redirectByRole(employee);
     }
 
-    @GetMapping("/customer/edit/")
+    @GetMapping("/customer/edit")
     public String showEditCustomer(@RequestParam int customerId,
                                    HttpSession session,
                                    Model model) {
@@ -91,7 +91,7 @@ public class CustomerController {
         return "edit-customer";
     }
 
-    @PostMapping("/customer/edit/")
+    @PostMapping("/customer/edit")
     public String updateCustomer(@RequestParam int customerId,
                                  @RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName,

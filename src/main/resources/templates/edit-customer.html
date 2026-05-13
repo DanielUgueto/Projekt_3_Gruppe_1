@@ -13,7 +13,7 @@
 <h1>Rediger kunde</h1>
 
 <section class="create-employee-box">
-    <form th:action="@{/customer/edit/(customerId=${selectedCustomer.customerId})}" method="post">
+    <form th:action="@{/customer/edit(customerId=${selectedCustomer.customerId})}" method="post">
 
         <div class="input-field">
             <input type="text" name="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
