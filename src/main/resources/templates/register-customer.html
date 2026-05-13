@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret kunde</title>
-    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
-    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{/add-employee-style.css}">
+    <link rel="stylesheet"  th:href="@{/style.css}">
+    <link rel="stylesheet"  th:href="@{/add-employee-style.css}">
 
 </head>
 <body>
@@ -14,40 +14,43 @@
 <h1>Opret kunde</h1>
 
 <section class="create-employee-box">
+
+    <p th:if="${error}" th:text="${error}" class="error-message" style="color:red"></p>
+
     <form th:action="@{/customer/register}" method="post">
         <div class="input-field">
-            <input type="text" name="firstName" placeholder="Fornavn" required>
+            <input type="text" name="firstName" th:value="${firstName}" placeholder="Fornavn" required>
         </div>
         <div class="input-field">
-            <input type="text" name="lastName" placeholder="Efternavn" required>
+            <input type="text" name="lastName" th:value="${lastName}" placeholder="Efternavn" required>
         </div>
         <div class="input-field">
-            <input type="text" inputmode="numeric" name="driversLicenseNumber" placeholder="Kørekort" required>
+            <input type="text" inputmode="numeric" name="driversLicenseNumber" th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
         </div>
         <div class="input-field">
-            <input type="text" inputmode="numeric" name="cprNumber" placeholder="CPR-nummer" required>
+            <input type="text" inputmode="numeric" name="cprNumber" th:value="${cprNumber}" placeholder="CPR-nummer" required>
         </div>
         <div class="input-field">
-            <input type="email" name="email" placeholder="Email adresse" required>
+            <input type="email" name="email" th:value="${email}" placeholder="Email adresse" required>
         </div>
         <div class="input-field">
-            <input type="tel" name="phoneNumber" placeholder="Telefon nummer" required>
-        </div>
-
-
-        <div class="input-field">
-            <input type="text" name="streetName" placeholder="Vejnavn" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="houseNumber" placeholder="Husnummer" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="floor" placeholder="Etage">
+            <input type="tel" name="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
         </div>
 
 
         <div class="input-field">
-            <input type="text" name="zipCode" placeholder="Postnummer">
+            <input type="text" name="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="houseNumber" th:value="${houseNumber}" placeholder="Husnummer" required>
+        </div>
+        <div class="input-field">
+            <input type="text" name="floor" th:value="${floor}" placeholder="Etage">
+        </div>
+
+
+        <div class="input-field">
+            <input type="text" name="zipCode" th:value="${zipCode}" placeholder="Postnummer">
             <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red">
         </div>
 
