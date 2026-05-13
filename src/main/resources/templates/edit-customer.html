@@ -13,42 +13,51 @@
 <h1>Rediger kunde</h1>
 
 <section class="create-employee-box">
+
+
     <form th:action="@{/customer/edit(customerId=${selectedCustomer.customerId})}" method="post">
 
         <div class="input-field">
-            <input type="text" name="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
+            <label for="firstName">Fornavn:</label>
+            <input type="text" name="firstName" id="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="lastName" placeholder="Efternavn" th:value="${selectedCustomer.lastName}" required>
+            <label for="lastName">Efternavn:</label>
+            <input type="text" name="lastName" id="lastName" placeholder="Efternavn" th:value="${selectedCustomer.lastName}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
+            <label for="cprNumber">CPR-nummer:</label>
+            <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
         </div>
         <div class="input-field">
-            <input type="email" name="email" placeholder="E-mail" th:value="${selectedCustomer.email}" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="E-mail" th:value="${selectedCustomer.email}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
+            <label for="phoneNumber">Tlf.nr:</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
         </div>
 
 
         <div class="input-field">
-            <input type="text" name="streetName" placeholder="Vejnavn" th:value="${selectedCustomerAddress.streetName}" required>
+            <label for="streetName">Gade:</label>
+            <input type="text" name="streetName" id="streetName" placeholder="Vejnavn" th:value="${selectedCustomerAddress.streetName}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="houseNumber" placeholder="Husnummer" th:value="${selectedCustomerAddress.houseNumber}" required>
+            <label for="houseNumber">Hus nr:</label>
+            <input type="text" name="houseNumber" id="houseNumber" placeholder="Husnummer" th:value="${selectedCustomerAddress.houseNumber}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="floor" placeholder="Etage" th:value="${selectedCustomerAddress.floor}">
+            <label for="floor">Etage:</label>
+            <input type="text" name="floor" id="floor" placeholder="Etage" th:value="${selectedCustomerAddress.floor}">
         </div>
 
 
         <div class="input-field">
-            <input type="text" name="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
-            <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red"></p>
+            <label for="zipCode">Post nummer:</label>
+            <input type="text" name="zipCode" id="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
         </div>
-
-        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+        <p th:if="${error}" th:text="${error}" style="color:red"></p>
         <button type="submit">Gem ændringer</button>
     </form>
 </section>

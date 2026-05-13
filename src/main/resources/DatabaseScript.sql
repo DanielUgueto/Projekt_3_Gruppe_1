@@ -15,10 +15,10 @@ CREATE TABLE customer
     customer_id            INT PRIMARY KEY AUTO_INCREMENT,
     first_name             VARCHAR(255) NOT NULL,
     last_name              VARCHAR(255) NOT NULL,
-    drivers_license_number INT          NOT NULL UNIQUE,
+    drivers_license_number VARCHAR(8)        NOT NULL UNIQUE,
     cpr_number             VARCHAR(20)  NOT NULL UNIQUE,
     email                  VARCHAR(255) NOT NULL,
-    phone_number           INT,
+    phone_number           VARCHAR(25),
     is_active              BOOLEAN
 );
 
