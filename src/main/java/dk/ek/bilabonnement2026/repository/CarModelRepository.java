@@ -64,4 +64,26 @@ public class CarModelRepository {
 
         return null;
     }
+
+    public void updateCarModel(CarModel carModel){
+        String sql = "UPDATE car_model " +
+                "SET car_brand_id = ?, model_name = ?, equipment_level = ?, shift_gear_type = ?, fuel_type = ? " +
+                "WHERE car_model_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, carModel.getCarBrandId());
+            statement.setString(2, carModel.getModelName());
+            statement.setString(3, carModel.getEquipmentLevel());
+            statement.setString(4, carModel.getShiftGearType());
+            statement.setString(5, carModel.getFuelType());
+            statement.setInt(6, carModel.getCarModelId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
