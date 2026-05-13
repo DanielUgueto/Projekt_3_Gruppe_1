@@ -3,7 +3,6 @@ package dk.ek.bilabonnement2026.controller;
 import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.CustomerAddress;
 import dk.ek.bilabonnement2026.model.Employee;
-import dk.ek.bilabonnement2026.model.ZipCode;
 import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.ZipCodeService;
@@ -11,12 +10,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-import java.util.List;
 
 
 @Controller
@@ -37,8 +34,6 @@ public class CustomerController {
             return "redirect:/";
         }
 
-        List<ZipCode> zipCodes = zipCodeService.getAllZipCodes();
-        model.addAttribute("zipCodes", zipCodes);
 
         return "register-customer";
     }
@@ -66,17 +61,15 @@ public class CustomerController {
         String error = customerService.registerCustomer(customer, customerAddress);
 
         if (error != null) {
-            List<ZipCode> zipCodes = zipCodeService.getAllZipCodes();
             model.addAttribute("error", error);
-            model.addAttribute("zipCodes", zipCodes);
             return "register-customer";
         }
 
         return employeeService.redirectByRole(employee);
     }
 
-    @GetMapping("/customer/edit/{customerId}")
-    public String showEditCustomer(@PathVariable int customerId,
+    @GetMapping("/customer/edit/")
+    public String showEditCustomer(@RequestParam int customerId,
                                    HttpSession session,
                                    Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -98,8 +91,8 @@ public class CustomerController {
         return "edit-customer";
     }
 
-    @PostMapping("/customer/edit/{customerId}")
-    public String updateCustomer(@PathVariable int customerId,
+    @PostMapping("/customer/edit/")
+    public String updateCustomer(@RequestParam int customerId,
                                  @RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName,
                                  @RequestParam("email") String email,
