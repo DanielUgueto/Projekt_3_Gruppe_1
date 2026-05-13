@@ -20,4 +20,8 @@ public class CarModelService {
     public CarModel getCarModelByCarModelId(int carModelId){
         return carModelRepository.getCarModelByCarModelId(carModelId);
     }
+
+    public void updateCarModel(CarModel carModel) {
+        carModelRepository.updateCarModel(carModel);
+    }
 }
