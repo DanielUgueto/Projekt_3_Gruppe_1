@@ -32,7 +32,7 @@
                 <form th:action="@{/dashboard/car}" method="get">
                     <label for="vinNumber">Søg efter stelnummer: </label>
                     <input type="text" name="vinNumber" id="vinNumber">
-                    <button type="submit">Filtrer</button>
+                    <button type="submit">Søg</button>
                 </form>
             </div>
         </section>
@@ -110,14 +110,15 @@
             </div>
 
             <div>
-                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
-                <p th:if="${success != null}" th:text="${success}" style="color:green;"></p>
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
             </div>
         </article>
 
         <article class="selected-car-placeholder" th:if="${selectedCar == null}">
             <h2>Ingen bil valgt</h2>
             <p>Vælg en bil i oversigten til venstre for at se detaljer her.</p>
+            <p th:if="${notFound != null}" th:text="${notFound}" style="color: red"></p>
         </article>
 
 

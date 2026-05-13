@@ -47,12 +47,8 @@
 
 
         <div class="input-field">
-            <select name="zipCode" required>
-                <option value="">-- vælg postnummer --</option>
-                <option th:each="zip : ${zipCodes}"
-                        th:value="${zip.zipCode}"
-                        th:text="${zip.zipCode + ' ' + zip.city}"></option>
-            </select>
+            <input type="text" name="zipCode" placeholder="Postnummer">
+            <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red">
         </div>
 
         <button type="submit">Opret kunde</button>
