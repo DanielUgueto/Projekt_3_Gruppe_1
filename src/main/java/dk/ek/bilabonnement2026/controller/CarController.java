@@ -147,13 +147,13 @@ public class CarController {
 
         Car car = carService.getCarByCarId(carId);
         if (car == null) {
-            redirectAttributes.addFlashAttribute("carNotFound", "Bil kunne ikke findes i databasen!");
+            redirectAttributes.addFlashAttribute("error", "Bil kunne ikke findes i databasen!");
             return "redirect:/dashboard/car";
         }
 
         CarModel carModel = carModelService.getCarModelByCarModelId(car.getCarModelId());
         if (carModel == null) {
-            redirectAttributes.addFlashAttribute("carModelNotFound", "Bil model kunne ikke findes i databasen!");
+            redirectAttributes.addFlashAttribute("error", "Bil model kunne ikke findes i databasen!");
             return "redirect:/dashboard/car";
         }
 
@@ -167,7 +167,7 @@ public class CarController {
             }
         }
         if (carBrand == null) {
-            redirectAttributes.addFlashAttribute("carModelNotFound", "Bil mærket kunne ikke findes i databasen!");
+            redirectAttributes.addFlashAttribute("error", "Bil mærket kunne ikke findes i databasen!");
             return "redirect:/dashboard/car";
         }
 
@@ -234,4 +234,9 @@ public class CarController {
         redirectAttributes.addFlashAttribute("success", "Bilens info blev ændret!");
         return "redirect:/dashboard/car?carId=" + carId;
     }
+
+    // Stelnummer og nummerplade skal stadig valideres da de SKAL være unikke
+    // Validerin for at man faktisk skriver en monthly price skal også laves
+    // Generelt hvis bilen har en aktiv lejekontrakt på sig (eller ikke står som ledig) må man ikke ændre på bilen
+    // CSS er stadig ikke blevet lavet for bilen
 }
