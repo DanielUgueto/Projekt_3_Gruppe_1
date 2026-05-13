@@ -8,6 +8,7 @@ public class Customer {
     private String cprNumber;
     private String email;
     private int phoneNumber;
+    private String status;
 
     public Customer(int customerId, String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
         this.customerId = customerId;
@@ -26,7 +27,6 @@ public class Customer {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
-
 
     public int getCustomerId() {
         return customerId;
@@ -54,5 +54,9 @@ public class Customer {
 
     public int getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
