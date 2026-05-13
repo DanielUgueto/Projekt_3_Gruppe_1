@@ -1,9 +1,6 @@
 package dk.ek.bilabonnement2026.controller;
 
-import dk.ek.bilabonnement2026.model.Customer;
-import dk.ek.bilabonnement2026.model.CustomerAddress;
-import dk.ek.bilabonnement2026.model.Employee;
-import dk.ek.bilabonnement2026.model.ZipCode;
+import dk.ek.bilabonnement2026.model.*;
 import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.ZipCodeService;
@@ -62,9 +59,9 @@ public class CustomerController {
             return "register-customer";
         }
 
-        Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber);
-        CustomerAddress customerAddress = new CustomerAddress(0, zipCode, streetName, houseNumber, floor);
-        String error = customerService.registerCustomer(customer, customerAddress);
+        Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
+        CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
+        String error = customerService.registerCustomer(customer,customerAddress);
 
         if (error != null) {
             model.addAttribute("error", error);
@@ -114,7 +111,9 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber);
+        Customer existing = customerService.getCustomerByCustomerId(customerId);
+        Boolean isActive = existing != null ? existing.getStatus() : true;
+        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber, isActive);
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
         if (!zipCodeService.zipcodeExists(zipCode)) {
@@ -134,4 +133,58 @@ public class CustomerController {
 
         return employeeService.redirectByRole(employee);
     }
+
+    @PostMapping("/customer/delete")
+    public String deleteCustomer(@RequestParam("customerId") int customerId,
+                                 HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        String error = customerService.setCustomerStatusInactive(customerId);
+        if (error != null) {
+            List<Customer> list = customerService.getAllCustomers();
+            Customer selectedCustomer = null;
+            for (Customer c : list) {
+                if (c.getCustomerId() == customerId) {
+                    selectedCustomer = c;
+                    break;
+                }
+            }
+            model.addAttribute("customerList", list);
+            model.addAttribute("selectedCustomer", selectedCustomer);
+            model.addAttribute("deleteError", error);
+            return "customer-dashboard";
+        }
+        return "redirect:/customer/dashboard";
+    }
+
+
+    @GetMapping("/customer/dashboard")
+    public String showCustomerDashboard(@RequestParam(required = false) String status,
+                                   @RequestParam(required = false) Integer customerId,
+                                   HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+
+        List<Customer> list = customerService.getAllCustomers();
+
+        if (customerId != null) {
+            Customer selectedCustomer = null;
+            for (Customer c : list){
+                if (c.getCustomerId() == customerId) {
+                    selectedCustomer = c;
+                    break;
+                }
+            }
+            model.addAttribute("selectedCustomer", selectedCustomer);
+        }
+
+        model.addAttribute("customerList", list);
+
+        return "customer-dashboard";
+    }
+
 }

@@ -20,7 +20,7 @@ public class CustomerRepository {
 
 
     public void createCustomer(Customer customer) {
-        String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number, is_active) VALUES(?,?,?,?,?,?,?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class CustomerRepository {
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
             statement.setInt(6, customer.getPhoneNumber());
-
+            statement.setBoolean(7, true);
 
             statement.executeUpdate();
 
@@ -60,7 +60,8 @@ public class CustomerRepository {
                         resultSet.getInt("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number")
+                        resultSet.getInt("phone_number"),
+                        resultSet.getBoolean("is_active")
                 );
 
                 return customer;
@@ -72,41 +73,10 @@ public class CustomerRepository {
         return null;
     }
 
-    public Customer findCustomerByCustomerId(int customerId) {
-        Customer customer = null;
-        String sql = "SELECT * FROM customer WHERE customer_id = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
-
-            statement.setInt(1, customerId);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-
-                if (resultSet.next()) {
-                    customer = new Customer(
-
-                            resultSet.getInt("customer_id"),
-                            resultSet.getString("first_name"),
-                            resultSet.getString("last_name"),
-                            resultSet.getInt("drivers_license_number"),
-                            resultSet.getString("cpr_number"),
-                            resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
-                    );
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return customer;
-    }
-
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT * FROM customer WHERE is_active = true";
+
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -119,9 +89,11 @@ public class CustomerRepository {
                         resultSet.getInt("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number"));
+                        resultSet.getInt("phone_number"),
+                        resultSet.getBoolean("is_active"));
                 customerList.add(customer);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -172,7 +144,8 @@ public class CustomerRepository {
                             resultSet.getInt("drivers_license_number"),
                             resultSet.getString("cpr_number"),
                             resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
+                            resultSet.getInt("phone_number"),
+                            resultSet.getBoolean("is_active")
                     );
                 }
             }
@@ -204,7 +177,8 @@ public class CustomerRepository {
                             resultSet.getInt("drivers_license_number"),
                             resultSet.getString("cpr_number"),
                             resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
+                            resultSet.getInt("phone_number"),
+                            resultSet.getBoolean("is_active")
                     );
                 }
             }
@@ -214,4 +188,50 @@ public class CustomerRepository {
         }
         return customer;
     }
+
+    public void setCustomerStatusInactive(int customerId) {
+        String sql = "UPDATE customer SET is_active = false WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public Customer findCustomerByCustomerId(int customerId) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    customer = new Customer(
+                            resultSet.getInt("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("cpr_number"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone_number"),
+                            resultSet.getBoolean("is_active")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+
 }

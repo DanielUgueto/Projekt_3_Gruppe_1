@@ -183,9 +183,9 @@ VALUES (1, 'JT100000000000001', 'AB12345', 2999.00, 'Ledig', 'White', '2022-01-1
        (30, 'RE300000000000003', 'KC12347', 3799.00, 'Ledig', 'White', '2023-11-12');
 
 -- Customers
-INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number)
-VALUES ('Anders', 'Jensen', 12345678, '010190-1234', 'demo@email.com', 12345678),
-       ('Mette', 'Hansen', 87654321, '020285-5678', 'demo2@email.com', 87654321);
+INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number, is_active)
+VALUES ('Anders', 'Jensen', 12345678, '010190-1234', 'demo@email.com', 12345678, true),
+       ('Mette', 'Hansen', 87654321, '020285-5678', 'demo2@email.com', 87654321, true);
 
 
 -- Customer Addresses

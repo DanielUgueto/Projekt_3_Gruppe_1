@@ -8,8 +8,9 @@ public class Customer {
     private String cprNumber;
     private String email;
     private int phoneNumber;
+    private Boolean isActive;
 
-    public Customer(int customerId, String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+    public Customer(int customerId, String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber, Boolean isActive) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,16 +18,18 @@ public class Customer {
         this.cprNumber = cprNumber;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
     }
-    public Customer( String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+
+    public Customer(String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.driversLicenseNumber = driversLicenseNumber;
         this.cprNumber = cprNumber;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
     }
-
 
     public int getCustomerId() {
         return customerId;
@@ -54,5 +57,9 @@ public class Customer {
 
     public int getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public Boolean getStatus() {
+        return isActive;
     }
 }
