@@ -225,16 +225,11 @@ public class CarController {
             carBrandId = savedBrand.getCarBrandId();
         }
 
-        CarModel carModel = carModelService.getCarModelByCarModelId(carModelId);
-        if (carModel == null) {
-            redirectAttributes.addFlashAttribute("error", "Bil modellen kunne ikke findes!");
-            return "redirect:/dashboard/car/edit?carId=" + carId;
-        }
+        CarModel updatedCarModel = new CarModel(carModelId, carBrandId, modelName, equipmentLevel, shiftGearType, fuelType);
+        carModelService.updateCarModel(updatedCarModel);
 
-
-
-        Car car = new Car(carId, carModelId, vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
-        CarModel carModel = new CarModel(carModelId, carBrandId, modelName, equipmentLevel, shiftGearType, fuelType);
+        Car updatedCar = new Car(carId, carModelId, vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
+        carService.updateCar(updatedCar);
 
         redirectAttributes.addFlashAttribute("success", "Bilens info blev ændret!");
         return "redirect:/dashboard/car?carId=" + carId;
