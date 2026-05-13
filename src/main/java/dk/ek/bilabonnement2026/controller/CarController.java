@@ -193,7 +193,7 @@ public class CarController {
                           @RequestParam("colour") String colour,
                           @RequestParam("status") String status,
                           @RequestParam("carId") int carId,
-                          @RequestParam("carModelId") int carModelId, HttpSession session) {
+                          @RequestParam("carModelId") int carModelId, HttpSession session, RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null){
             return "redirect:/";
@@ -212,15 +212,22 @@ public class CarController {
         }
 
         if (carBrandId == null) {
+            carBrandService.saveBrand(brandName);
 
+            CarBrand savedBrand = carBrandService.getCarBrandByBrandName(brandName);
+            if (savedBrand == null) {
+                redirectAttributes.addFlashAttribute("brandError", "Bilmærket kunne ikke gemmes!");
+                return "redirect:/dashboard/car/edit?carId=" + carId;
+            }
+
+            carBrandId = savedBrand.getCarBrandId();
         }
+
 
         Car car = new Car(carId, carModelId, vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
         CarModel carModel = new CarModel(carModelId, carBrandId, modelName, equipmentLevel, shiftGearType, fuelType);
-        CarBrand carBrand = new CarBrand(carBrandId, brandName);
 
-
-
-        return "redirect:/dashboard/car";
+        redirectAttributes.addFlashAttribute("success", "Bilens info blev ændret!");
+        return "redirect:/dashboard/car?carId=" + carId;
     }
 }
