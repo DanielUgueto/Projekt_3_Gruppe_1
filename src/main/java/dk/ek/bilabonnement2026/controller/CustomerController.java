@@ -161,11 +161,6 @@ public class CustomerController {
             return "edit-customer";
         }
 
-        Customer existing = customerService.getCustomerByCustomerId(customerId);
-        Boolean isActive = existing != null ? existing.getStatus() : true;
-        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber, isActive);
-        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
-
         if (!zipCodeService.zipcodeExists(zipCode)) {
             model.addAttribute("error", "Postnummer ikke fundet");
             addEditFormDataToCustomerEditModel(model, customerId,
@@ -177,7 +172,7 @@ public class CustomerController {
 
         phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
         cprNumber = customerService.normalizeCpr(cprNumber);
-        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber);
+        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber,existingCustomer.getStatus());
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
 
@@ -272,7 +267,7 @@ public class CustomerController {
                                                     String floor, String zipCode, Customer existing) {
         Customer customer = new Customer(customerId, firstName,
                 lastName, existing.getDriversLicenseNumber(),
-                cprNumber, email, phoneNumber);
+                cprNumber, email, phoneNumber,existing.getStatus());
 
         CustomerAddress address = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
