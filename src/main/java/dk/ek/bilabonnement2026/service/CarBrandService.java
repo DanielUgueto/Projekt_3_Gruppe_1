@@ -16,4 +16,12 @@ public class CarBrandService {
     public List<CarBrand> getAllCarBrands(){
         return carBrandRepository.getAllBrands();
     }
+
+    public void saveBrand(String brandName) {
+        carBrandRepository.saveBrand(brandName);
+    }
+
+    public CarBrand getCarBrandByBrandName(String brandName) {
+        return carBrandRepository.getCarBrandByBrandName(brandName);
+    }
 }
