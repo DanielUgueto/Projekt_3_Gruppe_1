@@ -63,4 +63,8 @@ public class CarService {
     public Car getCarByCarId(int carId){
         return carRepository.findCarByCarNumber(carId);
     }
+
+    public void updateCar(Car car) {
+        carRepository.updateCar(car);
+    }
 }
