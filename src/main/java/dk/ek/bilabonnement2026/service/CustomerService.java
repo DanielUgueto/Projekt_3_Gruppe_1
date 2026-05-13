@@ -69,7 +69,7 @@ public class CustomerService {
             }
         }
 
-        if(existingCustomer.getPhoneNumber() != customer.getPhoneNumber()){
+        if(!existingCustomer.getPhoneNumber().equals(customer.getPhoneNumber())){
             if(customerRepository.findCustomerByCustomerPhoneNumber(customer.getPhoneNumber()) != null){
                 return "Mobilnummeret er taget af en anden kunde";
             }
