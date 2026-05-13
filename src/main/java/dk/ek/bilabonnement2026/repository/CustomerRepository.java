@@ -72,24 +72,9 @@ public class CustomerRepository {
         return null;
     }
 
-    public void setCustomerStatusInactive(int customerId) {
-        String sql = "UPDATE customer SET status = 'inactive' WHERE customer_id = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setInt(1, customerId);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
-        String sql = "SELECT * FROM customer WHERE status != 'inactive' OR status IS NULL";
-
+        String sql = "SELECT * FROM customer";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
