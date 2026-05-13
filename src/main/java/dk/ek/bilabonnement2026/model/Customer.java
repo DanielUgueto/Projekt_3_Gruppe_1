@@ -20,6 +20,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
     }
+
     public Customer(String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;

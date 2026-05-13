@@ -283,4 +283,33 @@ public class RentalContractRepository {
         }
         return rentalContractOverview;
     }
+
+    public RentalContract findActiveContractByCustomerId(int customerId) {
+        RentalContract rentalContract = null;
+        String sql = "SELECT * FROM rental_contract WHERE customer_id = ? AND status = 'Aktiv'";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, customerId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    rentalContract = new RentalContract(resultSet.getInt("rental_contract_id"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getInt("customer_id"),
+                            resultSet.getInt("car_id"),
+                            resultSet.getDate("start_date").toLocalDate(),
+                            resultSet.getDate("end_date").toLocalDate(),
+                            resultSet.getString("pickup_location"),
+                            resultSet.getString("status"),
+                            resultSet.getString("subscription_type"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentalContract;
+    }
+
+
 }
