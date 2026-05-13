@@ -18,7 +18,8 @@ CREATE TABLE customer
     drivers_license_number INT          NOT NULL UNIQUE,
     cpr_number             VARCHAR(20)  NOT NULL UNIQUE,
     email                  VARCHAR(255) NOT NULL,
-    phone_number           INT
+    phone_number           INT          NOT NULL,
+    status                 VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE customer_address
