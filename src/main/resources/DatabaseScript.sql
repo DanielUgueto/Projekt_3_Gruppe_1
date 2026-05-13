@@ -19,7 +19,7 @@ CREATE TABLE customer
     cpr_number             VARCHAR(20)  NOT NULL UNIQUE,
     email                  VARCHAR(255) NOT NULL,
     phone_number           INT          NOT NULL,
-    status                 VARCHAR(255) NOT NULL
+    isActive               BOOLEAN      NOT NULL
 );
 
 CREATE TABLE customer_address
