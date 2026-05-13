@@ -83,7 +83,11 @@
             </section>
 
             <section class="selected-car-section">
-                <form th:action="@{/customer/delete}" method="post">
+                <a th:href="@{/customer/edit(customerId=${selectedCustomer.customerId})}" class="edit-btn">
+                    Rediger kunde
+                </a>
+
+                <form th:action="@{/customer/delete}" onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som inaktiv?'); " method="post">
                     <input type="hidden" name="customerId" th:value="${selectedCustomer.customerId}">
 
                     <p th:if="${deleteError != null}" style="color: red;" th:text="${deleteError}"></p>

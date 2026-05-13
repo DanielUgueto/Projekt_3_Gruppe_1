@@ -156,6 +156,20 @@ public class CustomerRepository {
         }
     }
 
+    public void setCustomerStatusInactive(int customerId) {
+        String sql = "UPDATE customer SET is_active = false WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Customer findCustomerByCustomerCprNumber(String cprNumber) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE cpr_number = ?";

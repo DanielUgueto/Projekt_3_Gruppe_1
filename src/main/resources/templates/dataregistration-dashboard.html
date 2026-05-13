@@ -34,7 +34,7 @@
         </div>
         <div class="create-box">
             <a th:href="@{/customer/dashboard}">
-                <p>Slet kunde</p>
+                <p>Rediger & slet kunde</p>
             </a>
         </div>
         <div class="create-box">
@@ -43,20 +43,6 @@
             </a>
         </div>
     </div>
-
-
-
-<!--fjern understående når customer dashboard er klar-->
-    <section>
-        <h2>Rediger eksisterende kunde</h2>
-        <ul>
-            <li th:each="customer : ${customerList}">
-                <span th:text="${customer.firstName + ' ' + customer.lastName}"></span>
-                <span th:text="${customer.email}"></span>
-                <a th:href="@{/customer/edit(customerId=${customer.customerId})}">Rediger</a>
-            </li>
-        </ul>
-    </section>
 
 </main>
 
