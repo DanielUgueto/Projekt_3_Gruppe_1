@@ -17,6 +17,9 @@
 
     <form th:action="@{/customer/edit(customerId=${selectedCustomer.customerId})}" method="post">
 
+        <p th:if="${error}" th:text="${error}" style="color:red"></p>
+        <p th:if="${success}" th:text="${success}" style="color:green"></p>
+
         <div class="input-field">
             <label for="firstName">Fornavn:</label>
             <input type="text" name="firstName" id="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
@@ -57,7 +60,7 @@
             <label for="zipCode">Post nummer:</label>
             <input type="text" name="zipCode" id="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
         </div>
-        <p th:if="${error}" th:text="${error}" style="color:red"></p>
+
         <button type="submit">Gem ændringer</button>
     </form>
 </section>

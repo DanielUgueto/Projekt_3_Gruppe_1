@@ -141,6 +141,7 @@ public class CustomerController {
 
         Customer existingCustomer = customerService.getCustomerByCustomerId(customerId);
         if (existingCustomer == null) {
+            model.addAttribute("error","Kunden kunne ikke findes");
             return employeeService.redirectByRole(employee);
         }
 
@@ -185,7 +186,11 @@ public class CustomerController {
             return "edit-customer";
         }
 
-        return employeeService.redirectByRole(employee);
+        model.addAttribute("success","Kunden er opdateret");
+        addEditFormDataToCustomerEditModel(model, customerId,
+                firstName, lastName, email, phoneNumber,
+                cprNumber, streetName, houseNumber, floor, zipCode, customer);
+        return "edit-customer";
     }
 
     @PostMapping("/customer/delete")
