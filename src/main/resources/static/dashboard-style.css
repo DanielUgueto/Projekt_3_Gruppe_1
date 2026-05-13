@@ -98,6 +98,12 @@
     margin-bottom: 20px;
 }
 
+.selected-car-header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .selected-car-section {
     margin-bottom: 15px;
     border-top: 1px solid var(--color-muted);

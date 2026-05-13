@@ -17,4 +17,7 @@ public class CarModelService {
         return carModelRepository.getAllCarModels();
     }
 
+    public CarModel getCarModelByCarModelId(int carModelId){
+        return carModelRepository.getCarModelByCarModelId(carModelId);
+    }
 }

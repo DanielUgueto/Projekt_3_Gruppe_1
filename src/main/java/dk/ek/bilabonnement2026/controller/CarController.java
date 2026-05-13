@@ -1,9 +1,7 @@
 package dk.ek.bilabonnement2026.controller;
 
-import dk.ek.bilabonnement2026.model.Car;
-import dk.ek.bilabonnement2026.model.CarModel;
-import dk.ek.bilabonnement2026.model.CarOverview;
-import dk.ek.bilabonnement2026.model.Employee;
+import dk.ek.bilabonnement2026.model.*;
+import dk.ek.bilabonnement2026.service.CarBrandService;
 import dk.ek.bilabonnement2026.service.CarModelService;
 import dk.ek.bilabonnement2026.service.CarService;
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,6 +23,9 @@ public class CarController {
 
     @Autowired
     CarModelService carModelService;
+
+    @Autowired
+    CarBrandService carBrandService;
 
     @GetMapping("/cars/create")
     public String showCreateCarForm(HttpSession session, Model model) {
@@ -111,7 +111,9 @@ public class CarController {
     }
 
     @PostMapping("/dashboard/car/remove")
-    public String setCarStatusAsExpired(@RequestParam("carId") int carId, HttpSession session, RedirectAttributes redirectAttributes){
+    public String setCarStatusAsExpired(@RequestParam("carId") int carId,
+                                        HttpSession session,
+                                        RedirectAttributes redirectAttributes){
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null){
             return "redirect:/";
@@ -129,5 +131,96 @@ public class CarController {
         }
 
         return "redirect:/dashboard/car?carId=" + carId;
+    }
+
+    @GetMapping("/dashboard/car/edit")
+    public String getCarEditHTML(@RequestParam("carId") int carId, HttpSession session,
+                                 Model model, RedirectAttributes redirectAttributes){
+
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dashboard/car";
+        }
+
+        Car car = carService.getCarByCarId(carId);
+        if (car == null) {
+            redirectAttributes.addFlashAttribute("carNotFound", "Bil kunne ikke findes i databasen!");
+            return "redirect:/dashboard/car";
+        }
+
+        CarModel carModel = carModelService.getCarModelByCarModelId(car.getCarModelId());
+        if (carModel == null) {
+            redirectAttributes.addFlashAttribute("carModelNotFound", "Bil model kunne ikke findes i databasen!");
+            return "redirect:/dashboard/car";
+        }
+
+        List<CarBrand> brands = carBrandService.getAllCarBrands();
+
+        CarBrand carBrand = null;
+        for (CarBrand brand : brands) {
+            if (brand.getCarBrandId() == carModel.getCarBrandId()) {
+                carBrand = brand;
+                break;
+            }
+        }
+        if (carBrand == null) {
+            redirectAttributes.addFlashAttribute("carModelNotFound", "Bil mærket kunne ikke findes i databasen!");
+            return "redirect:/dashboard/car";
+        }
+
+
+        model.addAttribute("brands", brands);
+        model.addAttribute("car", car);
+        model.addAttribute("carModel", carModel);
+        model.addAttribute("carBrand", carBrand);
+
+        return "edit-car";
+    }
+
+    @PostMapping("/dashboard/car/edit")
+    public String editCar(@RequestParam("brandName") String brandName,
+                          @RequestParam("modelName") String modelName,
+                          @RequestParam("equipmentLevel") String equipmentLevel,
+                          @RequestParam("fuelType") String fuelType,
+                          @RequestParam("shiftGearType") String shiftGearType,
+                          @RequestParam("vinNumber") String vinNumber,
+                          @RequestParam("licensePlate") String licensePlate,
+                          @RequestParam("monthlyPrice") double monthlyPrice,
+                          @RequestParam("registrationDate") String registrationDate,
+                          @RequestParam("colour") String colour,
+                          @RequestParam("status") String status,
+                          @RequestParam("carId") int carId,
+                          @RequestParam("carModelId") int carModelId, HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dashboard/car";
+        }
+
+        List<CarBrand> brands = carBrandService.getAllCarBrands();
+        Integer carBrandId = null;
+        for (CarBrand brand : brands) {
+            if (brand.getBrandName().equalsIgnoreCase(brandName)) {
+                carBrandId = brand.getCarBrandId();
+                break;
+            }
+        }
+
+        if (carBrandId == null) {
+
+        }
+
+        Car car = new Car(carId, carModelId, vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
+        CarModel carModel = new CarModel(carModelId, carBrandId, modelName, equipmentLevel, shiftGearType, fuelType);
+        CarBrand carBrand = new CarBrand(carBrandId, brandName);
+
+
+
+        return "redirect:/dashboard/car";
     }
 }

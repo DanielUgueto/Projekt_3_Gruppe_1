@@ -214,4 +214,40 @@ public class CarRepository {
 
         return list;
     }
+
+    public CarOverview findCarOverviewByCarId(int carId){
+        String sql = "SELECT * FROM car c " +
+                "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
+                "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
+                "WHERE c.car_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, carId);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new CarOverview(
+                        rs.getString("brand_name"),
+                        rs.getInt("car_id"),
+                        rs.getString("colour"),
+                        rs.getString("equipment_level"),
+                        rs.getString("license_plate"),
+                        rs.getString("model_name"),
+                        rs.getDouble("monthly_price"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("status"),
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

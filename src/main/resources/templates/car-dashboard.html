@@ -75,10 +75,17 @@
     <div class="dashboard-split-single-car">
         <article class="selected-car-panel" th:if="${selectedCar != null}">
             <header class="selected-car-header">
-                <h2>
-                    <span th:text="${selectedCar.brandName}"></span>
-                    <span th:text="${selectedCar.modelName}"></span>
-                </h2>
+                <div class="selected-car-header-nav">
+                    <h2 style="margin: 0">
+                        <span th:text="${selectedCar.brandName}"></span>
+                        <span th:text="${selectedCar.modelName}"></span>
+                    </h2>
+
+                    <a th:href="@{/dashboard/car/edit(carId=${selectedCar.carId})}">
+                        <button>Ændr info om bil</button>
+                    </a>
+                </div>
+
                 <p th:text="${selectedCar.equipmentLevel}"></p>
             </header>
 
