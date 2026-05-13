@@ -250,4 +250,28 @@ public class CarRepository {
 
         return null;
     }
+
+    public void updateCar(Car car) {
+        String sql = "UPDATE car " +
+                "SET car_model_id = ?, vin_number = ?, license_plate = ?, monthly_price = ?, status = ?, colour = ?, registration_date = ? " +
+                "WHERE car_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, car.getCarModelId());
+            statement.setString(2, car.getVinNumber());
+            statement.setString(3, car.getLicensePlate());
+            statement.setDouble(4, car.getMonthlyPrice());
+            statement.setString(5, car.getStatus());
+            statement.setString(6, car.getColour());
+            statement.setString(7, car.getRegistrationDate());
+            statement.setInt(8, car.getCarId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
