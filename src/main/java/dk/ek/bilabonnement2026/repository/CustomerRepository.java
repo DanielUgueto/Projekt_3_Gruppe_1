@@ -27,10 +27,10 @@ public class CustomerRepository {
 
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
-            statement.setInt(3, customer.getDriversLicenseNumber());
+            statement.setString(3, customer.getDriversLicenseNumber());
             statement.setString(4, customer.getCprNumber());
             statement.setString(5, customer.getEmail());
-            statement.setInt(6, customer.getPhoneNumber());
+            statement.setString(6, customer.getPhoneNumber());
 
 
             statement.executeUpdate();
@@ -57,10 +57,10 @@ public class CustomerRepository {
                         resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
-                        resultSet.getInt("drivers_license_number"),
+                        resultSet.getString("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number")
+                        resultSet.getString("phone_number")
                 );
 
                 return customer;
@@ -90,10 +90,10 @@ public class CustomerRepository {
                             resultSet.getInt("customer_id"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
-                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("drivers_license_number"),
                             resultSet.getString("cpr_number"),
                             resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
+                            resultSet.getString("phone_number")
                     );
                 }
             }
@@ -116,10 +116,10 @@ public class CustomerRepository {
                 Customer customer = new Customer(resultSet.getInt("customer_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
-                        resultSet.getInt("drivers_license_number"),
+                        resultSet.getString("drivers_license_number"),
                         resultSet.getString("cpr_number"),
                         resultSet.getString("email"),
-                        resultSet.getInt("phone_number"));
+                        resultSet.getString("phone_number"));
                 customerList.add(customer);
             }
         } catch (SQLException e) {
@@ -143,7 +143,7 @@ public class CustomerRepository {
             statement.setString(2, customer.getLastName());
             statement.setString(3, customer.getCprNumber());
             statement.setString(4, customer.getEmail());
-            statement.setInt(5, customer.getPhoneNumber());
+            statement.setString(5, customer.getPhoneNumber());
 
             statement.executeUpdate();
         }catch (SQLException e){
@@ -169,10 +169,10 @@ public class CustomerRepository {
                             resultSet.getInt("customer_id"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
-                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("drivers_license_number"),
                             resultSet.getString("cpr_number"),
                             resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
+                            resultSet.getString("phone_number")
                     );
                 }
             }
@@ -183,7 +183,7 @@ public class CustomerRepository {
         return customer;
     }
 
-    public Customer findCustomerByCustomerPhoneNumber(int phoneNumber) {
+    public Customer findCustomerByCustomerPhoneNumber(String phoneNumber) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE phone_number = ?";
 
@@ -191,7 +191,7 @@ public class CustomerRepository {
              PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            statement.setInt(1, phoneNumber);
+            statement.setString(1, phoneNumber);
 
             try (ResultSet resultSet = statement.executeQuery()) {
 
@@ -201,10 +201,10 @@ public class CustomerRepository {
                             resultSet.getInt("customer_id"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
-                            resultSet.getInt("drivers_license_number"),
+                            resultSet.getString("drivers_license_number"),
                             resultSet.getString("cpr_number"),
                             resultSet.getString("email"),
-                            resultSet.getInt("phone_number")
+                            resultSet.getString("phone_number")
                     );
                 }
             }

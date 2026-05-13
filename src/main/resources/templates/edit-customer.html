@@ -22,13 +22,13 @@
             <input type="text" name="lastName" placeholder="Efternavn" th:value="${selectedCustomer.lastName}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
+            <input type="text" inputmode="numeric" name="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
         </div>
         <div class="input-field">
             <input type="email" name="email" placeholder="E-mail" th:value="${selectedCustomer.email}" required>
         </div>
         <div class="input-field">
-            <input type="text" name="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
+            <input type="tel" name="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
         </div>
 
 

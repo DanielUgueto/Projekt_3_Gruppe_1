@@ -3,7 +3,6 @@ package dk.ek.bilabonnement2026.controller;
 import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.CustomerAddress;
 import dk.ek.bilabonnement2026.model.Employee;
-import dk.ek.bilabonnement2026.model.ZipCode;
 import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.ZipCodeService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-import java.util.List;
 
 
 @Controller
@@ -43,10 +41,10 @@ public class CustomerController {
     public String registerCustomer(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("driversLicenseNumber") int driversLicenseNumber,
+            @RequestParam("driversLicenseNumber") String driversLicenseNumber,
             @RequestParam("cprNumber") String cprNumber,
             @RequestParam("email") String email,
-            @RequestParam("phoneNumber") int phoneNumber,
+            @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("streetName") String streetName,
             @RequestParam("houseNumber") String houseNumber,
             @RequestParam("floor") String floor,
@@ -102,7 +100,7 @@ public class CustomerController {
                                  @RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName,
                                  @RequestParam("email") String email,
-                                 @RequestParam("phoneNumber") int phoneNumber,
+                                 @RequestParam("phoneNumber") String phoneNumber,
                                  @RequestParam("cprNumber") String cprNumber,
                                  @RequestParam("zipCode") String zipCode,
                                  @RequestParam("streetName") String streetName,
@@ -114,7 +112,7 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber);
+        Customer customer = new Customer(customerId, firstName, lastName, "", cprNumber, email, phoneNumber);
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
         if (!zipCodeService.zipcodeExists(zipCode)) {
