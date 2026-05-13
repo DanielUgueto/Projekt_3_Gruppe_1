@@ -19,38 +19,48 @@
 
     <form th:action="@{/customer/register}" method="post">
         <div class="input-field">
-            <input type="text" name="firstName" th:value="${firstName}" placeholder="Fornavn" required>
+            <label for="firstName">Fornavn:</label>
+            <input type="text" name="firstName" id="firstName" th:value="${firstName}" placeholder="Fornavn" required>
         </div>
         <div class="input-field">
-            <input type="text" name="lastName" th:value="${lastName}" placeholder="Efternavn" required>
+            <label for="lastName">Efternavn:</label>
+            <input type="text" name="lastName" id="lastName" th:value="${lastName}" placeholder="Efternavn" required>
         </div>
         <div class="input-field">
-            <input type="text" inputmode="numeric" name="driversLicenseNumber" th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
+            <label for="driversLicenseNumber">Kørekort nr. :</label>
+            <input type="text" inputmode="numeric" name="driversLicenseNumber" id="driversLicenseNumber" th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
         </div>
         <div class="input-field">
-            <input type="text" inputmode="numeric" name="cprNumber" th:value="${cprNumber}" placeholder="CPR-nummer" required>
+            <label for="cprNumber">CPR-Nummer:</label>
+            <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" th:value="${cprNumber}" placeholder="CPR-nummer" required>
         </div>
         <div class="input-field">
-            <input type="email" name="email" th:value="${email}" placeholder="Email adresse" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" th:value="${email}" placeholder="Email adresse" required>
         </div>
         <div class="input-field">
-            <input type="tel" name="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
-        </div>
-
-
-        <div class="input-field">
-            <input type="text" name="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="houseNumber" th:value="${houseNumber}" placeholder="Husnummer" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="floor" th:value="${floor}" placeholder="Etage">
+            <label for="phoneNumber">Tlf.nr:</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
         </div>
 
 
         <div class="input-field">
-            <input type="text" name="zipCode" th:value="${zipCode}" placeholder="Postnummer">
+            <label for="streetName">Gade:</label>
+            <input type="text" name="streetName" id="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
+        </div>
+        <div class="input-field">
+            <label for="houseNumber">Hus nr. :</label>
+            <input type="text" name="houseNumber" id="houseNumber" th:value="${houseNumber}" placeholder="Husnummer" required>
+        </div>
+        <div class="input-field">
+            <label for="floor">Etage:</label>
+            <input type="text" name="floor" id="floor" th:value="${floor}" placeholder="Etage">
+        </div>
+
+
+        <div class="input-field">
+            <label for="zipCode">Post nr. :</label>
+            <input type="text" name="zipCode" id="zipCode" th:value="${zipCode}" placeholder="Postnummer">
             <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red">
         </div>
 

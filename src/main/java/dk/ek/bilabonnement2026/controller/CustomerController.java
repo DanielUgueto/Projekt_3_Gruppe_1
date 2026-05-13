@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 
-
 @Controller
 public class CustomerController {
 
@@ -55,33 +54,33 @@ public class CustomerController {
             return "redirect:/";
         }
 
-        if(!customerService.isValidPhoneNumber(phoneNumber)){
-            model.addAttribute("error","Ugyldigt telefonnummer");
-           addFormDataToCustomerModel(model,firstName,lastName,
-                   driversLicenseNumber,cprNumber,email,
-                   phoneNumber,streetName,houseNumber,floor,zipCode);
+        if (!customerService.isValidPhoneNumber(phoneNumber)) {
+            model.addAttribute("error", "Ugyldigt telefonnummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
-        if(!customerService.isValidCpr(cprNumber)){
-            model.addAttribute("error","Ugyldigt CPR-nummer");
-            addFormDataToCustomerModel(model,firstName,lastName,
-                    driversLicenseNumber,cprNumber,email,
-                    phoneNumber,streetName,houseNumber,floor,zipCode);
+        if (!customerService.isValidCpr(cprNumber)) {
+            model.addAttribute("error", "Ugyldigt CPR-nummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
-        if(!customerService.isValidDriversLicense(driversLicenseNumber)){
-            model.addAttribute("error","Ugyldigt Kørekort nummer");
-            addFormDataToCustomerModel(model,firstName,lastName,
-                    driversLicenseNumber,cprNumber,email,
-                    phoneNumber,streetName,houseNumber,floor,zipCode);
+        if (!customerService.isValidDriversLicense(driversLicenseNumber)) {
+            model.addAttribute("error", "Ugyldigt Kørekort nummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
 
         if (!zipCodeService.zipcodeExists(zipCode)) {
             model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
-            addFormDataToCustomerModel(model,firstName,lastName,
-                    driversLicenseNumber,cprNumber,email,
-                    phoneNumber,streetName,houseNumber,floor,zipCode);
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
         driversLicenseNumber = customerService.normalizeDriversLicense(driversLicenseNumber);
@@ -139,21 +138,51 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-        Customer customer = new Customer(customerId, firstName, lastName, "", cprNumber, email, phoneNumber);
-        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
-        if (!zipCodeService.zipcodeExists(zipCode)) {
-            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
-            model.addAttribute("selectedCustomer", customer);
-            model.addAttribute("selectedCustomerAddress", customerAddress);
+        Customer existingCustomer = customerService.getCustomerByCustomerId(customerId);
+        if (existingCustomer == null) {
+            return employeeService.redirectByRole(employee);
+        }
+
+        if (!customerService.isValidPhoneNumber(phoneNumber)) {
+            model.addAttribute("error", "Ugyldigt telefonnummer");
+
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
             return "edit-customer";
         }
+
+        if (!customerService.isValidCpr(cprNumber)) {
+            model.addAttribute("error", "Ugyldigt CPR-nummer");
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
+            return "edit-customer";
+        }
+
+
+        if (!zipCodeService.zipcodeExists(zipCode)) {
+            model.addAttribute("error", "Postnummer ikke fundet");
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
+            return "edit-customer";
+        }
+
+
+        phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
+        cprNumber = customerService.normalizeCpr(cprNumber);
+        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber);
+        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
+
 
         String error = customerService.updateCustomer(customer, customerAddress);
         if (error != null) {
             model.addAttribute("error", error);
-            model.addAttribute("selectedCustomer", customer);
-            model.addAttribute("selectedCustomerAddress", customerAddress);
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
             return "edit-customer";
         }
 
@@ -161,11 +190,11 @@ public class CustomerController {
     }
 
     private void addFormDataToCustomerModel(Model model,
-                                            String firstName,String lastName,
+                                            String firstName, String lastName,
                                             String driversLicenseNumber, String cprNumber,
                                             String email, String phoneNumber,
                                             String streetName, String houseNumber,
-                                            String floor, String zipCode){
+                                            String floor, String zipCode) {
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("driversLicenseNumber", driversLicenseNumber);
@@ -176,5 +205,20 @@ public class CustomerController {
         model.addAttribute("houseNumber", houseNumber);
         model.addAttribute("floor", floor);
         model.addAttribute("zipCode", zipCode);
+    }
+
+    private void addEditFormDataToCustomerEditModel(Model model, int customerId,
+                                                    String firstName, String lastName,
+                                                    String email, String phoneNumber, String cprNumber,
+                                                    String streetName, String houseNumber,
+                                                    String floor, String zipCode, Customer existing) {
+        Customer customer = new Customer(customerId, firstName,
+                lastName, existing.getDriversLicenseNumber(),
+                cprNumber, email, phoneNumber);
+
+        CustomerAddress address = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
+
+        model.addAttribute("selectedCustomer", customer);
+        model.addAttribute("selectedCustomerAddress", address);
     }
 }
