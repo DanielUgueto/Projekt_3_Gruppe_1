@@ -40,11 +40,16 @@ public class PageController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
-                        HttpSession session){
+                        HttpSession session, Model model){
 
         Employee employee = employeeService.login(email, password);
 
         if (employee == null){
+            model.addAttribute("error","Du er ikke logget ind.");
+            return "login";
+        }
+        if(!employee.getIs_active()){
+            model.addAttribute("error","Din bruger er inaktiv, kontakt en administrator.");
             return "login";
         }
 
