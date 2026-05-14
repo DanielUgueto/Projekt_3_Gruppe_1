@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret kunde</title>
-    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
-    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{/add-employee-style.css}">
+    <link rel="stylesheet"  th:href="@{/style.css}">
+    <link rel="stylesheet"  th:href="@{/add-employee-style.css}">
 
 </head>
 <body>
@@ -14,43 +14,61 @@
 <h1>Opret kunde</h1>
 
 <section class="create-employee-box">
+
+
     <form th:action="@{/customer/register}" method="post">
+        <p th:if="${error}" th:text="${error}" class="error-message" style="color:red"></p>
+
+        <section class="create-employee-box-section">
+            <h3>Person info:</h3>
         <div class="input-field">
-            <input type="text" name="firstName" placeholder="Fornavn" required>
+            <label for="firstName">Fornavn:</label>
+            <input type="text" name="firstName" id="firstName" th:value="${firstName}" placeholder="Fornavn" required>
         </div>
         <div class="input-field">
-            <input type="text" name="lastName" placeholder="Efternavn" required>
+            <label for="lastName">Efternavn:</label>
+            <input type="text" name="lastName" id="lastName" th:value="${lastName}" placeholder="Efternavn" required>
         </div>
         <div class="input-field">
-            <input type="text" name="driversLicenseNumber" placeholder="Kørekort" required>
+            <label for="driversLicenseNumber">Kørekort nr. :</label>
+            <input type="text" inputmode="numeric" name="driversLicenseNumber" id="driversLicenseNumber" th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
         </div>
         <div class="input-field">
-            <input type="text" name="cprNumber" placeholder="CPR-nummer" required>
+            <label for="cprNumber">CPR-Nummer:</label>
+            <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" th:value="${cprNumber}" placeholder="CPR-nummer" required>
         </div>
         <div class="input-field">
-            <input type="email" name="email" placeholder="Email adresse" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" th:value="${email}" placeholder="Email adresse" required>
         </div>
         <div class="input-field">
-            <input type="text" name="phoneNumber" placeholder="Telefon nummer" required>
+            <label for="phoneNumber">Tlf.nr:</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
+        </div>
+        </section>
+
+        <section class="create-employee-box-section">
+            <h3>Adresse info:</h3>
+        <div class="input-field">
+            <label for="streetName">Gade:</label>
+            <input type="text" name="streetName" id="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
+        </div>
+        <div class="input-field">
+            <label for="houseNumber">Hus nr. :</label>
+            <input type="text" name="houseNumber" id="houseNumber" th:value="${houseNumber}" placeholder="Husnummer" required>
+        </div>
+        <div class="input-field">
+            <label for="floor">Etage:</label>
+            <input type="text" name="floor" id="floor" th:value="${floor}" placeholder="Etage">
         </div>
 
 
         <div class="input-field">
-            <input type="text" name="streetName" placeholder="Vejnavn" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="houseNumber" placeholder="Husnummer" required>
-        </div>
-        <div class="input-field">
-            <input type="text" name="floor" placeholder="Etage">
-        </div>
-
-
-        <div class="input-field">
-            <input type="text" name="zipCode" placeholder="Postnummer">
+            <label for="zipCode">Post nr. :</label>
+            <input type="text" name="zipCode" id="zipCode" th:value="${zipCode}" placeholder="Postnummer">
             <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red">
         </div>
-
+        </section>
         <button type="submit">Opret kunde</button>
     </form>
 </section>

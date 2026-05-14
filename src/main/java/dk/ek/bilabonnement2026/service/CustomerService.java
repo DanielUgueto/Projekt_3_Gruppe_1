@@ -14,6 +14,9 @@ import java.util.List;
 @Service
 public class CustomerService {
     private static final String EMAIL_PATTERN = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+    private static final String PHONE_PATTERN = "^(\\+45)?[\\s-]?(\\d{2}[\\s-]?){3}\\d{2}$";
+    private static final String DRIVERS_LICENSE_PATTERN = "^\\d{8}$";
+    private static final String CPR_PATTERN = "^\\d{6}-?\\d{4}$";
 
     @Autowired
     CustomerRepository customerRepository;
@@ -79,13 +82,13 @@ public class CustomerService {
             }
         }
 
-        if(existingCustomer.getPhoneNumber() != customer.getPhoneNumber()){
+        if(!existingCustomer.getPhoneNumber().equals(customer.getPhoneNumber())){
             if(customerRepository.findCustomerByCustomerPhoneNumber(customer.getPhoneNumber()) != null){
                 return "Mobilnummeret er taget af en anden kunde";
             }
         }
 
-        // der må godt være flere kunder på en adresse. fix
+
         CustomerAddress existingAddress = customerAddressRepository.findCustomerAddressByCustomerId(customerAddress.getCustomerId());
         if(existingAddress == null){
             return "Adressen eksisterer ikke";
@@ -94,6 +97,48 @@ public class CustomerService {
         customerRepository.updateCustomer(customer);
         customerAddressRepository.updateCustomerAddress(customerAddress);
         return null;
+    }
+
+
+    // Service methods
+
+            //validating
+    public boolean isValidPhoneNumber(String number){
+        if(number == null || number.isBlank()){
+            return false;
+        }
+        return number.trim().matches(PHONE_PATTERN);
+    }
+    public boolean isValidCpr(String cpr){
+        if(cpr == null || cpr.isBlank()){
+            return false;
+        }
+        return cpr.trim().matches(CPR_PATTERN);
+    }
+    public boolean isValidDriversLicense(String licenseNumber){
+        if(licenseNumber == null || licenseNumber.isBlank()){
+            return false;
+        }
+        return licenseNumber.trim().matches(DRIVERS_LICENSE_PATTERN);
+    }
+
+
+            // normalisering
+
+    public String normalizePhoneNumber(String number){
+        String numberOnlyDigits = number.replaceAll("\\D","");
+        if(numberOnlyDigits.startsWith("45") && numberOnlyDigits.length() == 10){
+            numberOnlyDigits = numberOnlyDigits.substring(2);
+        }
+        return numberOnlyDigits.trim();
+    }
+
+    public String normalizeDriversLicense(String licenseNumber){
+        return licenseNumber.trim();
+    }
+
+    public String normalizeCpr(String cpr){
+        return cpr.replaceAll("-","").trim();
     }
 }
 

@@ -40,10 +40,10 @@ public class CustomerController {
     public String registerCustomer(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("driversLicenseNumber") int driversLicenseNumber,
+            @RequestParam("driversLicenseNumber") String driversLicenseNumber,
             @RequestParam("cprNumber") String cprNumber,
             @RequestParam("email") String email,
-            @RequestParam("phoneNumber") int phoneNumber,
+            @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("streetName") String streetName,
             @RequestParam("houseNumber") String houseNumber,
             @RequestParam("floor") String floor,
@@ -54,11 +54,38 @@ public class CustomerController {
             return "redirect:/";
         }
 
-        if (!zipCodeService.zipcodeExists(zipCode)) {
-            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
+        if (!customerService.isValidPhoneNumber(phoneNumber)) {
+            model.addAttribute("error", "Ugyldigt telefonnummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
+            return "register-customer";
+        }
+        if (!customerService.isValidCpr(cprNumber)) {
+            model.addAttribute("error", "Ugyldigt CPR-nummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
+            return "register-customer";
+        }
+        if (!customerService.isValidDriversLicense(driversLicenseNumber)) {
+            model.addAttribute("error", "Ugyldigt Kørekort nummer");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
 
+        if (!zipCodeService.zipcodeExists(zipCode)) {
+            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
+            addFormDataToCustomerModel(model, firstName, lastName,
+                    driversLicenseNumber, cprNumber, email,
+                    phoneNumber, streetName, houseNumber, floor, zipCode);
+            return "register-customer";
+        }
+        driversLicenseNumber = customerService.normalizeDriversLicense(driversLicenseNumber);
+        cprNumber = customerService.normalizeCpr(cprNumber);
+        phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
         CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
         String error = customerService.registerCustomer(customer,customerAddress);
@@ -99,7 +126,7 @@ public class CustomerController {
                                  @RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName,
                                  @RequestParam("email") String email,
-                                 @RequestParam("phoneNumber") int phoneNumber,
+                                 @RequestParam("phoneNumber") String phoneNumber,
                                  @RequestParam("cprNumber") String cprNumber,
                                  @RequestParam("zipCode") String zipCode,
                                  @RequestParam("streetName") String streetName,
@@ -111,27 +138,59 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-        Customer existing = customerService.getCustomerByCustomerId(customerId);
-        Boolean isActive = existing != null ? existing.getStatus() : true;
-        Customer customer = new Customer(customerId, firstName, lastName, 0, cprNumber, email, phoneNumber, isActive);
-        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
-        if (!zipCodeService.zipcodeExists(zipCode)) {
-            model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
-            model.addAttribute("selectedCustomer", customer);
-            model.addAttribute("selectedCustomerAddress", customerAddress);
+        Customer existingCustomer = customerService.getCustomerByCustomerId(customerId);
+        if (existingCustomer == null) {
+            model.addAttribute("error","Kunden kunne ikke findes");
+            return employeeService.redirectByRole(employee);
+        }
+
+        if (!customerService.isValidPhoneNumber(phoneNumber)) {
+            model.addAttribute("error", "Ugyldigt telefonnummer");
+
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
             return "edit-customer";
         }
+
+        if (!customerService.isValidCpr(cprNumber)) {
+            model.addAttribute("error", "Ugyldigt CPR-nummer");
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
+            return "edit-customer";
+        }
+
+        if (!zipCodeService.zipcodeExists(zipCode)) {
+            model.addAttribute("error", "Postnummer ikke fundet");
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
+            return "edit-customer";
+        }
+
+
+        phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
+        cprNumber = customerService.normalizeCpr(cprNumber);
+        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber,existingCustomer.getStatus());
+        CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
+
 
         String error = customerService.updateCustomer(customer, customerAddress);
         if (error != null) {
             model.addAttribute("error", error);
-            model.addAttribute("selectedCustomer", customer);
-            model.addAttribute("selectedCustomerAddress", customerAddress);
+            addEditFormDataToCustomerEditModel(model, customerId,
+                    firstName, lastName, email, phoneNumber,
+                    cprNumber, streetName, houseNumber, floor, zipCode, existingCustomer);
             return "edit-customer";
         }
 
-        return employeeService.redirectByRole(employee);
+        model.addAttribute("success","Kunden er opdateret");
+        addEditFormDataToCustomerEditModel(model, customerId,
+                firstName, lastName, email, phoneNumber,
+                cprNumber, streetName, houseNumber, floor, zipCode, customer);
+        return "edit-customer";
     }
 
     @PostMapping("/customer/delete")
@@ -187,4 +246,37 @@ public class CustomerController {
         return "customer-dashboard";
     }
 
+
+    private void addFormDataToCustomerModel(Model model,
+                                            String firstName, String lastName,
+                                            String driversLicenseNumber, String cprNumber,
+                                            String email, String phoneNumber,
+                                            String streetName, String houseNumber,
+                                            String floor, String zipCode) {
+        model.addAttribute("firstName", firstName);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("driversLicenseNumber", driversLicenseNumber);
+        model.addAttribute("cprNumber", cprNumber);
+        model.addAttribute("email", email);
+        model.addAttribute("phoneNumber", phoneNumber);
+        model.addAttribute("streetName", streetName);
+        model.addAttribute("houseNumber", houseNumber);
+        model.addAttribute("floor", floor);
+        model.addAttribute("zipCode", zipCode);
+    }
+
+    private void addEditFormDataToCustomerEditModel(Model model, int customerId,
+                                                    String firstName, String lastName,
+                                                    String email, String phoneNumber, String cprNumber,
+                                                    String streetName, String houseNumber,
+                                                    String floor, String zipCode, Customer existing) {
+        Customer customer = new Customer(customerId, firstName,
+                lastName, existing.getDriversLicenseNumber(),
+                cprNumber, email, phoneNumber,existing.getStatus());
+
+        CustomerAddress address = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
+
+        model.addAttribute("selectedCustomer", customer);
+        model.addAttribute("selectedCustomerAddress", address);
+    }
 }

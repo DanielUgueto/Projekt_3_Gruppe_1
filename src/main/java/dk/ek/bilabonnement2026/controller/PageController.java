@@ -78,9 +78,6 @@ public class PageController {
         if (employee == null) {
             return "redirect:/";
         }
-        //fjern denne model efter customer dashboard er implementeret. ren test her
-        List<Customer> customerList = customerService.getAllCustomers();
-        model.addAttribute("customerList",customerList);
         return "dataregistration-dashboard";
     }
 }
