@@ -86,4 +86,19 @@ public class EmployeeController {
 
         return"employee-dashboard";
     }
+
+    @PostMapping("/employee/delete")
+    public String deleteEmployee(@RequestParam("employeeId") int employeeId,
+                                 HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+        String message = employeeService.changeEmployeeStatus(employeeId, employee.getEmployeeId());
+        if(message != null){
+            model.addAttribute("error",message);
+        }
+        model.addAttribute("success","Medarbejderens status er sat til inaktiv");
+        return "redirect:/employee/dashboard";
+    }
 }

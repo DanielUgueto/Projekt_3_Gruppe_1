@@ -57,13 +57,34 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployeesByStatus(String status){
-        if(!status.equalsIgnoreCase("aktiv") || status.equalsIgnoreCase("inaktiv")){
+        if(status == null){
             return null;
         }
-        boolean employeeStatus = true;
-        if(!status.equalsIgnoreCase("aktiv")){
+        boolean employeeStatus;
+        if(status.equalsIgnoreCase("aktiv")){
+            employeeStatus = true;
+        } else if (status.equalsIgnoreCase("inaktiv")){
             employeeStatus = false;
+        }else {
+            return null;
         }
+
         return employeeRepository.findAllEmployeesByStatus(employeeStatus);
+    }
+
+    public String changeEmployeeStatus(int employeeId, int sessionEmployeeId){
+        if(employeeId == sessionEmployeeId){
+            return "Ikke muligt at slette dig selv";
+        }
+        boolean is_active = true;
+        Employee givenEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
+        if(givenEmployee == null){
+            return "Medarbejderen kunne ikke findes i systemet";
+        }
+
+        if(givenEmployee.getIs_active()){
+            is_active = false;
+        }
+       return employeeRepository.updateEmployeeIsActive(is_active,givenEmployee.getEmployeeId());
     }
 }

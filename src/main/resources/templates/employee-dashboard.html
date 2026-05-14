@@ -22,6 +22,10 @@
                         <option value="Inaktiv">inaktiv</option>
                     </select>
                     <button type="submit">Filtrer</button>
+                    <div>
+                        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                        <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
+                    </div>
                 </form>
             </div>
         </section>
@@ -64,16 +68,13 @@
             </section>
 
             <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.is_active == true}">
-                <form th:action="@{/employee/dashboard/remove(employeeId=${selectedEmployee.employeeId})}" method="post"
+                <form th:action="@{/employee/delete(employeeId=${selectedEmployee.employeeId})}" method="post"
                       onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
                     <button type="submit">Sæt medarbejder som inaktiv</button>
                 </form>
             </div>
 
-<!--            <div>-->
-<!--                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>-->
-<!--                <p th:if="${success != null}" th:text="${success}" style="color:green"></p>-->
-<!--            </div>-->
+
         </article>
 
         <article class="selected-car-placeholder" th:if="${selectedEmployee == null}">
