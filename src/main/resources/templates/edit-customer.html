@@ -19,7 +19,8 @@
 
         <p th:if="${error}" th:text="${error}" style="color:red"></p>
         <p th:if="${success}" th:text="${success}" style="color:green"></p>
-
+<section class="create-employee-box-section">
+    <h3>Person info:</h3>
         <div class="input-field">
             <label for="firstName">Fornavn:</label>
             <input type="text" name="firstName" id="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
@@ -40,8 +41,10 @@
             <label for="phoneNumber">Tlf.nr:</label>
             <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
         </div>
+</section>
 
-
+        <section class="create-employee-box-section">
+            <h3>Adresse info:</h3>
         <div class="input-field">
             <label for="streetName">Gade:</label>
             <input type="text" name="streetName" id="streetName" placeholder="Vejnavn" th:value="${selectedCustomerAddress.streetName}" required>
@@ -55,12 +58,11 @@
             <input type="text" name="floor" id="floor" placeholder="Etage" th:value="${selectedCustomerAddress.floor}">
         </div>
 
-
         <div class="input-field">
             <label for="zipCode">Post nummer:</label>
             <input type="text" name="zipCode" id="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
         </div>
-
+        </section>
         <button type="submit">Gem ændringer</button>
     </form>
 </section>

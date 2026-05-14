@@ -18,6 +18,8 @@
     <p th:if="${error}" th:text="${error}" class="error-message" style="color:red"></p>
 
     <form th:action="@{/customer/register}" method="post">
+        <section class="create-employee-box-section">
+            <h3>Person info:</h3>
         <div class="input-field">
             <label for="firstName">Fornavn:</label>
             <input type="text" name="firstName" id="firstName" th:value="${firstName}" placeholder="Fornavn" required>
@@ -42,8 +44,10 @@
             <label for="phoneNumber">Tlf.nr:</label>
             <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
         </div>
+        </section>
 
-
+        <section class="create-employee-box-section">
+            <h3>Adresse info:</h3>
         <div class="input-field">
             <label for="streetName">Gade:</label>
             <input type="text" name="streetName" id="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
@@ -63,7 +67,7 @@
             <input type="text" name="zipCode" id="zipCode" th:value="${zipCode}" placeholder="Postnummer">
             <p th:if="${wrongZipcode != null}" th:text="${wrongZipcode}" style="color:red">
         </div>
-
+        </section>
         <button type="submit">Opret kunde</button>
     </form>
 </section>
