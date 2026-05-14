@@ -69,7 +69,7 @@ main {
     transform: translateY(-1px) scale(1.01);
 }
 
-.action-text {
+.action-text, .heading-text, .stat-text {
     color: gray;
 }
 
@@ -78,8 +78,11 @@ main {
     margin: 0;
 }
 
-.stat-text {
-    color: gray;
+h1 {
+    margin: 10px 0 0 0;
 }
 
+h2 {
+    margin: 0;
+}
 
