@@ -50,8 +50,8 @@
         <article class="selected-car-panel" th:if="${selectedEmployee != null}">
             <header class="selected-car-header">
                 <h2>
-                    <span th:text="${employee.firstName}"></span>
-                    <span th:text="${employee.lastName}"></span>
+                    <span th:text="${selectedEmployee.firstName}"></span>
+                    <span th:text="${selectedEmployee.lastName}"></span>
                 </h2>
                 <p th:text="${selectedEmployee.role}"></p>
             </header>
