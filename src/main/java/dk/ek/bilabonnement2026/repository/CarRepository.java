@@ -37,7 +37,7 @@ public class CarRepository {
             statement.executeUpdate();
 
         }catch(SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Bilen kunne ikke gemmes i databasen", e);
         }
 
     }

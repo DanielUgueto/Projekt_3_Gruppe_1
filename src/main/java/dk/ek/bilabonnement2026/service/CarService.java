@@ -24,10 +24,9 @@ public class CarService {
             throw new IllegalArgumentException("En bil med dette stelnummer eksistere allerede");
         }
 
-        // Validate if vinNumber exsists
-        validatorCar = carRepository.findCarByCarNumber(car.getCarId());
+        validatorCar = carRepository.findCarByLicensePlate(car.getLicensePlate());
         if(validatorCar != null){
-            throw new IllegalArgumentException("En bil med dette vognnummer eksistere allerede");
+            throw new IllegalArgumentException("En bil med denne nummerplade eksisterer allerede");
         }
 
         carRepository.saveCar(car);

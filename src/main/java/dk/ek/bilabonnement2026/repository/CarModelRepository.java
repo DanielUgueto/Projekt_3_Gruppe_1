@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +14,49 @@ public class CarModelRepository {
 
     @Autowired
     DataSource dataSource;
+
+    public void saveCarModel(CarModel carModel){
+        String sql = "INSERT INTO car_model (car_brand_id, model_name, equipment_level, shift_gear_type, fuel_type) " +
+                "VALUES (?,?,?,?,?)";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setInt(1,carModel.getCarBrandId());
+            statement.setString(2,carModel.getModelName());
+            statement.setString(3, carModel.getEquipmentLevel());
+            statement.setString(4, carModel.getShiftGearType());
+            statement.setString(5, carModel.getFuelType());
+
+            statement.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public CarModel getCarModelByModelName(String modelName){
+        String sql = "SELECT * FROM car_model WHERE model_name = ?";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1,modelName);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                return new CarModel(resultSet.getInt("car_model_id"),
+                        resultSet.getInt("car_brand_id"),
+                        resultSet.getString("model_name"),
+                        resultSet.getString("equipment_level"),
+                        resultSet.getString("shift_gear_type"),
+                        resultSet.getString("fuel_type"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<CarModel> getAllCarModels(){
         List<CarModel> carModelsList = new ArrayList<>();
