@@ -141,3 +141,30 @@ button:hover {
 .dashboard-greeting{
     margin-left: 2em;
 }
+
+.delete-btn{
+    background-color: red;
+    border-color: red;
+}
+
+.delete-btn:hover{
+    background-color: darkred;
+    border-color: darkred;
+}
+.edit-btn{
+    display: inline-block;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edit-btn:hover{
+    background-color: var(--color-bg);
+    border-color: var(--color-muted);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}

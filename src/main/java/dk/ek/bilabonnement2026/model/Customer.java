@@ -4,12 +4,13 @@ public class Customer {
     private int customerId;
     private String firstName;
     private String lastName;
-    private int driversLicenseNumber;
+    private String driversLicenseNumber;
     private String cprNumber;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
+    private Boolean isActive;
 
-    public Customer(int customerId, String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, String phoneNumber, Boolean isActive) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,16 +18,18 @@ public class Customer {
         this.cprNumber = cprNumber;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
     }
-    public Customer( String firstName, String lastName, int driversLicenseNumber, String cprNumber, String email, int phoneNumber) {
+
+    public Customer(String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, String phoneNumber, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.driversLicenseNumber = driversLicenseNumber;
         this.cprNumber = cprNumber;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
     }
-
 
     public int getCustomerId() {
         return customerId;
@@ -40,7 +43,7 @@ public class Customer {
         return lastName;
     }
 
-    public int getDriversLicenseNumber() {
+    public String getDriversLicenseNumber() {
         return driversLicenseNumber;
     }
 
@@ -52,7 +55,11 @@ public class Customer {
         return email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public Boolean getStatus() {
+        return isActive;
     }
 }
