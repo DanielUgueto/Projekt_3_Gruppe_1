@@ -5,6 +5,8 @@ import dk.ek.bilabonnement2026.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -48,5 +50,41 @@ public class EmployeeService {
         }
 
         return employee;
+    }
+
+    public List<Employee> getAllEmployees(){
+     return employeeRepository.findAllEmployees();
+    }
+
+    public List<Employee> getAllEmployeesByStatus(String status){
+        if(status == null){
+            return null;
+        }
+        boolean employeeStatus;
+        if(status.equalsIgnoreCase("aktiv")){
+            employeeStatus = true;
+        } else if (status.equalsIgnoreCase("inaktiv")){
+            employeeStatus = false;
+        }else {
+            return null;
+        }
+
+        return employeeRepository.findAllEmployeesByStatus(employeeStatus);
+    }
+
+    public String changeEmployeeStatus(int employeeId, int sessionEmployeeId){
+        if(employeeId == sessionEmployeeId){
+            return "Ikke muligt at slette dig selv";
+        }
+        boolean is_active = true;
+        Employee givenEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
+        if(givenEmployee == null){
+            return "Medarbejderen kunne ikke findes i systemet";
+        }
+
+        if(givenEmployee.getIs_active()){
+            is_active = false;
+        }
+       return employeeRepository.updateEmployeeIsActive(is_active,givenEmployee.getEmployeeId());
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
@@ -29,7 +29,7 @@
             <button type="submit">Login</button>
         </form>
 
-        <p>Kun medarbejdere med gyldig adgang kan logge ind.</p>
+        <p th:if="${error}" th:text="${error}" style="color:red"></p>
     </section>
 </main>
 
