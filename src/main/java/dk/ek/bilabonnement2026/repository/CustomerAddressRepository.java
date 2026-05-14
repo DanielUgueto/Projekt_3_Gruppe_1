@@ -33,7 +33,7 @@ public class CustomerAddressRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kunde adressen kunne ikke gemmes i databasen", e);
         }
     }
 
@@ -81,7 +81,7 @@ WHERE customer_id = ?
 
             statement.executeUpdate();
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Kunde adressen kunne ikke opdateres i databasen", e);
         }
     }
 }

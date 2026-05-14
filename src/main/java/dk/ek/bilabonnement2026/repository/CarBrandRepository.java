@@ -52,7 +52,7 @@ public class CarBrandRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Car brand kunne ikke gemmes i databasen", e);
         }
     }
 
