@@ -39,7 +39,7 @@
                         <spand th:text="${employee.role}"></spand>
                     </div>
                     <div>
-                        <spand th:text="${employee.status}"></spand>
+                        <spand th:text="${employee.is_active}"></spand>
                     </div>
                 </a>
             </article>
@@ -60,26 +60,26 @@
                 <p><strong>ID:</strong> <span th:text="${selectedEmployee.employeeId}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${selectedEmployee.workEmail}"></span></p>
                 <p><strong>Rolle:</strong> <span th:text="${selectedEmployee.role}"></span></p>
-                <p><strong>Status:</strong> <span th:text="${selectedEmployee.status}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedEmployee.is_active}"></span></p>
             </section>
 
-            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${emplyee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.status.equals('Aktiv')}">
+            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.is_active == true}">
                 <form th:action="@{/dashboard/employee/remove(employeeId=${selectedEmployee.employeeId})}" method="post"
                       onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
                     <button type="submit">Sæt medarbejder som inaktiv</button>
                 </form>
             </div>
 
-            <div>
-                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
-            </div>
+<!--            <div>-->
+<!--                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>-->
+<!--                <p th:if="${success != null}" th:text="${success}" style="color:green"></p>-->
+<!--            </div>-->
         </article>
 
-        <article class="selected-car-placeholder" th:if="${selectedCar == null}">
+        <article class="selected-car-placeholder" th:if="${selectedEmployee == null}">
             <h2>Ingen medarbejder valgt</h2>
             <p>Vælg en medarbejder i oversigten til venstre for at se detaljer her.</p>
-            <p th:if="${notFound != null}" th:text="${notFound}" style="color: red"></p>
+<!--            <p th:if="${notFound != null}" th:text="${notFound}" style="color: red"></p>-->
         </article>
 
     </div>

@@ -81,6 +81,7 @@ public class EmployeeController {
             model.addAttribute("selectedEmployee", selectedEmployee);
         }
 
+        model.addAttribute("employee",employee);
         model.addAttribute("employeeList",employeeList);
 
         return"employee-dashboard";

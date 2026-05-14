@@ -99,7 +99,7 @@ public class EmployeeRepository {
                         resultSet.getString("last_name"),
                         resultSet.getString("work_email"),
                         resultSet.getString("role"),
-                        resultSet.getBoolean("status"));
+                        resultSet.getBoolean("is_active"));
 
                 employeeList.add(employee);
             }
@@ -110,7 +110,7 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findAllEmployeesByStatus(boolean status){
-        String sql = "SELECT * FROM employee WHERE status = ?";
+        String sql = "SELECT * FROM employee WHERE is_active = ?";
         List<Employee> employeeList = new ArrayList<>();
 
         try(Connection connection = dataSource.getConnection();
@@ -126,7 +126,7 @@ public class EmployeeRepository {
                             resultSet.getString("last_name"),
                             resultSet.getString("work_email"),
                             resultSet.getString("role"),
-                            resultSet.getBoolean("status"));
+                            resultSet.getBoolean("is_active"));
 
                     employeeList.add(employee);
                 }
