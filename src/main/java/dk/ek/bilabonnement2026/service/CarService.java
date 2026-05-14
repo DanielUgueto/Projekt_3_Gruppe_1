@@ -67,4 +67,8 @@ public class CarService {
     public void updateCar(Car car) {
         carRepository.updateCar(car);
     }
+
+    public Car getCarByLicensePlate(String licensePlate) {
+        return carRepository.findCarByLicensePlate(licensePlate);
+    }
 }
