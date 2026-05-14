@@ -1,0 +1,46 @@
+main {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    border: 1px solid var(--color-muted);
+    background-color: var(--color-surface);
+    border-radius: 10px;
+    padding: 3em;
+}
+
+.form-input {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+}
+
+.form-input select, input{
+    width: 240px;
+    padding: 11px 14px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-sizing: border-box;
+}
+
+.error-text {
+    display: flex;
+    color: red;
+    justify-content: center;
+}

@@ -31,7 +31,7 @@
             <div>
                 <form th:action="@{/dashboard/car}" method="get">
                     <label for="vinNumber">Søg efter stelnummer: </label>
-                    <input type="text" name="vinNumber" id="vinNumber">
+                    <input type="text" name="vinNumber" id="vinNumber" placeholder="Skriv stelnummer her">
                     <button type="submit">Søg</button>
                 </form>
             </div>
@@ -75,10 +75,19 @@
     <div class="dashboard-split-single-car">
         <article class="selected-car-panel" th:if="${selectedCar != null}">
             <header class="selected-car-header">
-                <h2>
-                    <span th:text="${selectedCar.brandName}"></span>
-                    <span th:text="${selectedCar.modelName}"></span>
-                </h2>
+                <div class="selected-car-header-nav">
+                    <h2 style="margin: 0">
+                        <span th:text="${selectedCar.brandName}"></span>
+                        <span th:text="${selectedCar.modelName}"></span>
+                    </h2>
+
+                    <div th:if="${employee.role.equals('dataregistrering') and (selectedCar.status.equals('Ledig') or selectedCar.status.equals('Udgået'))}">
+                        <a th:href="@{/dashboard/car/edit(carId=${selectedCar.carId})}">
+                            <button>Ændr info om bil</button>
+                        </a>
+                    </div>
+                </div>
+
                 <p th:text="${selectedCar.equipmentLevel}"></p>
             </header>
 
