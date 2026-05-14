@@ -81,9 +81,11 @@
                         <span th:text="${selectedCar.modelName}"></span>
                     </h2>
 
-                    <a th:href="@{/dashboard/car/edit(carId=${selectedCar.carId})}">
-                        <button>Ændr info om bil</button>
-                    </a>
+                    <div th:if="${employee.role.equals('dataregistrering') and (selectedCar.status.equals('Ledig') or selectedCar.status.equals('Udgået'))}">
+                        <a th:href="@{/dashboard/car/edit(carId=${selectedCar.carId})}">
+                            <button>Ændr info om bil</button>
+                        </a>
+                    </div>
                 </div>
 
                 <p th:text="${selectedCar.equipmentLevel}"></p>
