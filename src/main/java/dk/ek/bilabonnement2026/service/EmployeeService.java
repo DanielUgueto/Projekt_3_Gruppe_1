@@ -5,6 +5,8 @@ import dk.ek.bilabonnement2026.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -48,5 +50,13 @@ public class EmployeeService {
         }
 
         return employee;
+    }
+
+    public List<Employee> getAllEmployees(){
+     return employeeRepository.findAllEmployees();
+    }
+
+    public List<Employee> getAllEmployeesByStatus(String status){
+        return employeeRepository.findAllEmployeesByStatus(String status);
     }
 }
