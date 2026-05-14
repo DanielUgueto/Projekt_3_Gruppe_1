@@ -47,50 +47,50 @@ public class CustomerService {
         return null;
     }
 
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();
     }
 
-    public Customer getCustomerByCustomerId(int customerId){
+    public Customer getCustomerByCustomerId(int customerId) {
         return customerRepository.findCustomerByCustomerId(customerId);
     }
 
-    public CustomerAddress getCustomerAddressByCustomerId(int customerId){
+    public CustomerAddress getCustomerAddressByCustomerId(int customerId) {
         return customerAddressRepository.findCustomerAddressByCustomerId(customerId);
     }
 
-    public String updateCustomer(Customer customer, CustomerAddress customerAddress){
+    public String updateCustomer(Customer customer, CustomerAddress customerAddress) {
         //tjekke kunden er der
         Customer existingCustomer = customerRepository.findCustomerByCustomerId(customer.getCustomerId());
-        if(existingCustomer == null){
+        if (existingCustomer == null) {
             return "Kunden eksisterer ikke";
         }
         //tjekker om email matcher pattern
-        if(!customer.getEmail().matches(EMAIL_PATTERN)){
+        if (!customer.getEmail().matches(EMAIL_PATTERN)) {
             return "Email har ugyldigt format";
         }
         //tjekker først om kunden har ændret email og først hvis de har tjekkes om den er unik i systemet.
-        if(!existingCustomer.getEmail().equals(customer.getEmail())){
-            if(customerRepository.findCustomerByCustomerEmail(customer.getEmail()) != null){
+        if (!existingCustomer.getEmail().equals(customer.getEmail())) {
+            if (customerRepository.findCustomerByCustomerEmail(customer.getEmail()) != null) {
                 return "Email skal være unik";
             }
         }
 
-        if(!existingCustomer.getCprNumber().equals(customer.getCprNumber())){
-            if(customerRepository.findCustomerByCustomerCprNumber(customer.getCprNumber()) != null){
+        if (!existingCustomer.getCprNumber().equals(customer.getCprNumber())) {
+            if (customerRepository.findCustomerByCustomerCprNumber(customer.getCprNumber()) != null) {
                 return "Cpr nummer eksisterer allerede i systemet";
             }
         }
 
-        if(!existingCustomer.getPhoneNumber().equals(customer.getPhoneNumber())){
-            if(customerRepository.findCustomerByCustomerPhoneNumber(customer.getPhoneNumber()) != null){
+        if (!existingCustomer.getPhoneNumber().equals(customer.getPhoneNumber())) {
+            if (customerRepository.findCustomerByCustomerPhoneNumber(customer.getPhoneNumber()) != null) {
                 return "Mobilnummeret er taget af en anden kunde";
             }
         }
 
 
         CustomerAddress existingAddress = customerAddressRepository.findCustomerAddressByCustomerId(customerAddress.getCustomerId());
-        if(existingAddress == null){
+        if (existingAddress == null) {
             return "Adressen eksisterer ikke";
         }
 
@@ -102,43 +102,56 @@ public class CustomerService {
 
     // Service methods
 
-            //validating
-    public boolean isValidPhoneNumber(String number){
-        if(number == null || number.isBlank()){
+    //validating
+    public boolean isValidPhoneNumber(String number) {
+        if (number == null || number.isBlank()) {
             return false;
         }
         return number.trim().matches(PHONE_PATTERN);
     }
-    public boolean isValidCpr(String cpr){
-        if(cpr == null || cpr.isBlank()){
+
+    public boolean isValidCpr(String cpr) {
+        if (cpr == null || cpr.isBlank()) {
             return false;
         }
         return cpr.trim().matches(CPR_PATTERN);
     }
-    public boolean isValidDriversLicense(String licenseNumber){
-        if(licenseNumber == null || licenseNumber.isBlank()){
+
+    public boolean isValidDriversLicense(String licenseNumber) {
+        if (licenseNumber == null || licenseNumber.isBlank()) {
             return false;
         }
         return licenseNumber.trim().matches(DRIVERS_LICENSE_PATTERN);
     }
 
 
-            // normalisering
+    // normalisering
 
-    public String normalizePhoneNumber(String number){
-        String numberOnlyDigits = number.replaceAll("\\D","");
-        if(numberOnlyDigits.startsWith("45") && numberOnlyDigits.length() == 10){
+    public String normalizePhoneNumber(String number) {
+        String numberOnlyDigits = number.replaceAll("\\D", "");
+        if (numberOnlyDigits.startsWith("45") && numberOnlyDigits.length() == 10) {
             numberOnlyDigits = numberOnlyDigits.substring(2);
         }
         return numberOnlyDigits.trim();
     }
 
-    public String normalizeDriversLicense(String licenseNumber){
+    public String normalizeDriversLicense(String licenseNumber) {
         return licenseNumber.trim();
     }
 
-    public String normalizeCpr(String cpr){
-        return cpr.replaceAll("-","").trim();
+    public String normalizeCpr(String cpr) {
+        return cpr.replaceAll("-", "").trim();
+    }
+
+
+    public List<Customer> searchCustomerByName(String query) {
+        //returnerer tom list med det samme
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        query = query.trim();
+
+        return customerRepository.findCustomerByName(query.trim());
     }
 }
 

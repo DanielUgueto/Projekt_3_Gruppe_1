@@ -1,6 +1,7 @@
 package dk.ek.bilabonnement2026.repository;
 
 import dk.ek.bilabonnement2026.model.Customer;
+import dk.ek.bilabonnement2026.model.CustomerAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -234,5 +235,45 @@ public class CustomerRepository {
         return customer;
     }
 
+    public List<Customer> findCustomerByName(String name) {
+        String sql = "SELECT c.*, ca.zip_code, ca.street_name, ca.house_number, ca.floor " +
+                "FROM customer c " +
+                "LEFT JOIN customer_address ca ON c.customer_id = ca.customer_id " +
+                "WHERE LOWER(CONCAT(c.first_name, ' ', c.last_name)) LIKE LOWER(?)";
+        List<Customer> customers = new ArrayList<>();
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "%" + name + "%");
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {                                   //validering for hvis kunde har en adresse
+                    CustomerAddress address = rs.getString("zip_code") != null ? new CustomerAddress(
+                            rs.getInt("customer_id"),
+                            rs.getString("zip_code"),
+                            rs.getString("street_name"),
+                            rs.getString("house_number"),
+                            rs.getString("floor"))
+                            : null;
+
+                    Customer customer = new Customer(
+                            rs.getInt("customer_id"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("drivers_license_number"),
+                            rs.getString("cpr_number"),
+                            rs.getString("email"),
+                            rs.getString("phone_number"),
+                            rs.getBoolean("is_active"),
+                            address
+                    );
+                    customers.add(customer);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
 }

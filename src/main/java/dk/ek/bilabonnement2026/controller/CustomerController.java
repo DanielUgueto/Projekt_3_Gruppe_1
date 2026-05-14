@@ -87,8 +87,8 @@ public class CustomerController {
         cprNumber = customerService.normalizeCpr(cprNumber);
         phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
-        CustomerAddress customerAddress = new CustomerAddress(0,zipCode,streetName,houseNumber,floor);
-        String error = customerService.registerCustomer(customer,customerAddress);
+        CustomerAddress customerAddress = new CustomerAddress(0, zipCode, streetName, houseNumber, floor);
+        String error = customerService.registerCustomer(customer, customerAddress);
 
         if (error != null) {
             model.addAttribute("error", error);
@@ -141,7 +141,6 @@ public class CustomerController {
 
         Customer existingCustomer = customerService.getCustomerByCustomerId(customerId);
         if (existingCustomer == null) {
-            model.addAttribute("error","Kunden kunne ikke findes");
             return employeeService.redirectByRole(employee);
         }
 
@@ -173,7 +172,7 @@ public class CustomerController {
 
         phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
         cprNumber = customerService.normalizeCpr(cprNumber);
-        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber,existingCustomer.getStatus());
+        Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber, existingCustomer.getIsActive());
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
 
@@ -186,7 +185,7 @@ public class CustomerController {
             return "edit-customer";
         }
 
-        model.addAttribute("success","Kunden er opdateret");
+        model.addAttribute("success", "Kunden er opdateret");
         addEditFormDataToCustomerEditModel(model, customerId,
                 firstName, lastName, email, phoneNumber,
                 cprNumber, streetName, houseNumber, floor, zipCode, customer);
@@ -221,18 +220,30 @@ public class CustomerController {
 
     @GetMapping("/customer/dashboard")
     public String showCustomerDashboard(@RequestParam(required = false) String status,
-                                   @RequestParam(required = false) Integer customerId,
-                                   HttpSession session, Model model){
+                                        @RequestParam(required = false) Integer customerId,
+                                        @RequestParam(required = false) String query,
+                                        HttpSession session, Model model) {
+
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
-        List<Customer> list = customerService.getAllCustomers();
+        List<Customer> list;
+
+        if (query != null && !query.isBlank()) {
+            list = customerService.searchCustomerByName(query);
+            model.addAttribute("query", query);
+            if (list.isEmpty()) {
+                model.addAttribute("error", "Ingen kunder fundet med navnet: \"" + query + "\"");
+            }
+        } else {
+            list = customerService.getAllCustomers();
+        }
 
         if (customerId != null) {
             Customer selectedCustomer = null;
-            for (Customer c : list){
+            for (Customer c : list) {
                 if (c.getCustomerId() == customerId) {
                     selectedCustomer = c;
                     break;
@@ -272,11 +283,12 @@ public class CustomerController {
                                                     String floor, String zipCode, Customer existing) {
         Customer customer = new Customer(customerId, firstName,
                 lastName, existing.getDriversLicenseNumber(),
-                cprNumber, email, phoneNumber,existing.getStatus());
+                cprNumber, email, phoneNumber, existing.getIsActive());
 
         CustomerAddress address = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 
         model.addAttribute("selectedCustomer", customer);
         model.addAttribute("selectedCustomerAddress", address);
     }
+
 }

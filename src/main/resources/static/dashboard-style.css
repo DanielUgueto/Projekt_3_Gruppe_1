@@ -144,12 +144,13 @@ button:hover {
 
 .delete-btn{
     background-color: red;
-    border-color: red;
+    border-color: black;
+    margin-top: 1rem;
 }
 
 .delete-btn:hover{
     background-color: darkred;
-    border-color: darkred;
+    border-color: black;
 }
 .edit-btn{
     display: inline-block;
