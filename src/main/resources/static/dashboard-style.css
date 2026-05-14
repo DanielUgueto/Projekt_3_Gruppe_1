@@ -62,7 +62,7 @@
 }
 
 .dashboard-car-info:hover {
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.10);
     transform: translateY(-1px) scale(1.01);
 }
 

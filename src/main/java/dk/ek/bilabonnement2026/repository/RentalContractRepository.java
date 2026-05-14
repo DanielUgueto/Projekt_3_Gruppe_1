@@ -311,5 +311,23 @@ public class RentalContractRepository {
         return rentalContract;
     }
 
+    public int returnAmountOfContractsByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM rental_contract WHERE status = ?";
 
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, status);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }
