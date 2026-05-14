@@ -202,6 +202,18 @@ public class CarController {
             return "redirect:/dashboard/car";
         }
 
+        Car foundCar = carService.getCarByLicensePlate(licensePlate);
+        Car car = carService.getCarByCarId(carId);
+        if (foundCar != null && foundCar.getCarId() != carId) {
+            redirectAttributes.addFlashAttribute("error", "Den indtastede nummerplade er ikke unik!");
+            return "redirect:/dashboard/car/edit?carId=" + carId;
+        }
+
+        if (monthlyPrice < 0) {
+            redirectAttributes.addFlashAttribute("error", "Den indtastede pris er ikke gyldig!");
+            return "redirect:/dashboard/car/edit?carId=" + carId;
+        }
+
         List<CarBrand> brands = carBrandService.getAllCarBrands();
         Integer carBrandId = null;
         for (CarBrand brand : brands) { // checking if brand already exists
@@ -235,8 +247,6 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 
-    // Stelnummer og nummerplade skal stadig valideres da de SKAL være unikke
-    // Validerin for at man faktisk skriver en monthly price skal også laves
     // Generelt hvis bilen har en aktiv lejekontrakt på sig (eller ikke står som ledig) må man ikke ændre på bilen
     // CSS er stadig ikke blevet lavet for bilen
 }
