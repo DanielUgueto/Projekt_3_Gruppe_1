@@ -31,7 +31,8 @@ public class CarModelRepository {
                         resultSet.getInt("car_brand_id"),
                         resultSet.getString("model_name"),
                         resultSet.getString("equipment_level"),
-                        resultSet.getString("shift_gear_type")
+                        resultSet.getString("shift_gear_type"),
+                        resultSet.getString("fuel_type")
                 );
                 carModelsList.add(carModel);
             }
@@ -39,5 +40,50 @@ public class CarModelRepository {
             e.printStackTrace();
         }
         return carModelsList;
+    }
+
+    public CarModel getCarModelByCarModelId(int carModelId){
+        String sql = "SELECT * FROM car_model WHERE car_model_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, carModelId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()){
+                return new CarModel(rs.getInt("car_model_id"),
+                        rs.getInt("car_brand_id"),
+                        rs.getString("model_name"),
+                        rs.getString("equipment_level"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("fuel_type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateCarModel(CarModel carModel){
+        String sql = "UPDATE car_model " +
+                "SET car_brand_id = ?, model_name = ?, equipment_level = ?, shift_gear_type = ?, fuel_type = ? " +
+                "WHERE car_model_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, carModel.getCarBrandId());
+            statement.setString(2, carModel.getModelName());
+            statement.setString(3, carModel.getEquipmentLevel());
+            statement.setString(4, carModel.getShiftGearType());
+            statement.setString(5, carModel.getFuelType());
+            statement.setInt(6, carModel.getCarModelId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

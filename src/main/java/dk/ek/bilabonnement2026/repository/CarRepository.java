@@ -214,4 +214,91 @@ public class CarRepository {
 
         return list;
     }
+
+    public CarOverview findCarOverviewByCarId(int carId){
+        String sql = "SELECT * FROM car c " +
+                "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
+                "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
+                "WHERE c.car_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, carId);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new CarOverview(
+                        rs.getString("brand_name"),
+                        rs.getInt("car_id"),
+                        rs.getString("colour"),
+                        rs.getString("equipment_level"),
+                        rs.getString("license_plate"),
+                        rs.getString("model_name"),
+                        rs.getDouble("monthly_price"),
+                        rs.getString("shift_gear_type"),
+                        rs.getString("status"),
+                        rs.getString("vin_number"),
+                        rs.getString("registration_date"),
+                        rs.getString("fuel_type"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateCar(Car car) {
+        String sql = "UPDATE car " +
+                "SET car_model_id = ?, vin_number = ?, license_plate = ?, monthly_price = ?, status = ?, colour = ?, registration_date = ? " +
+                "WHERE car_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, car.getCarModelId());
+            statement.setString(2, car.getVinNumber());
+            statement.setString(3, car.getLicensePlate());
+            statement.setDouble(4, car.getMonthlyPrice());
+            statement.setString(5, car.getStatus());
+            statement.setString(6, car.getColour());
+            statement.setString(7, car.getRegistrationDate());
+            statement.setInt(8, car.getCarId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Car findCarByLicensePlate(String licensePlate){
+        String sql = "SELECT * FROM car WHERE license_plate = ?";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, licensePlate);
+
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    return new Car(resultSet.getInt("car_id"),
+                            resultSet.getInt("car_model_id"),
+                            resultSet.getString("vin_number"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDouble("monthly_price"),
+                            resultSet.getString("status"),
+                            resultSet.getString("colour"),
+                            resultSet.getString("registration_date"));
+                }
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -6,21 +6,24 @@ public class CarModel {
     private String modelName;
     private String equipmentLevel;
     private String shiftGearType;
+    private String fuelType;
 
     public CarModel(int carModelId, int carBrandId, String modelName,
-                    String equipmentLevel, String shiftGearType) {
+                    String equipmentLevel, String shiftGearType, String fuelType) {
         this.carModelId = carModelId;
         this.carBrandId = carBrandId;
         this.modelName = modelName;
         this.equipmentLevel = equipmentLevel;
         this.shiftGearType = shiftGearType;
+        this.fuelType = fuelType;
     }
-    public CarModel(int carBrandId, String modelName,
-                    String equipmentLevel, String shiftGearType) {
+    public CarModel(int carBrandId, String modelName, String equipmentLevel,
+                    String shiftGearType, String fuelType) {
         this.carBrandId = carBrandId;
         this.modelName = modelName;
         this.equipmentLevel = equipmentLevel;
         this.shiftGearType = shiftGearType;
+        this.fuelType = fuelType;
     }
 
     public int getCarModelId() {
@@ -41,5 +44,9 @@ public class CarModel {
 
     public String getShiftGearType() {
         return shiftGearType;
+    }
+
+    public String getFuelType(){
+        return fuelType;
     }
 }
