@@ -151,6 +151,13 @@ public class CarController {
             return "redirect:/dashboard/car";
         }
 
+        if (!car.getStatus().equals("Ledig") && !car.getStatus().equals("Udgået")) {
+            // redirect to logout, because whoever is using the system is now trying to do something they aren't allowed to.
+            // Realistically system should ping an admin that an employee is doing something they shouldn't be doing,
+            // and until the admin changes it then the employee's account should be locked.
+            return "redirect:/logout";
+        }
+
         CarModel carModel = carModelService.getCarModelByCarModelId(car.getCarModelId());
         if (carModel == null) {
             redirectAttributes.addFlashAttribute("error", "Bil model kunne ikke findes i databasen!");
@@ -203,12 +210,10 @@ public class CarController {
         }
 
         Car foundCar = carService.getCarByLicensePlate(licensePlate);
-        Car car = carService.getCarByCarId(carId);
         if (foundCar != null && foundCar.getCarId() != carId) {
             redirectAttributes.addFlashAttribute("error", "Den indtastede nummerplade er ikke unik!");
             return "redirect:/dashboard/car/edit?carId=" + carId;
         }
-
         if (monthlyPrice < 0) {
             redirectAttributes.addFlashAttribute("error", "Den indtastede pris er ikke gyldig!");
             return "redirect:/dashboard/car/edit?carId=" + carId;
@@ -247,6 +252,5 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 
-    // Generelt hvis bilen har en aktiv lejekontrakt på sig (eller ikke står som ledig) må man ikke ændre på bilen
     // CSS er stadig ikke blevet lavet for bilen
 }
