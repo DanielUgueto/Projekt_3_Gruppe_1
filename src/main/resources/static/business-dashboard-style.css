@@ -58,7 +58,28 @@ main {
     border-radius: 10px;
     padding: 1em;
     gap: 1em;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
+.action:hover {
+    background-color: var(--color-bg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+    transform: translateY(-1px) scale(1.01);
+}
+
+.action-text {
+    color: gray;
+}
+
+.stat-value {
+    font-size: 40px;
+    margin: 0;
+}
+
+.stat-text {
+    color: gray;
+}
 
 
