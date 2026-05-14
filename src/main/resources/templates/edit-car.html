@@ -11,7 +11,7 @@
     <section>
         <form th:action="@{/dashboard/car/edit}" method="post">
             <div>
-                <div>
+                <div class="input-field">
                     <label for="brandName">Mærke</label>
                     <input type="text" id="brandName" name="brandName" list="brands" th:value="${carBrand.brandName}">
                     <datalist id="brands">
@@ -19,15 +19,15 @@
                                 th:value="${brand.brandName}"></option>
                     </datalist>
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="modelName">Model</label>
                     <input type="text" id="modelName" name="modelName" th:value="${carModel.modelName}">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="equipmentLevel">Udstyrsniveau</label>
                     <input type="text" id="equipmentLevel" name="equipmentLevel" th:value="${carModel.equipmentLevel}">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="fuelType">Brændstof</label>
                     <select id="fuelType" name="fuelType">
                         <option value="Petrol" th:selected="${carModel.fuelType == 'Petrol'}">Petrol</option>
@@ -36,7 +36,7 @@
                         <option value="Electric" th:selected="${carModel.fuelType == 'Electric'}">Electric</option>
                     </select>
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="shiftGearType">Gear type</label>
                     <select id="shiftGearType" name="shiftGearType">
                         <option value="Manual" th:selected="${carModel.shiftGearType == 'Manual'}">Manual</option>
@@ -45,28 +45,28 @@
                 </div>
             </div>
             <div>
-                <div>
+                <div class="input-field">
                     <label for="vinNumber">Stelnummer</label>
                     <input type="text" id="vinNumber" name="vinNumber" th:value="${car.vinNumber}"
                           style="background: var(--color-muted)" readonly>
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="licensePlate">Nummerplade</label>
                     <input type="text" id="licensePlate" name="licensePlate" th:value="${car.licensePlate}">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="monthlyPrice">Månedlig pris</label>
                     <input type="number" id="monthlyPrice" name="monthlyPrice" th:value="${car.monthlyPrice}" step="0.01">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="registrationDate">Registreringsdato</label>
                     <input type="text" id="registrationDate" name="registrationDate" th:value="${car.registrationDate}">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="colour">Farve</label>
                     <input type="text" id="colour" name="colour" th:value="${car.colour}">
                 </div>
-                <div>
+                <div class="input-field">
                     <label for="status">Status</label>
                     <select id="status" name="status">
                         <option value="Ledig" th:selected="${car.status == 'Ledig'}">Ledig</option>

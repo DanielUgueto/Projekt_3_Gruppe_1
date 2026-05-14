@@ -152,7 +152,7 @@ public class CarController {
         }
 
         if (!car.getStatus().equals("Ledig") && !car.getStatus().equals("Udgået")) {
-            // redirect to logout, because whoever is using the system is now trying to do something they aren't allowed to.
+            // redirect to log out, because whoever is using the system is now trying to do something they aren't allowed to.
             // Realistically system should ping an admin that an employee is doing something they shouldn't be doing,
             // and until the admin changes it then the employee's account should be locked.
             return "redirect:/logout";
