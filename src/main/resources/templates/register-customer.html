@@ -15,9 +15,10 @@
 
 <section class="create-employee-box">
 
-    <p th:if="${error}" th:text="${error}" class="error-message" style="color:red"></p>
 
     <form th:action="@{/customer/register}" method="post">
+        <p th:if="${error}" th:text="${error}" class="error-message" style="color:red"></p>
+
         <section class="create-employee-box-section">
             <h3>Person info:</h3>
         <div class="input-field">
