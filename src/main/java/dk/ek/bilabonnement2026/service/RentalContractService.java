@@ -91,4 +91,8 @@ public class RentalContractService {
     public RentalContractOverview getRentalContractOverviewById(int contractId){
         return rentalContractRepository.findRentalContractOverviewById(contractId);
     }
+
+    public int returnAmountOfContractsByStatus(String status) {
+        return rentalContractRepository.returnAmountOfContractsByStatus(status);
+    }
 }
