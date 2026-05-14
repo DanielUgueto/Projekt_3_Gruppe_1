@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class EmployeeRepository {
@@ -79,5 +81,61 @@ public class EmployeeRepository {
         }
 
         return null;
+    }
+
+    public List<Employee> findAllEmployees(){
+        String sql = "SELECT * FROM employee";
+
+        List<Employee> employeeList = new ArrayList<>();
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                Employee employee = new Employee(resultSet.getInt("employee_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("work_email"),
+                        resultSet.getString("role"),
+                        resultSet.getBoolean("status"));
+
+                employeeList.add(employee);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return employeeList;
+    }
+
+    public List<Employee> findAllEmployeesByStatus(boolean status){
+        String sql = "SELECT * FROM employee WHERE status = ?";
+        List<Employee> employeeList = new ArrayList<>();
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+
+
+            statement.setBoolean(1,status);
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Employee employee = new Employee(resultSet.getInt("employee_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("work_email"),
+                            resultSet.getString("role"),
+                            resultSet.getBoolean("status"));
+
+                    employeeList.add(employee);
+                }
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return employeeList;
     }
 }

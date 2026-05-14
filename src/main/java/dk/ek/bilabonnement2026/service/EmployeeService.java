@@ -57,6 +57,13 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployeesByStatus(String status){
-        return employeeRepository.findAllEmployeesByStatus(String status);
+        if(!status.equalsIgnoreCase("aktiv") || status.equalsIgnoreCase("inaktiv")){
+            return null;
+        }
+        boolean employeeStatus = true;
+        if(!status.equalsIgnoreCase("aktiv")){
+            employeeStatus = false;
+        }
+        return employeeRepository.findAllEmployeesByStatus(employeeStatus);
     }
 }
