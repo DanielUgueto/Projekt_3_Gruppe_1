@@ -88,7 +88,8 @@ public class EmployeeRepository {
                         rs.getString("last_name"),
                         rs.getString("password"),
                         rs.getString("work_email"),
-                        rs.getString("role")
+                        rs.getString("role"),
+                        rs.getBoolean("is_active")
                 );
 
                 return employee;

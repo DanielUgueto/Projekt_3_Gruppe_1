@@ -9,13 +9,14 @@ public class Employee {
     String role;
     boolean is_active;
 
-    public Employee(int employeeId, String firstName, String lastName, String password, String workEmail, String role) {
+    public Employee(int employeeId, String firstName, String lastName, String password, String workEmail, String role, boolean is_active) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.workEmail = workEmail;
         this.role = role;
+        this.is_active = is_active;
     }
 
     public Employee(String firstName, String lastName, String password, String workEmail, String role) {
