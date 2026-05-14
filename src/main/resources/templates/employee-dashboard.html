@@ -28,7 +28,7 @@
 
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="employee : ${employeeList}">
-                <a th:href="@{/dashboard/employee(employeeId=${employee.employeeId})}">
+                <a th:href="@{/employee/dashboard(employeeId=${employee.employeeId})}">
                     <div>
                         <h4>
                             <span th:text="${employee.firstName}"></span>
@@ -36,10 +36,10 @@
                         </h4>
                     </div>
                     <div>
-                        <spand th:text="${employee.role}"></spand>
+                        <span th:text="${employee.role}"></span>
                     </div>
                     <div>
-                        <spand th:text="${employee.is_active}"></spand>
+                        <span th:text="${employee.is_active}"></span>
                     </div>
                 </a>
             </article>
@@ -50,8 +50,8 @@
         <article class="selected-car-panel" th:if="${selectedEmployee != null}">
             <header class="selected-car-header">
                 <h2>
-                    <spand th:text="${employee.firstName}"></spand>
-                    <spand th:text="${employee.lastName}"></spand>
+                    <span th:text="${employee.firstName}"></span>
+                    <span th:text="${employee.lastName}"></span>
                 </h2>
                 <p th:text="${selectedEmployee.role}"></p>
             </header>
@@ -64,7 +64,7 @@
             </section>
 
             <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.is_active == true}">
-                <form th:action="@{/dashboard/employee/remove(employeeId=${selectedEmployee.employeeId})}" method="post"
+                <form th:action="@{/employee/dashboard/remove(employeeId=${selectedEmployee.employeeId})}" method="post"
                       onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
                     <button type="submit">Sæt medarbejder som inaktiv</button>
                 </form>
