@@ -9,6 +9,7 @@ public class Customer {
     private String email;
     private String phoneNumber;
     private Boolean isActive;
+    private CustomerAddress address;
 
     public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, String phoneNumber, Boolean isActive) {
         this.customerId = customerId;
@@ -29,6 +30,20 @@ public class Customer {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
+    }
+
+
+    public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber,
+                    String cprNumber, String email, String phoneNumber, boolean isActive, CustomerAddress address) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.driversLicenseNumber = driversLicenseNumber;
+        this.cprNumber = cprNumber;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
+        this.address = address;
     }
 
     public int getCustomerId() {
@@ -59,7 +74,11 @@ public class Customer {
         return phoneNumber;
     }
 
-    public Boolean getStatus() {
+    public Boolean getIsActive() {
         return isActive;
+    }
+
+    public CustomerAddress getAddress() {
+        return address;
     }
 }

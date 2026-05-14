@@ -12,34 +12,18 @@
 
 
 <div class="dashboard-split">
-
-    <!--    denne sektion har intet prefix til tlf nummer så jeg kommenterede det ud-->
-
-    <!--    <div class="dashboard-split-car">-->
-    <!--        <div class="dashboard-car-box">-->
-    <!--            <article class="dashboard-car-info" th:each="customer : ${customerList}">-->
-    <!--                <a th:href="@{/customer/dashboard(customerId=${customer.customerId})}">-->
-    <!--                    <div>-->
-    <!--                        <h4>-->
-    <!--                            <span th:text="${customer.firstName}"></span>-->
-    <!--                            <span th:text="${customer.lastName}"></span>-->
-    <!--                        </h4>-->
-    <!--                    </div>-->
-    <!--                    <div>-->
-    <!--                        <span th:text="${customer.email}"></span>-->
-    <!--                    </div>-->
-    <!--                    <div>-->
-    <!--                        <span th:text="${customer.phoneNumber}"></span>-->
-    <!--                    </div>-->
-    <!--                </a>-->
-    <!--            </article>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-
-    <!--    denne version har +45 prefix til tlf nummer men det er en hardcoded placeholder for nu-->
-
     <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
+            <div>
+                <form th:action="@{/customer/dashboard}" method="get">
+                    <label for="fullName">Søg efter kundens navn:</label>
+                    <input type="text" id="fullName" name="query" th:value="${query}" placeholder="Indtast navn..."/>
+                    <button type="submit">Søg</button>
+                </form>
+                <p th:if="${error != null}" style="color: red;" th:text="${error}"></p>
+            </div>
+        </section>
+
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="customer : ${customerList}">
                 <a th:href="@{/customer/dashboard(customerId=${customer.customerId})}">
@@ -60,7 +44,6 @@
         </div>
     </div>
 
-
     <div class="dashboard-split-single-car">
         <article class="selected-car-panel" th:if="${selectedCustomer != null}">
             <header class="selected-car-header">
@@ -68,7 +51,8 @@
                     <span th:text="${selectedCustomer.firstName}"></span>
                     <span th:text="${selectedCustomer.lastName}"></span>
                 </h2>
-                <p><strong>Kørekort-nummer:</strong> <span th:text="${selectedCustomer.driversLicenseNumber}"></span>
+                <p><strong>Kørekort-nummer:</strong> <span
+                        th:text="${selectedCustomer.driversLicenseNumber}"></span>
                 </p>
                 <p><strong>CPR-nummer:</strong> <span th:text="${selectedCustomer.cprNumber}"></span></p>
             </header>
@@ -78,8 +62,8 @@
                 <p><strong>Fornavn:</strong> <span th:text="${selectedCustomer.firstName}"></span></p>
                 <p><strong>Efternavn:</strong> <span th:text="${selectedCustomer.lastName}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${selectedCustomer.email}"></span></p>
-                <p><strong>Tlf-nummer:</strong><span> +45 </span> <span
-                        th:text="${selectedCustomer.phoneNumber}"></span></p>
+                <p><strong>Tlf-nummer:</strong><span>+45 </span> <span th:text="${selectedCustomer.phoneNumber}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedCustomer.isActive} ? 'Aktiv' : 'Inaktiv'"></span></p>
             </section>
 
             <section class="selected-car-section">
@@ -87,7 +71,9 @@
                     Rediger kunde
                 </a>
 
-                <form th:action="@{/customer/delete}" onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som inaktiv?'); " method="post">
+                <form th:action="@{/customer/delete}"
+                      onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som inaktiv?'); "
+                      method="post">
                     <input type="hidden" name="customerId" th:value="${selectedCustomer.customerId}">
 
                     <p th:if="${deleteError != null}" style="color: red;" th:text="${deleteError}"></p>
@@ -105,5 +91,6 @@
         </article>
     </div>
 </div>
+
 </body>
 </html>
