@@ -5,9 +5,12 @@ import dk.ek.bilabonnement2026.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -49,5 +52,37 @@ public class EmployeeController {
         }
 
         return employeeService.redirectByRole(loggedInEmployee);
+    }
+
+    @GetMapping("/employee/dashboard")
+    public String showEmployeeDashboard(@RequestParam(required = false) Integer employeeId,
+                                        @RequestParam(required = false) String status,
+                                        HttpSession session, Model model){
+
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+        List<Employee> employeeList;
+        if(status == null || status.isBlank()){
+             employeeList = employeeService.getAllEmployees();
+        } else{
+            employeeList = employeeService.getAllEmployeesByStatus(status);
+        }
+
+        if(employeeId != null){
+            Employee selectedEmployee = null;
+            for(Employee e : employeeList){
+                if(e.getEmployeeId() == employeeId){
+                    selectedEmployee = e;
+                    break;
+                }
+            }
+            model.addAttribute("selectedEmployee", selectedEmployee);
+        }
+
+        model.addAttribute("employeeList",employeeList);
+
+        return"employee-dashboard";
     }
 }
