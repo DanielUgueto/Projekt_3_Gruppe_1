@@ -7,7 +7,6 @@ import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,5 +58,17 @@ public class CarService {
 
         carRepository.updateCarStatus(carId, "Udgået");
         return true;
+    }
+
+    public Car getCarByCarId(int carId){
+        return carRepository.findCarByCarNumber(carId);
+    }
+
+    public void updateCar(Car car) {
+        carRepository.updateCar(car);
+    }
+
+    public Car getCarByLicensePlate(String licensePlate) {
+        return carRepository.findCarByLicensePlate(licensePlate);
     }
 }

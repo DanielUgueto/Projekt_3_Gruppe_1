@@ -14,7 +14,7 @@
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
 
 <section>
-    <form action="@{/cars/create}" method="post">
+    <form th:action="@{/cars/create}" method="post">
     
     <label for="carModelId">Bilmodel:</label>
     <select id="carModelId" name="carModelId" required>
