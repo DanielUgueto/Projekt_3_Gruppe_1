@@ -274,4 +274,31 @@ public class CarRepository {
             e.printStackTrace();
         }
     }
+
+    public Car findCarByLicensePlate(String licensePlate){
+        String sql = "SELECT * FROM car WHERE license_plate = ?";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, licensePlate);
+
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    return new Car(resultSet.getInt("car_id"),
+                            resultSet.getInt("car_model_id"),
+                            resultSet.getString("vin_number"),
+                            resultSet.getString("license_plate"),
+                            resultSet.getDouble("monthly_price"),
+                            resultSet.getString("status"),
+                            resultSet.getString("colour"),
+                            resultSet.getString("registration_date"));
+                }
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
