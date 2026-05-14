@@ -209,6 +209,16 @@ public class CarController {
             return "redirect:/dashboard/car";
         }
 
+        Car originalCar = carService.getCarByCarId(carId);
+        if (!originalCar.getStatus().equals(status)) {
+            redirectAttributes.addFlashAttribute("error", "Status på denne bil må ikke ændres her!");
+            return "redirect:/dashboard/car/edit?carId=" + carId;
+        }
+        if (!originalCar.getVinNumber().equals(vinNumber)) {
+            redirectAttributes.addFlashAttribute("error", "Stelnummer må ikke ændres");
+            return "redirect:/dashboard/car/edit?carId=" + carId;
+        }
+
         Car foundCar = carService.getCarByLicensePlate(licensePlate);
         if (foundCar != null && foundCar.getCarId() != carId) {
             redirectAttributes.addFlashAttribute("error", "Den indtastede nummerplade er ikke unik!");
@@ -251,6 +261,4 @@ public class CarController {
         redirectAttributes.addFlashAttribute("success", "Bilens info blev ændret!");
         return "redirect:/dashboard/car?carId=" + carId;
     }
-
-    // CSS er stadig ikke blevet lavet for bilen
 }
