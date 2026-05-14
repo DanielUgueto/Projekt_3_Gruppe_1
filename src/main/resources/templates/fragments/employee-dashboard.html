@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EmployeeDashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-split">
+    <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
+            <div>
+                <form>
+                    <label for="status">Filtrer efter medarbejder status:</label>
+                    <select name="status" id="status">
+                        <option value="">Alle</option>
+                        <option value="Aktiv">Aktiv</option>
+                        <option value="Inaktiv">Aktiv</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </form>
+            </div>
+        </section>
+
+        <div class="dashboard-car-box">
+            <article class="dashboard-car-info" th:each="employee : ${employeeList}">
+                <a th:href="@{/dashboard/employee(employeeId=${employee.employeeId})}">
+                    <div>
+                        <h4>
+                            <span th:text="${employee.firstName}"></span>
+                            <span th:text="${employee.lastName}"></span>
+                        </h4>
+                    </div>
+                    <div>
+                        <spand th:text="${employee.role}"></spand>
+                    </div>
+                    <div>
+                        <spand th:text="${employee.status}"></spand>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </div>
+
+    <div class="dashboard-split-single-car">
+        <article class="selected-car-panel" th:if="${selectedEmployee != null}">
+            <header class="selected-car-header">
+                <h2>
+                    <spand th:text="${employee.firstName}"></spand>
+                    <spand th:text="${employee.lastName}"></spand>
+                </h2>
+                <p th:text="${selectedEmployee.role}"></p>
+            </header>
+
+            <section class="selected-car-section">
+                <p><strong>ID:</strong> <span th:text="${selectedEmployee.employeeId}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${selectedEmployee.workEmail}"></span></p>
+                <p><strong>Rolle:</strong> <span th:text="${selectedEmployee.role}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedEmployee.status}"></span></p>
+            </section>
+
+            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${emplyee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.status.equals('Aktiv')}">
+                <form th:action="@{/dashboard/employee/remove(employeeId=${selectedEmployee.employeeId})}" method="post"
+                      onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
+                    <button type="submit">Sæt medarbejder som inaktiv</button>
+                </form>
+            </div>
+
+            <div>
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
+            </div>
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedCar == null}">
+            <h2>Ingen medarbejder valgt</h2>
+            <p>Vælg en medarbejder i oversigten til venstre for at se detaljer her.</p>
+            <p th:if="${notFound != null}" th:text="${notFound}" style="color: red"></p>
+        </article>
+
+    </div>
+</div>
+</body>
+</html>
