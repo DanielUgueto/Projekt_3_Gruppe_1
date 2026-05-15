@@ -63,7 +63,7 @@ VALUES (1, 'Yaris', 'Base', 'Manual', 'Petrol'),
 -- Cars
 INSERT INTO car (car_model_id, vin_number, license_plate, monthly_price, status, colour, registration_date)
 VALUES (1, 'JT100000000000001', 'AB12345', 2999.00, 'Ledig', 'White', '2022-01-15'),
-       (1, 'JT100000000000002', 'AB12346', 2999.00, 'Ledig', 'Black', '2022-03-11'),
+       (1, 'JT100000000000002', 'AB12346', 2999.00, 'Udlejet', 'Black', '2022-03-11'),
        (1, 'JT100000000000003', 'AB12347', 2999.00, 'Ledig', 'Silver', '2021-11-09'),
 
        (2, 'JT200000000000001', 'AC12345', 3499.00, 'Ledig', 'Blue', '2023-02-20'),
@@ -197,12 +197,13 @@ VALUES (1, '2500', 'Demovej', '1', 'st'),
 -- Rental Contracts (car_id 1 og 2 er begge Toyota Yaris med status Ledig)
 INSERT INTO rental_contract (employee_id, customer_id, car_id, start_date, end_date, pickup_location, status, subscription_type)
 VALUES (1, 1, 1, '2024-01-01', '2024-06-01', 'København', 'Afsluttet', 'Limited'),
-       (1, 2, 2, '2024-02-01', '2024-07-01', 'København', 'Aktiv', 'Limited');
+       (1, 2, 2, '2026-05-01', '2026-07-01', 'København', 'Aktiv', 'Limited');
 
 
 INSERT INTO damage_category (name, standard_price, description)
 VALUES ('Ridset dør', 1500.00, 'Ridser på bildør'),
        ('Knust rude', 3000.00, 'Beskadiget forrude'),
-       ('Bule', 2000.00, 'Bule på karrosseri');
+       ('Bule', 2000.00, 'Bule på karrosseri'),
+       ('Ridset fælg', 600.00,'Fælgen er ridset');
 
 
