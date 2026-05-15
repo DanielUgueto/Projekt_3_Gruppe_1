@@ -92,6 +92,7 @@
     padding: 15px;
     background-color: var(--color-surface);
     min-height: 300px;
+    border-radius: 10px;
 }
 
 .selected-car-header {
