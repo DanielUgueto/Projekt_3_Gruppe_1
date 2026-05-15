@@ -138,6 +138,29 @@ public class RentalContractRepository {
         return cars;
     }
 
+    public void updateRentalContract(RentalContract rentalContract){
+        String sql = """
+                UPDATE rental_contract
+                SET start_date = ?, end_date = ?, pickup_location = ?, subscription_type = ?
+                WHERE rental_contract_id = ? AND status = 'Aktiv'
+                """;
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setDate(1,Date.valueOf(rentalContract.getStartDate()));
+            statement.setDate(2, Date.valueOf(rentalContract.getEndDate()));
+            statement.setString(3,rentalContract.getPickupLocation());
+            statement.setString(4,rentalContract.getSubscriptionType());
+            statement.setInt(5, rentalContract.getRentalContractId());
+
+            statement.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException("Rental contract kunne ikke opdateres i databasen", e);
+        }
+    }
+
     public void updateRentalContractStatus(int rentalContractId, String newStatus) {
         String sql = "UPDATE rental_contract SET status = ? WHERE rental_contract_id = ?";
 
