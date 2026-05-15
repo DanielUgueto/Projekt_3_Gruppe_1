@@ -88,7 +88,7 @@ public class RentalContractController {
 
     @GetMapping("/rental-contracts/edit")
     public String showEditContractForm(@RequestParam("rentalContractId") int rentalContractId,
-                                       HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+                                       HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
