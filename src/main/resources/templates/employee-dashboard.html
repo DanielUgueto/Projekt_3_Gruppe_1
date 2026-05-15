@@ -64,7 +64,7 @@
                 <p><strong>ID:</strong> <span th:text="${selectedEmployee.employeeId}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${selectedEmployee.workEmail}"></span></p>
                 <p><strong>Rolle:</strong> <span th:text="${selectedEmployee.role}"></span></p>
-                <p><strong>Status:</strong> <span th:text="${selectedEmployee.is_active}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedEmployee.isActive} ? 'Aktiv' : 'Inaktiv'"></span></p>
             </section>
 
             <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.is_active == true}">
