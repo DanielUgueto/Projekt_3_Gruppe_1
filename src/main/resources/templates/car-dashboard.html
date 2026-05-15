@@ -111,14 +111,14 @@
                 <p><strong>Månedlig pris:</strong> <span th:text="${selectedCar.monthlyPrice}"></span> kr.</p>
             </section>
 
-            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${selectedCar.status.equals('Ledig')}">
+            <div class="delete-car-btn selected-car-section" th:if="${employee.role.equals('dataregistrering')} and ${selectedCar.status.equals('Ledig')}">
                 <form th:action="@{/dashboard/car/remove(carId=${selectedCar.carId})}" method="post"
                       onsubmit="return confirm('Er du sikker på, at du vil sætte bilens status som udgået?')">
                     <button type="submit">Sæt bil som udgået</button>
                 </form>
             </div>
 
-            <div>
+            <div class="selected-car-section">
                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
             </div>
