@@ -30,7 +30,10 @@ public class CarService {
         }
 
         if(car.getLicensePlate().length() != 7){
-            throw new IllegalArgumentException("Nummerpladen skal være 7 lang");
+            throw new IllegalArgumentException("Nummerpladen skal være 7 tegn");
+        }
+        if(car.getVinNumber().length() != 17){
+            throw new IllegalArgumentException("Stelnummeret skal være 17 tegn");
         }
 
         carRepository.saveCar(car);
