@@ -3,57 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Business info</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/business-dashboard-style.css" th:href="@{/business-dashboard-style.css}">
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<main class="dashboard-page">
+<main>
+    <section class="dashboard-box">
+        <div class="dashboard-header">
+            <h1>Business Dashboard</h1>
+            <p class="heading-text">Overblik over forretningens nøgletal</p>
+        </div>
 
-    <header class="dashboard-header">
-        <h1>Business Dashboard</h1>
-        <p>Overblik over forretningens nøgletal</p>
-    </header>
+        <section class="dashboard-stats">
+            <article class="stat-card">
+                <img src="/img/balance.png" alt="">
+                <div>
+                    <h4>Månedlig indtægt</h4>
+                    <p class="stat-value" th:text="${monthlyRevenue} + ' kr.'"></p>
+                    <p class="stat-text">Månedlig indtægt fra lejekontrakter</p>
+                </div>
+            </article>
 
-    <section class="dashboard-summary">
-        <article class="dashboard-card revenue-card">
-            <h2>Månedlig indtægt</h2>
-            <p class="dashboard-value">
-                <span th:text="${monthlyRevenue}">0</span> kr.
-            </p>
-            <p class="dashboard-description">
-                Samlet månedlig lejeindtægt fra aktive lejeaftaler
-            </p>
-        </article>
+            <article class="stat-card">
+                <img src="/img/rental.png" alt="">
+                <div>
+                    <h4>Aktive lejeaftaler</h4>
+                    <p class="stat-value" th:text="${activeRentalContracts}"></p>
+                    <p class="stat-text">Igangværende aftaler</p>
+                </div>
+            </article>
 
-        <article class="dashboard-card placeholder-card">
-            <h2>Kommende widget</h2>
-            <p>Plads til flere nøgletal senere</p>
-        </article>
+            <article class="stat-card">
+                <img src="/img/car.png" alt="">
+                <div>
+                    <h4>Ledige biler</h4>
+                    <p class="stat-value" th:text="${availableCars}"></p>
+                    <p class="stat-text">Klar til udlejning</p>
+                </div>
+            </article>
+        </section>
 
-        <article class="dashboard-card placeholder-card">
-            <h2>Kommende widget</h2>
-            <p>Plads til flere nøgletal senere</p>
-        </article>
+        <section class="actions-panel">
+            <div>
+                <h2>Genveje</h2>
+                <p class="heading-text">Gå videre til oversigter</p>
+            </div>
+
+            <div class="actions-container">
+                <a class="action" th:href="@{/dashboard/car}">
+                    <img src="/img/car.png" alt="">
+                    <div>
+                        <h3>Se biloverblik</h3>
+                        <p class="action-text">Se alle biler og deres status</p>
+                    </div>
+                </a>
+
+                <a class="action" th:href="@{/rental-contracts/overview}">
+                    <img src="/img/rental.png" alt="">
+                    <div>
+                        <h3>Se lejeaftaler</h3>
+                        <p class="action-text">Få overblik over alle aftaler</p>
+                    </div>
+                </a>
+            </div>
+        </section>
     </section>
-
-    <section class="dashboard-content">
-        <article class="dashboard-panel">
-            <h2>Detaljer</h2>
-            <p>Her kan du senere vise flere data, fx lister, statusoverblik eller ekstra forretningsstatistik.</p>
-        </article>
-    </section>
-
-    <div>
-        <a th:href="@{/car/dashboard}">
-            <p>Se overblik over biler</p>
-        </a>
-        <a th:href="@{/rental-contracts/overview}">
-            <p>Se overblik over lejeaftaler</p>
-        </a>
-    </div>
-
 </main>
 
 </body>

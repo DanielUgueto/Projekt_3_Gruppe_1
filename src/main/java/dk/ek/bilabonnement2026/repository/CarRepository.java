@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class CarRepository {
             statement.setString(4, car.getColour());
             statement.setString(5, car.getStatus());
             statement.setDouble(6,car.getMonthlyPrice());
-            statement.setString(7, car.getRegistrationDate());
+            statement.setDate(7, Date.valueOf(car.getRegistrationDate()));
 
             statement.executeUpdate();
 
@@ -60,7 +61,7 @@ public class CarRepository {
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
                             resultSet.getString("colour"),
-                            resultSet.getString("registration_date"));
+                            resultSet.getDate("registration_date").toLocalDate());
                 }
             }
 
@@ -88,7 +89,7 @@ public class CarRepository {
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
                             resultSet.getString("colour"),
-                            resultSet.getString("registration_date"));
+                            resultSet.getDate("registration_date").toLocalDate());
                 }
             }
 
@@ -131,7 +132,7 @@ public class CarRepository {
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
                             resultSet.getString("colour"),
-                            resultSet.getString("registration_date")));
+                            resultSet.getDate("registration_date").toLocalDate()));
                 }
             }
         }catch (SQLException e){
@@ -164,7 +165,7 @@ public class CarRepository {
                         rs.getString("shift_gear_type"),
                         rs.getString("status"),
                         rs.getString("vin_number"),
-                        rs.getString("registration_date"),
+                        rs.getDate("registration_date").toLocalDate(),
                         rs.getString("fuel_type"));
 
                 list.add(carOverview);
@@ -203,7 +204,7 @@ public class CarRepository {
                         rs.getString("shift_gear_type"),
                         rs.getString("status"),
                         rs.getString("vin_number"),
-                        rs.getString("registration_date"),
+                        rs.getDate("registration_date").toLocalDate(),
                         rs.getString("fuel_type"));
 
                 list.add(carOverview);
@@ -240,7 +241,7 @@ public class CarRepository {
                         rs.getString("shift_gear_type"),
                         rs.getString("status"),
                         rs.getString("vin_number"),
-                        rs.getString("registration_date"),
+                        rs.getDate("registration_date").toLocalDate(),
                         rs.getString("fuel_type"));
             }
 
@@ -265,7 +266,7 @@ public class CarRepository {
             statement.setDouble(4, car.getMonthlyPrice());
             statement.setString(5, car.getStatus());
             statement.setString(6, car.getColour());
-            statement.setString(7, car.getRegistrationDate());
+            statement.setDate(7, Date.valueOf(car.getRegistrationDate()));
             statement.setInt(8, car.getCarId());
 
             statement.executeUpdate();
@@ -292,7 +293,7 @@ public class CarRepository {
                             resultSet.getDouble("monthly_price"),
                             resultSet.getString("status"),
                             resultSet.getString("colour"),
-                            resultSet.getString("registration_date"));
+                            resultSet.getDate("registration_date").toLocalDate());
                 }
             }
 
@@ -300,5 +301,25 @@ public class CarRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int returnCarAmountByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM car WHERE status = ?";
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, status);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

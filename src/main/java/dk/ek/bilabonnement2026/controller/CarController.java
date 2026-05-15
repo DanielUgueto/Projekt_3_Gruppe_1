@@ -215,7 +215,7 @@ public class CarController {
                           @RequestParam("vinNumber") String vinNumber,
                           @RequestParam("licensePlate") String licensePlate,
                           @RequestParam("monthlyPrice") double monthlyPrice,
-                          @RequestParam("registrationDate") String registrationDate,
+                          @RequestParam("registrationDate") LocalDate registrationDate,
                           @RequestParam("colour") String colour,
                           @RequestParam("status") String status,
                           @RequestParam("carId") int carId,

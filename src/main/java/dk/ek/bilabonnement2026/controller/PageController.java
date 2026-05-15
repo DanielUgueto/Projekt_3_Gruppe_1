@@ -2,6 +2,7 @@ package dk.ek.bilabonnement2026.controller;
 
 import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.Employee;
+import dk.ek.bilabonnement2026.service.CarService;
 import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import dk.ek.bilabonnement2026.service.RentalContractService;
@@ -23,6 +24,10 @@ public class PageController {
 
     @Autowired
     RentalContractService rentalContractService;
+
+    @Autowired
+    CarService carService;
+
     @Autowired
     CustomerService customerService;
 
@@ -72,7 +77,11 @@ public class PageController {
         }
 
         double monthlyRevenue = rentalContractService.calculateMonthlyRevenue();
+        int rentalContracts = rentalContractService.returnAmountOfContractsByStatus("Aktiv");
+        int availableCars = carService.returnCarAmountByStatus("Ledig");
         model.addAttribute("monthlyRevenue", monthlyRevenue);
+        model.addAttribute("activeRentalContracts", rentalContracts);
+        model.addAttribute("availableCars", availableCars);
 
         return "business-dashboard";
     }

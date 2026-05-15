@@ -77,4 +77,8 @@ public class CarService {
     public Car getCarByLicensePlate(String licensePlate) {
         return carRepository.findCarByLicensePlate(licensePlate);
     }
+
+    public int returnCarAmountByStatus(String status) {
+        return carRepository.returnCarAmountByStatus(status);
+    }
 }
