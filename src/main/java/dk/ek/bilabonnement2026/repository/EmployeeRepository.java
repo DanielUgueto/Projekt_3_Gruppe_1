@@ -32,7 +32,7 @@ public class EmployeeRepository {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Medarbejderen kunne ikke gemmes i databasen", e);
         }
     }
 
@@ -47,8 +47,7 @@ public class EmployeeRepository {
             statement.executeUpdate();
         }
         catch (SQLException e){
-
-            return e.getMessage();
+            throw new RuntimeException("Medarbejderens status kunne ikke opdateres i databasen", e);
         }
         return null;
     }

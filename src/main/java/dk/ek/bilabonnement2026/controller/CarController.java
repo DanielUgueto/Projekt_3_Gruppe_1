@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -33,29 +34,47 @@ public class CarController {
         if(employee == null){
             return "redirect:/";
         }
-        List<CarModel> carModels = carModelService.getAllCarModels();
-        model.addAttribute("carModels",carModels);
+        model.addAttribute("brands",carBrandService.getAllCarBrands());
+        model.addAttribute("models", carModelService.getAllCarModels());
         return "createCar";
     }
 
     @PostMapping("/cars/create")
-    public String createCar(@RequestParam("carModelId") int carModelId,
+    public String createCar(@RequestParam("brandName") String brandName,
+                            @RequestParam("modelName") String modelName,
+                            @RequestParam("equipmentLevel") String equipmentLevel,
+                            @RequestParam("fuelType") String fuelType,
+                            @RequestParam("shiftGearType") String shiftGearType,
                             @RequestParam("vinNumber") String vinNumber,
                             @RequestParam("licensePlate") String licensePlate,
                             @RequestParam("colour") String colour,
                             @RequestParam("status") String status,
                             @RequestParam("monthlyPrice") double monthlyPrice,
-                            @RequestParam("registration_date") String registrationDate,
+                            @RequestParam("registrationDate") LocalDate registrationDate,
                             Model model){
-        Car car = new Car(carModelId,vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
+
+        CarBrand brand = carBrandService.getCarBrandByBrandName(brandName);
+        if(brand == null){
+            carBrandService.saveBrand(brandName);
+            brand = carBrandService.getCarBrandByBrandName(brandName);
+        }
+
+        CarModel carModel = carModelService.getCarModelByModelName(modelName);
+        if(carModel == null){
+            CarModel newModel = new CarModel(brand.getCarBrandId(), modelName, equipmentLevel, shiftGearType, fuelType);
+            carModelService.saveCarModel(newModel);
+            carModel = carModelService.getCarModelByModelName(modelName);
+        }
+
+        Car car = new Car(carModel.getCarModelId(),vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
 
         try{
             carService.createCar(car);
-            return "redirect:/cars";
+            return "redirect:/";
         }catch (IllegalArgumentException e){
             model.addAttribute("fejl", e.getMessage());
-            List<CarModel> carModels = carModelService.getAllCarModels();
-            model.addAttribute("carModels", carModels);
+            model.addAttribute("brands",carBrandService.getAllCarBrands());
+            model.addAttribute("models", carModelService.getAllCarModels());
             return "createCar";
         }
     }
@@ -196,7 +215,7 @@ public class CarController {
                           @RequestParam("vinNumber") String vinNumber,
                           @RequestParam("licensePlate") String licensePlate,
                           @RequestParam("monthlyPrice") double monthlyPrice,
-                          @RequestParam("registrationDate") String registrationDate,
+                          @RequestParam("registrationDate") LocalDate registrationDate,
                           @RequestParam("colour") String colour,
                           @RequestParam("status") String status,
                           @RequestParam("carId") int carId,

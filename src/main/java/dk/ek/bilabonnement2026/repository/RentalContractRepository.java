@@ -36,7 +36,7 @@ public class RentalContractRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Lejekontrakten kunne ikke gemmes i databasen", e);
         }
     }
 
@@ -127,7 +127,7 @@ public class RentalContractRepository {
                         resultSet.getDouble("monthly_price"),
                         resultSet.getString("status"),
                         resultSet.getString("colour"),
-                        resultSet.getString("registration_date"),
+                        resultSet.getDate("registration_date").toLocalDate(),
                         resultSet.getString("fuel_type"),
                         resultSet.getInt("rental_contract_id")));
             }
@@ -173,7 +173,7 @@ public class RentalContractRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Lejekontraktens status kunne ikke opdateres i databasen", e);
         }
     }
 

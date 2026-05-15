@@ -1,47 +1,98 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret Bil</title>
     <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/edit-car-style.css}">
+    <link rel="stylesheet" th:href="@{/add-employee-style.css}">
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<h1>Opret Bil</h1>
+<main>
 
-<p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
+    <h1>Opret Bil</h1>
 
-<section>
-    <form th:action="@{/cars/create}" method="post">
+    <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
 
-        <label for="carModelId">Bilmodel:</label>
-        <select id="carModelId" name="carModelId" required>
-            <option value="">-- Vælg model --</option>
-            <option th:each="carModel : ${carModels}"
-                    th:value="${carModel.carModelId}"
-                    th:text="${carModel.modelName + ' - ' + carModel.equipmentLevel}">
-            </option>
-        </select>
-
-        <label for="vinNumber">Stelnummer:</label>
-        <input type="text" id="vinNumber" name="vinNumber" required>
-
-        <label for="licensePlate">Nummerplade:</label>
-        <input type="text" id="licensePlate" name="licensePlate" required>
-
-        <label for="colour">Farve:</label>
-        <input type="text" id="colour" name="colour" required>
-
-        <input type="hidden" name="status" value="Ledig">
-
-        <label for="monthlyPrice">Månedlig pris:</label>
-        <input type="number" id="monthlyPrice" name="monthlyPrice" step="0.01" required>
-
-        <button type="submit">Opret bil</button>
-    </form>
-</section>
-
+    <section>
+        <form th:action="@{/cars/create}" method="post">
+            <div class="form-input">
+                <div>
+                    <div class="input-field">
+                        <label for="brandName">Mærke</label>
+                        <input type="text" id="brandName" name="brandName" list="brands">
+                        <datalist id="brands">
+                            <option th:each="brand : ${brands}"
+                                    th:value="${brand.brandName}"></option>
+                        </datalist>
+                    </div>
+                    <div class="input-field">
+                        <label for="modelName">Model</label>
+                        <input type="text" id="modelName" name="modelName" list="models">
+                        <datalist id="models">
+                            <option th:each="model : ${models}"
+                                    th:value="${model.modelName}"></option>
+                        </datalist>
+                    </div>
+                    <div class="input-field">
+                        <label for="equipmentLevel">Udstyrsniveau</label>
+                        <input type="text" id="equipmentLevel" name="equipmentLevel">
+                    </div>
+                    <div class="input-field">
+                        <label for="fuelType">Brændstof</label>
+                        <select id="fuelType" name="fuelType">
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Electric">Electric</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="shiftGearType">Gear type</label>
+                        <select id="shiftGearType" name="shiftGearType">
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field">
+                        <label for="vinNumber">Stelnummer</label>
+                        <input type="text" id="vinNumber" name="vinNumber">
+                    </div>
+                    <div class="input-field">
+                        <label for="licensePlate">Nummerplade</label>
+                        <input type="text" id="licensePlate" name="licensePlate">
+                    </div>
+                    <div class="input-field">
+                        <label for="monthlyPrice">Månedlig pris</label>
+                        <input type="number" id="monthlyPrice" name="monthlyPrice" step="0.01">
+                    </div>
+                    <div class="input-field">
+                        <label for="registrationDate">Registreringsdato</label>
+                        <input type="date" id="registrationDate" name="registrationDate">
+                    </div>
+                    <div class="input-field">
+                        <label for="colour">Farve</label>
+                        <input type="text" id="colour" name="colour">
+                    </div>
+                    <div class="input-field">
+                        <label for="status">Status</label>
+                        <input type="text" id="status" name="status"
+                               value="Ledig" style="background: var(--color-muted)" readonly>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="create-employee-box">
+                    <button type="submit">Opret bil</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
 </body>
 </html>

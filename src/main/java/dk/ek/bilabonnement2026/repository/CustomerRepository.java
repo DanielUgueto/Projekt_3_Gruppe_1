@@ -37,7 +37,7 @@ public class CustomerRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kunden kunne ikke gemmes i databasen", e);
         }
 
     }
@@ -153,7 +153,7 @@ public class CustomerRepository {
 
             statement.executeUpdate();
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Kunden kunne ikke opdateres i databasen", e);
         }
     }
 
@@ -167,7 +167,7 @@ public class CustomerRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kundens status kunne ikke opdateres i databasen", e);
         }
     }
 
