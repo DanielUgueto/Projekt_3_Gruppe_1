@@ -30,7 +30,7 @@ public class DamageRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Skade kunne ikke gemmes i databasen", e);
         }
     }
 }

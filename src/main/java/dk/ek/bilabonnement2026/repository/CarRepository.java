@@ -38,7 +38,7 @@ public class CarRepository {
             statement.executeUpdate();
 
         }catch(SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Bilen kunne ikke gemmes i databasen", e);
         }
 
     }
@@ -110,7 +110,7 @@ public class CarRepository {
 
             statement.executeUpdate();
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Bilens status kunne ikke opdateres i databasen", e);
         }
     }
 
@@ -272,7 +272,7 @@ public class CarRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Bilens kunne ikke opdateres i databasen", e);
         }
     }
 

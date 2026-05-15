@@ -13,6 +13,13 @@ public class CarModelService {
     @Autowired
     CarModelRepository carModelRepository;
 
+    public void saveCarModel(CarModel carModel){
+        carModelRepository.saveCarModel(carModel);
+    }
+
+    public CarModel getCarModelByModelName(String modelName){
+        return carModelRepository.getCarModelByModelName(modelName);
+    }
     public List<CarModel> getAllCarModels(){
         return carModelRepository.getAllCarModels();
     }

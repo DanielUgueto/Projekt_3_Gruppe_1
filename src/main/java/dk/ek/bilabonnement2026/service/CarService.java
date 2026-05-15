@@ -24,10 +24,16 @@ public class CarService {
             throw new IllegalArgumentException("En bil med dette stelnummer eksistere allerede");
         }
 
-        // Validate if vinNumber exsists
-        validatorCar = carRepository.findCarByCarNumber(car.getCarId());
+        validatorCar = carRepository.findCarByLicensePlate(car.getLicensePlate());
         if(validatorCar != null){
-            throw new IllegalArgumentException("En bil med dette vognnummer eksistere allerede");
+            throw new IllegalArgumentException("En bil med denne nummerplade eksisterer allerede");
+        }
+
+        if(car.getLicensePlate().length() != 7){
+            throw new IllegalArgumentException("Nummerpladen skal være 7 tegn");
+        }
+        if(car.getVinNumber().length() != 17){
+            throw new IllegalArgumentException("Stelnummeret skal være 17 tegn");
         }
 
         carRepository.saveCar(car);

@@ -36,7 +36,7 @@ public class RentalContractRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Lejekontrakten kunne ikke gemmes i databasen", e);
         }
     }
 
@@ -150,7 +150,7 @@ public class RentalContractRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Lejekontraktens status kunne ikke opdateres i databasen", e);
         }
     }
 
