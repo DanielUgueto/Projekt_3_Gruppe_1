@@ -88,7 +88,8 @@ public class RentalContractController {
 
     @GetMapping("/rental-contracts/edit")
     public String showEditContractForm(@RequestParam("rentalContractId") int rentalContractId,
-                                       HttpSession session, Model model) {
+                                       HttpSession session, Model model,
+                                       RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
@@ -98,13 +99,15 @@ public class RentalContractController {
         }
 
         RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
-
+        if(rentalContract == null){
+            redirectAttributes.addFlashAttribute("error", "Lejeaftalen med ID "+rentalContractId+" blev ikke fundet");
+            return "redirect:/rental-contracts";
+        }
         model.addAttribute("rentalContract", rentalContract);
-
-        return "edit-rentalContract";
+        return "edit-rental-contract";
     }
 
-    @PostMapping("/rental-contracts")
+    @PostMapping("/rental-contracts/edit")
     public String editRentalContract(@RequestParam("rentalContractId") int rentalContractId,
                                      @RequestParam("startDate") LocalDate startDate,
                                      @RequestParam("endDate") LocalDate endDate,
@@ -126,13 +129,13 @@ public class RentalContractController {
             redirectAttributes.addFlashAttribute("success", "Kontrakten blev opdateret");
             return "redirect:/rental-contracts/" + rentalContractId;
         } catch (IllegalArgumentException e){
+            model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("rentalContractId", rentalContractId);
-            model.addAttribute("startDate", startDate);
-            model.addAttribute("endDate", endDate);
-            model.addAttribute("pickupLocation", pickupLocation);
-            model.addAttribute("subscriptionType", subscriptionType);
-            return "rental-contract/edit";
+            return "edit-rental-contract";
+        } catch(Exception e) {
+            model.addAttribute("rentalContract", rentalContract);
+            model.addAttribute("error", "Der opstod en uventet fejl.");
+            return "edit-rental-contract";
         }
 
     }
