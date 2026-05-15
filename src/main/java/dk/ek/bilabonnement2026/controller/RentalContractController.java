@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -85,32 +86,83 @@ public class RentalContractController {
         }
     }
 
-    @GetMapping("/rental-contracts/return")
-    public String showReturnCarForm(HttpSession session, Model model){
+    @GetMapping("/rental-contracts/edit")
+    public String showEditContractForm(@RequestParam("rentalContractId") int rentalContractId,
+                                       HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
+            return "redirect:/";
+        }
+
+        RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
+
+        model.addAttribute("rentalContract", rentalContract);
+
+        return "edit-rentalContract";
+    }
+
+    @PostMapping("/rental-contracts")
+    public String editRentalContract(@RequestParam("rentalContractId") int rentalContractId,
+                                     @RequestParam("startDate") LocalDate startDate,
+                                     @RequestParam("endDate") LocalDate endDate,
+                                     @RequestParam("pickupLocation") String pickupLocation,
+                                     @RequestParam("subscriptionType") String subscriptionType,
+                                     HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
+            return "redirect:/";
+        }
+
+        RentalContract rentalContract = new RentalContract(rentalContractId, startDate, endDate, pickupLocation, subscriptionType);
+
+        try {
+            rentalContractService.updateRentalContract(rentalContract);
+            redirectAttributes.addFlashAttribute("success", "Kontrakten blev opdateret");
+            return "redirect:/rental-contracts/" + rentalContractId;
+        } catch (IllegalArgumentException e){
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("rentalContractId", rentalContractId);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("pickupLocation", pickupLocation);
+            model.addAttribute("subscriptionType", subscriptionType);
+            return "rental-contract/edit";
+        }
+
+    }
+
+    @GetMapping("/rental-contracts/return")
+    public String showReturnCarForm(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
             return "redirect:/";
         }
         List<Car> carList = carService.findCarsByStatus("Udlejet");
 
-        model.addAttribute("carList",carList);
-        model.addAttribute("employeeId",employee.getEmployeeId());
+        model.addAttribute("carList", carList);
+        model.addAttribute("employeeId", employee.getEmployeeId());
 
         return "returnCar";
     }
 
     @PostMapping("/rental-contracts/return")
-    public String returnCar(HttpSession session, @RequestParam("carId") int carId, Model model){
+    public String returnCar(HttpSession session, @RequestParam("carId") int carId, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        try{
+        try {
             rentalContractService.registerReturnOfCar(carId);
             return employeeService.redirectByRole(employee);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             List<Car> carList = carService.findCarsByStatus("Udlejet");
-            model.addAttribute("carList",carList);
+            model.addAttribute("carList", carList);
             model.addAttribute("fejl", e.getMessage());
             return "returnCar";
         }

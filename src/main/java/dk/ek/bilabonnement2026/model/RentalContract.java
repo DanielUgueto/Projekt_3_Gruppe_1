@@ -38,6 +38,14 @@ public class RentalContract {
         this.subscriptionType = subscriptionType;
     }
 
+    public RentalContract(int rentalContractId, LocalDate startDate, LocalDate endDate, String pickupLocation, String subscriptionType){
+        this.rentalContractId = rentalContractId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.pickupLocation = pickupLocation;
+        this.subscriptionType = subscriptionType;
+    }
+
     public int getRentalContractId() {
         return rentalContractId;
     }
