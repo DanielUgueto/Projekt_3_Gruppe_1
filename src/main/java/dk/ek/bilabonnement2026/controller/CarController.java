@@ -124,6 +124,7 @@ public class CarController {
         }
 
         model.addAttribute("employee", employee);
+        model.addAttribute("selectedStatus", status);
         model.addAttribute("carList", list);
 
         return "car-dashboard";
@@ -281,3 +282,4 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 }
+
