@@ -128,7 +128,7 @@ public class RentalContractController {
         try {
             rentalContractService.updateRentalContract(rentalContract);
             redirectAttributes.addFlashAttribute("success", "Kontrakten blev opdateret");
-            return "redirect:/rental-contracts/overview" + rentalContractId;
+            return "redirect:/rental-contracts/overview?contractId=" + rentalContractId;
         } catch (IllegalArgumentException e){
             model.addAttribute("rcOverview", rentalContractService.getRentalContractOverviewById(rentalContractId));
             model.addAttribute("rentalContract", rentalContract);
