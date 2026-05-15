@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret Lejeaftale</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{/add-employee-style.css}">
 </head>
 <body>
 
@@ -12,48 +13,52 @@
 <h1>Opret Lejeaftale</h1>
 
 <p th:if="${fejl}" th:text="${fejl}" style="color: red;"></p>
-<section>
-<form action="/rental-contracts/create" method="post">
+<section class="create-employee-box">
+    <form th:action="@{/rental-contracts/create}" method="post">
+        <div class="input-field">
+            <label for="customerId">Kunde:</label>
+            <select id="customerId" name="customerId" required>
+                <option value="">-- Vælg kunde --</option>
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.customerId}"
+                        th:text="${customer.firstName + ' ' + customer.lastName}">
+                </option>
+            </select>
+        </div>
+        <div class="input-field">
+            <label for="carId">Bil:</label>
+            <select id="carId" name="carId" required>
+                <option value="">-- Vælg bil --</option>
+                <option th:each="car : ${cars}"
+                        th:value="${car.carId}"
+                        th:text="${car.licensePlate + ' - ' + car.colour}">
+                </option>
+            </select>
+        </div>
+        <div class="input-field">
+            <label for="startDate">Startdato:</label>
+            <input type="date" id="startDate" name="startDate" required>
+        </div>
+        <div class="input-field">
+            <label for="endDate">Slutdato:</label>
+            <input type="date" id="endDate" name="endDate" required>
+        </div>
+        <div class="input-field">
+            <label for="pickupLocation">Afhentningssted:</label>
+            <input type="text" id="pickupLocation" name="pickupLocation" required>
+        </div>
+        <div class="input-field">
+            <label for="subscriptionType">Abonnementstype:</label>
+            <select id="subscriptionType" name="subscriptionType" required>
+                <option value="">-- Vælg type --</option>
+                <option value="Limited">Limited (5 måneder)</option>
+                <option value="Unlimited">Unlimited (3-36 måneder)</option>
+            </select>
+        </div>
+        <input type="hidden" name="employeeId" th:value="${employeeId}">
+        <button type="submit">Opret lejeaftale</button>
 
-    <label for="customerId">Kunde:</label>
-    <select id="customerId" name="customerId" required>
-        <option value="">-- Vælg kunde --</option>
-        <option th:each="customer : ${customers}"
-                th:value="${customer.customerId}"
-                th:text="${customer.firstName + ' ' + customer.lastName}">
-        </option>
-    </select>
-
-    <label for="carId">Bil:</label>
-    <select id="carId" name="carId" required>
-        <option value="">-- Vælg bil --</option>
-        <option th:each="car : ${cars}"
-                th:value="${car.carId}"
-                th:text="${car.licensePlate + ' - ' + car.colour}">
-        </option>
-    </select>
-
-    <label for="startDate">Startdato:</label>
-    <input type="date" id="startDate" name="startDate" required>
-
-    <label for="endDate">Slutdato:</label>
-    <input type="date" id="endDate" name="endDate" required>
-
-    <label for="pickupLocation">Afhentningssted:</label>
-    <input type="text" id="pickupLocation" name="pickupLocation" required>
-
-    <label for="subscriptionType">Abonnementstype:</label>
-    <select id="subscriptionType" name="subscriptionType" required>
-        <option value="">-- Vælg type --</option>
-        <option value="Limited">Limited (5 måneder)</option>
-        <option value="Unlimited">Unlimited (3-36 måneder)</option>
-    </select>
-
-    <input type="hidden" name="employeeId" th:value="${employeeId}">
-
-    <button type="submit">Opret lejeaftale</button>
-
-</form>
+    </form>
 </section>
 </body>
 </html>
