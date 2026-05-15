@@ -30,7 +30,7 @@
             <section class="dashboard-data-grid">
                 <article class="dashboard-data-card">
                     <a th:href="@{/cars/create}">
-                        <img src="/img/balance.png" alt="">
+                        <img src="/img/addCar.png" alt="">
                         <div>
                             <h4>Opret en ny bil i systemet</h4>
                             <p class="btn-text">Registrer en ny bil med model, oplysninger og pris</p>
@@ -39,7 +39,7 @@
                 </article>
                 <article class="dashboard-data-card">
                     <a th:href="@{/addEmployee}">
-                        <img src="/img/balance.png" alt="">
+                        <img src="/img/addEmployee.png" alt="">
                         <div>
                             <h4>Opret ny bruger i systemet</h4>
                             <p class="btn-text">Opret en ny bruger med adgang til systemet</p>
@@ -47,26 +47,8 @@
                     </a>
                 </article>
                 <article class="dashboard-data-card">
-                    <a th:href="@{/employee/dashboard}">
-                        <img src="/img/balance.png" alt="">
-                        <div>
-                            <h4>Slet medarbejder fra systemet</h4>
-                            <p class="btn-text">Fjern en medarbejder fra systemet</p>
-                        </div>
-                    </a>
-                </article>
-                <article class="dashboard-data-card">
-                    <a th:href="@{/rental-contracts/create}">
-                        <img src="/img/balance.png" alt="">
-                        <div>
-                            <h4>Opret ny lejekontrakt i systemet</h4>
-                            <p class="btn-text">Opret en ny lejekontrakt på en bil og kunde</p>
-                        </div>
-                    </a>
-                </article>
-                <article class="dashboard-data-card">
                     <a th:href="@{/customer/register}">
-                        <img src="/img/balance.png" alt="">
+                        <img src="/img/addCustomer.png" alt="">
                         <div>
                             <h4>Opret ny kunde i systemet</h4>
                             <p class="btn-text">Registrer en ny kunde med kontaktoplysninger</p>
@@ -74,20 +56,38 @@
                     </a>
                 </article>
                 <article class="dashboard-data-card">
-                    <a th:href="@{/customer/dashboard}">
-                        <img src="/img/balance.png" alt="">
+                    <a th:href="@{/rental-contracts/create}">
+                        <img src="/img/addRentalContract.png" alt="">
                         <div>
-                            <h4>Rediger & slet kunde fra systemet</h4>
-                            <p class="btn-text">Rediger eller slet kundeoplysninger</p>
+                            <h4>Opret ny lejekontrakt i systemet</h4>
+                            <p class="btn-text">Opret en ny lejekontrakt på en bil og kunde</p>
                         </div>
                     </a>
                 </article>
                 <article class="dashboard-data-card">
                     <a th:href="@{/rental-contracts/return}">
-                        <img src="/img/balance.png" alt="">
+                        <img src="/img/returnCar.png" alt="">
                         <div>
                             <h4>Returner bil</h4>
                             <p class="btn-text">Registrer returnering af en bil og opdater status</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="dashboard-data-card">
+                    <a th:href="@{/employee/dashboard}">
+                        <img src="/img/removeEmployee.png" alt="">
+                        <div>
+                            <h4>Slet bruger fra systemet</h4>
+                            <p class="btn-text">Fjern en medarbejder fra systemet</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="dashboard-data-card">
+                    <a th:href="@{/customer/dashboard}">
+                        <img src="/img/editCustomer.png" alt="">
+                        <div>
+                            <h4>Rediger & slet kunde fra systemet</h4>
+                            <p class="btn-text">Rediger eller slet kundeoplysninger</p>
                         </div>
                     </a>
                 </article>
