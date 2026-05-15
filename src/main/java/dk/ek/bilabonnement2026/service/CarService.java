@@ -29,6 +29,10 @@ public class CarService {
             throw new IllegalArgumentException("En bil med denne nummerplade eksisterer allerede");
         }
 
+        if(car.getLicensePlate().length() != 7){
+            throw new IllegalArgumentException("Nummerpladen skal være 7 lang");
+        }
+
         carRepository.saveCar(car);
     }
 
