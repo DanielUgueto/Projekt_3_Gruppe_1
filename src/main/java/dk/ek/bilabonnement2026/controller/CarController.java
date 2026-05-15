@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -49,7 +50,7 @@ public class CarController {
                             @RequestParam("colour") String colour,
                             @RequestParam("status") String status,
                             @RequestParam("monthlyPrice") double monthlyPrice,
-                            @RequestParam("registrationDate") String registrationDate,
+                            @RequestParam("registrationDate") LocalDate registrationDate,
                             Model model){
 
         CarBrand brand = carBrandService.getCarBrandByBrandName(brandName);
@@ -69,7 +70,7 @@ public class CarController {
 
         try{
             carService.createCar(car);
-            return "redirect:/dashboard/car";
+            return "redirect:/";
         }catch (IllegalArgumentException e){
             model.addAttribute("fejl", e.getMessage());
             model.addAttribute("brands",carBrandService.getAllCarBrands());
