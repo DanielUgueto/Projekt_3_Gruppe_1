@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opdater lejekontrakt</title>
+    <link rel="stylesheet" href="/style.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/add-employee-style.css" th:href="@{/add-employee-style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h1>Rediger lejeaftale</h1>
+
+<section class="create-employee-box">
+    <form th:action="@{/rental-contracts/edit}" method="post">
+        <div class="input-field">
+            <label for="name">Kunde:</label>
+            <input type="text" id="name" th:value="${rcOverview.customerFirstName + ' ' + rcOverview.customerLastName}"
+                   style="background: var(--color-muted)" readonly>
+        </div>
+        <div class="input-field">
+            <label for="car">Bil:</label>
+            <input type="text" id="car" th:value="${rcOverview.brandName + ' ' + rcOverview.modelName}"
+                   style="background: var(--color-muted)" readonly>
+        </div>
+        <div class="input-field">
+            <label for="startDate">Startdato:</label>
+            <input type="date" id="startDate" name="startDate" th:value="${rentalContract.startDate}" required>
+        </div>
+        <div class="input-field">
+            <label for="endDate">Slutdato:</label>
+            <input type="date" id="endDate" name="endDate" th:value="${rentalContract.endDate}" required>
+        </div>
+        <div class="input-field">
+            <label for="pickup">Afhentningsted:</label>
+            <input type="text" id="pickup" name="pickupLocation" th:value="${rentalContract.pickupLocation}" required>
+        </div>
+        <div class="input-field">
+            <label for="sub">Abonnementstype:</label>
+            <input type="text" id="sub" name="subscriptionType" th:value="${rentalContract.subscriptionType}"
+                   style="background: var(--color-muted)" readonly>
+        </div>
+        <div th:if="${error}" th:text="${error}" style="color: red"></div>
+        <input type="hidden" id="rental" name="rentalContractId" th:value="${rentalContract.rentalContractId}">
+        <button type="submit">Gem ændringer</button>
+    </form>
+</section>
+
+
+
+</body>
+</html>
