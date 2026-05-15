@@ -1,5 +1,7 @@
 package dk.ek.bilabonnement2026.model;
 
+import java.time.LocalDate;
+
 public class Car {
     private int carId;
     private int carModelId; // FK fra car_model
@@ -8,11 +10,11 @@ public class Car {
     private String colour;
     private String status;
     private double monthlyPrice;
-    private String registrationDate;
+    private LocalDate registrationDate;
 
 
     public Car(int carId, int carModelId, String vinNumber, String licensePlate,
-               double monthlyPrice, String status, String colour, String registrationDate) {
+               double monthlyPrice, String status, String colour, LocalDate registrationDate) {
         this.carId = carId;
         this.carModelId = carModelId;
         this.vinNumber = vinNumber;
@@ -23,7 +25,7 @@ public class Car {
         this.registrationDate = registrationDate;
     }
     public Car(int carModelId, String vinNumber, String licensePlate,
-               double monthlyPrice, String status, String colour, String registrationDate) {
+               double monthlyPrice, String status, String colour, LocalDate registrationDate) {
         this.carModelId = carModelId;
         this.vinNumber = vinNumber;
         this.licensePlate = licensePlate;
@@ -61,5 +63,5 @@ public class Car {
         return monthlyPrice;
     }
 
-    public String getRegistrationDate() {return registrationDate;}
+    public LocalDate getRegistrationDate() {return registrationDate;}
 }

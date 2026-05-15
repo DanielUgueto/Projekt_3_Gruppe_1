@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -45,13 +46,13 @@ public class CarController {
                             @RequestParam("colour") String colour,
                             @RequestParam("status") String status,
                             @RequestParam("monthlyPrice") double monthlyPrice,
-                            @RequestParam("registration_date") String registrationDate,
+                            @RequestParam("registrationDate") LocalDate registrationDate,
                             Model model){
         Car car = new Car(carModelId,vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
 
         try{
             carService.createCar(car);
-            return "redirect:/cars";
+            return "redirect:/";
         }catch (IllegalArgumentException e){
             model.addAttribute("fejl", e.getMessage());
             List<CarModel> carModels = carModelService.getAllCarModels();
@@ -196,7 +197,7 @@ public class CarController {
                           @RequestParam("vinNumber") String vinNumber,
                           @RequestParam("licensePlate") String licensePlate,
                           @RequestParam("monthlyPrice") double monthlyPrice,
-                          @RequestParam("registrationDate") String registrationDate,
+                          @RequestParam("registrationDate") LocalDate registrationDate,
                           @RequestParam("colour") String colour,
                           @RequestParam("status") String status,
                           @RequestParam("carId") int carId,
