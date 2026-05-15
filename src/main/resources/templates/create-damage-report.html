@@ -23,7 +23,7 @@
                     <option value="">-- Vælg kategori --</option>
                     <option th:each="category : ${categories}"
                             th:value="${category.damageCategoryId}"
-                            th:text="${category.name} + ' — ' + ${category.standardPrice} + ' kr.'">
+                            th:text="${category.name} + ' - ' + ${category.standardPrice} + ' kr.'">
                     </option>
                 </select>
                 <button type="submit">Tilføj skade</button>
@@ -33,8 +33,8 @@
         <section>
             <h2>Valgte skader</h2>
             <p th:if="${#lists.isEmpty(selectedDamages)}">Ingen skader tilføjet endnu.</p>
-            <p th:each="damage : ${selectedDamages}" th:text="${damage.name} + ' — ' + ${damage.standardPrice} + ' kr.'"></p>
-            <p>Samlet pris:<span th:text="${totalPrice}"></span> kr.</p>
+            <p th:each="damage : ${selectedDamages}" th:text="${damage.name} + ' - ' + ${damage.standardPrice} + ' kr.'"></p>
+            <p><strong>Samlet pris: </strong><span th:text="${totalPrice}"></span> kr.</p>
         </section>
 
         <section>
