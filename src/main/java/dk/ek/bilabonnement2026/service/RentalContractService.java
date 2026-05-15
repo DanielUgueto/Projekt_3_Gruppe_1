@@ -43,10 +43,11 @@ public class RentalContractService {
 
     public void updateRentalContract(RentalContract rentalContract){
         RentalContract existingContract = rentalContractRepository.findRentalContractById(rentalContract.getRentalContractId());
-        Car car = carRepository.findCarByCarNumber(existingContract.getCarId());
         if(existingContract == null){
             throw new IllegalArgumentException("Lejekontrakt med id "+rentalContract.getRentalContractId()+" findes ikke i systemet");
         }
+
+        Car car = carRepository.findCarByCarNumber(existingContract.getCarId());
 
         if(car == null){
             throw new IllegalArgumentException("Bil tilhørende lejekontrakten kunne ikke findes");
@@ -55,7 +56,7 @@ public class RentalContractService {
             throw new IllegalArgumentException("Bilen er ikke udlejet");
         }
 
-        if(!existingContract.getStatus().equalsIgnoreCase("Aktive")){
+        if(!existingContract.getStatus().equalsIgnoreCase("Aktiv")){
             throw new IllegalArgumentException("Lejekontrakten er ikke aktiv");
         }
 

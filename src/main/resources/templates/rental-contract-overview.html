@@ -73,6 +73,13 @@
                 <p><strong>Status:</strong> <span th:text="${selectedContract.status}"></span></p>
                 <p><strong>Månedlig pris:</strong> <span th:text="${selectedContract.monthlyPrice}"></span> kr.</p>
             </section>
+
+            <section class="selected-car-section">
+                <form th:action="@{/rental-contracts/edit}" method="get">
+                    <input type="hidden" name="rentalContractId" th:value="${selectedContract.rentalContractId}">
+                    <button type="submit">Rediger lejekontrakt</button>
+                </form>
+            </section>
         </article>
 
         <article class="selected-car-placeholder" th:if="${selectedContract == null}">
