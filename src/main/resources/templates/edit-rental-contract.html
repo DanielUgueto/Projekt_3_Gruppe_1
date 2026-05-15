@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opdater lejekontrakt</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 
+<h1>Rediger lejeaftale</h1>
+
+<div th:if="${error}" th:text="${error}" style="color: red"></div>
+
+<input type="hidden" name="rentalContractId" th:value="${rentalContract.rentalContractId}">
+<input type="date" name="startDate" th:value="${rentalContract.startDate}" required>
+<input type="date" name="endDate" th:value="${rentalContract.endDate}" required>
+<input type="text" name="pickupLocation" th:value="${rentalContract.pickupLocation}" required>
+<select name="subscriptionType" required>
+    <option value="Limited" th:selected="${rentalContract.subscriptionType == 'Limited'}">Limited</option>
+    <option value="Unlimited" th:selected="${rentalContract.subscriptionType == 'Unlimited'}">Unlimited</option>
+</select>
+
+<button type="submit">Gem ændringer</button>
 </body>
 </html>
