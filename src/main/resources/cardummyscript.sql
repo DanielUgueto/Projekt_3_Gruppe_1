@@ -1,8 +1,19 @@
 USE bilabonnement;
 
-INSERT INTO employee (employee_id, first_name, last_name, password, work_email, role) VALUES (1, 'rune', 'runesen','demo','demo1','dataregistrering'),
-                                                                                             (2, 'daniel', 'danielsen','demo','demo2','skade-udbedring'),
-                                                                                             (3, 'nico', 'nicosen','demo','demo3','forretningsudvikler');
+
+-- Rental Contracts (car_id 1 og 2 er begge Toyota Yaris med status Ledig)
+INSERT INTO rental_contract (employee_id, customer_id, car_id, start_date, end_date, pickup_location, status,
+                             subscription_type)
+VALUES (1, 1, 1, '2024-01-01', '2024-06-01', 'København', 'Afsluttet', 'Limited'),
+       (1, 2, 2, '2026-05-01', '2026-07-01', 'København', 'Aktiv', 'Limited'),
+       (1, 3, 3, '2020-01-01', '2025-01-01', 'København', 'Afsluttet', 'Limited');
+
+
+
+INSERT INTO employee (employee_id, first_name, last_name, password, work_email, role)
+VALUES (1, 'rune', 'runesen', 'demo', 'demo1', 'dataregistrering'),
+       (2, 'daniel', 'danielsen', 'demo', 'demo2', 'skade-udbedring'),
+       (3, 'nico', 'nicosen', 'demo', 'demo3', 'forretningsudvikler');
 
 
 -- Brands
@@ -194,16 +205,11 @@ VALUES (1, '2500', 'Demovej', '1', 'st'),
        (2, '4400', 'Testvej', '2', '1');
 
 
--- Rental Contracts (car_id 1 og 2 er begge Toyota Yaris med status Ledig)
-INSERT INTO rental_contract (employee_id, customer_id, car_id, start_date, end_date, pickup_location, status, subscription_type)
-VALUES (1, 1, 1, '2024-01-01', '2024-06-01', 'København', 'Afsluttet', 'Limited'),
-       (1, 2, 2, '2026-05-01', '2026-07-01', 'København', 'Aktiv', 'Limited');
-
 
 INSERT INTO damage_category (name, standard_price, description)
 VALUES ('Ridset dør', 1500.00, 'Ridser på bildør'),
        ('Knust rude', 3000.00, 'Beskadiget forrude'),
        ('Bule', 2000.00, 'Bule på karrosseri'),
-       ('Ridset fælg', 600.00,'Fælgen er ridset');
+       ('Ridset fælg', 600.00, 'Fælgen er ridset');
 
 

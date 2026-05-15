@@ -82,11 +82,12 @@
                 <p><strong>Lejeaftale nr.:</strong> <span th:text="${selectedCar.rentalContractId}"></span></p>
             </section>
 
-            <section class="selected-car-section" th:if="${selectedCar.status.equals('Tilbageleveret')}">
+            <section class="selected-car-section" th:if="${selectedCar.status == 'Tilbageleveret'}">
                 <a th:href="@{/damage-reports/create/{id}(id=${selectedCar.rentalContractId})}">
-                    Opret skadesrapport
+                    <button>Opret skadesrapport</button>
                 </a>
             </section>
+
         </article>
 
         <article class="selected-car-placeholder" th:if="${selectedCar == null}">
