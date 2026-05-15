@@ -23,7 +23,7 @@
                 <div>
                     <div class="input-field">
                         <label for="brandName">Mærke</label>
-                        <input type="text" id="brandName" name="brandName" list="brands">
+                        <input type="text" id="brandName" name="brandName" list="brands" placeholder="Mærke" required>
                         <datalist id="brands">
                             <option th:each="brand : ${brands}"
                                     th:value="${brand.brandName}"></option>
@@ -31,19 +31,24 @@
                     </div>
                     <div class="input-field">
                         <label for="modelName">Model</label>
-                        <input type="text" id="modelName" name="modelName" list="models">
+                        <input type="text" id="modelName" name="modelName" list="models" placeholder="Model" required>
                         <datalist id="models">
                             <option th:each="model : ${models}"
                                     th:value="${model.modelName}"></option>
                         </datalist>
                     </div>
+                    <!--
+                     If you choose a model from the list, then it doesn't matter what you write in the next three fields
+                     you'd need JavaScript to fill the other three fields dynamically. Known error that we need JavaScript for, or we'd have to overhaul page.
+                    -->
                     <div class="input-field">
                         <label for="equipmentLevel">Udstyrsniveau</label>
-                        <input type="text" id="equipmentLevel" name="equipmentLevel">
+                        <input type="text" id="equipmentLevel" name="equipmentLevel" placeholder="Udstyrsniveau" required>
                     </div>
                     <div class="input-field">
                         <label for="fuelType">Brændstof</label>
-                        <select id="fuelType" name="fuelType">
+                        <select id="fuelType" name="fuelType" required>
+                            <option value="">--Vælg brændstof--</option>
                             <option value="Petrol">Petrol</option>
                             <option value="Diesel">Diesel</option>
                             <option value="Hybrid">Hybrid</option>
@@ -52,7 +57,8 @@
                     </div>
                     <div class="input-field">
                         <label for="shiftGearType">Gear type</label>
-                        <select id="shiftGearType" name="shiftGearType">
+                        <select id="shiftGearType" name="shiftGearType" required>
+                            <option value="">--Vælg gear type--</option>
                             <option value="Manual">Manual</option>
                             <option value="Automatic">Automatic</option>
                         </select>
@@ -61,23 +67,23 @@
                 <div>
                     <div class="input-field">
                         <label for="vinNumber">Stelnummer</label>
-                        <input type="text" id="vinNumber" name="vinNumber">
+                        <input type="text" id="vinNumber" name="vinNumber" placeholder="Stelnummer" required>
                     </div>
                     <div class="input-field">
                         <label for="licensePlate">Nummerplade</label>
-                        <input type="text" id="licensePlate" name="licensePlate">
+                        <input type="text" id="licensePlate" name="licensePlate" placeholder="Nummerplade" required>
                     </div>
                     <div class="input-field">
                         <label for="monthlyPrice">Månedlig pris</label>
-                        <input type="number" id="monthlyPrice" name="monthlyPrice" step="0.01">
+                        <input type="number" id="monthlyPrice" name="monthlyPrice" step="0.01" placeholder="Månedlig pris" required>
                     </div>
                     <div class="input-field">
                         <label for="registrationDate">Registreringsdato</label>
-                        <input type="date" id="registrationDate" name="registrationDate">
+                        <input type="date" id="registrationDate" name="registrationDate" placeholder="Registreringsdato" required>
                     </div>
                     <div class="input-field">
                         <label for="colour">Farve</label>
-                        <input type="text" id="colour" name="colour">
+                        <input type="text" id="colour" name="colour" placeholder="Farve" required>
                     </div>
                     <div class="input-field">
                         <label for="status">Status</label>

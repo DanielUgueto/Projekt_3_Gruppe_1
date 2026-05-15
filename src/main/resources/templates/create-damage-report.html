@@ -41,7 +41,7 @@
             <form th:action="@{/damage-reports/create/{id}(id=${rentalContract.rentalContractId})}" method="post">
                 <input type="hidden" name="employeeId" th:value="${employeeId}">
                 <label for="description">Beskrivelse:</label>
-                <input type="text" id="description" name="description" required>
+                <input type="text" id="description" name="description" placeholder="Skriv information om skader her" required>
                 <button type="submit">Opret skadesrapport</button>
             </form>
         </section>

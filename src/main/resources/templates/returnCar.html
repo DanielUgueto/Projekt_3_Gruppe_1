@@ -16,15 +16,15 @@
 <section class="create-employee-box">
     <form th:action="@{/rental-contracts/return}" method="post">
         <div class="input-field">
-            <label for="carId"> bil:</label>
+            <label for="carId"> Bil:</label>
             <select id="carId" name="carId" required>
-                <option value="">-- vælg bil --</option>
+                <option value="">-- Vælg bil --</option>
                 <option th:each="car : ${carList}"
                         th:value="${car.carId}"
                         th:text="${car.licensePlate + ' ' + car.status}"></option>
             </select>
         </div>
-        <button type="submit">Retuner bil</button>
+        <button type="submit">Returner bil</button>
     </form>
 </section>
 </body>
