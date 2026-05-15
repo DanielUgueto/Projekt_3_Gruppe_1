@@ -13,58 +13,60 @@
 <h1>Rediger kunde</h1>
 
 <section class="create-employee-box">
-
-
     <form th:action="@{/customer/edit(customerId=${selectedCustomer.customerId})}" method="post">
 
         <p th:if="${error}" th:text="${error}" style="color:red"></p>
         <p th:if="${success}" th:text="${success}" style="color:green"></p>
-<section class="create-employee-box-section">
-    <h3>Person info:</h3>
-        <div class="input-field">
-            <label for="firstName">Fornavn:</label>
-            <input type="text" name="firstName" id="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
-        </div>
-        <div class="input-field">
-            <label for="lastName">Efternavn:</label>
-            <input type="text" name="lastName" id="lastName" placeholder="Efternavn" th:value="${selectedCustomer.lastName}" required>
-        </div>
-        <div class="input-field">
-            <label for="cprNumber">CPR-nummer:</label>
-            <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
-        </div>
-        <div class="input-field">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="E-mail" th:value="${selectedCustomer.email}" required>
-        </div>
-        <div class="input-field">
-            <label for="phoneNumber">Tlf.nr:</label>
-            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
-        </div>
-</section>
+        <div class="create-customer-field">
+            <section class="create-customer-box-section">
+                <h3>Person info:</h3>
+                <div class="input-field">
+                    <label for="firstName">Fornavn:</label>
+                    <input type="text" name="firstName" id="firstName" placeholder="Fornavn" th:value="${selectedCustomer.firstName}" required>
+                </div>
+                <div class="input-field">
+                    <label for="lastName">Efternavn:</label>
+                    <input type="text" name="lastName" id="lastName" placeholder="Efternavn" th:value="${selectedCustomer.lastName}" required>
+                </div>
+                <div class="input-field">
+                    <label for="cprNumber">CPR-nummer:</label>
+                    <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" placeholder="CPR-nummer" th:value="${selectedCustomer.cprNumber}" required>
+                </div>
+                <div class="input-field">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" placeholder="E-mail" th:value="${selectedCustomer.email}" required>
+                </div>
+                <div class="input-field">
+                    <label for="phoneNumber">Tlf.nr:</label>
+                    <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Telefon nummer" th:value="${selectedCustomer.phoneNumber}" required>
+                </div>
+            </section>
 
-        <section class="create-employee-box-section">
-            <h3>Adresse info:</h3>
-        <div class="input-field">
-            <label for="streetName">Gade:</label>
-            <input type="text" name="streetName" id="streetName" placeholder="Vejnavn" th:value="${selectedCustomerAddress.streetName}" required>
-        </div>
-        <div class="input-field">
-            <label for="houseNumber">Hus nr:</label>
-            <input type="text" name="houseNumber" id="houseNumber" placeholder="Husnummer" th:value="${selectedCustomerAddress.houseNumber}" required>
-        </div>
-        <div class="input-field">
-            <label for="floor">Etage:</label>
-            <input type="text" name="floor" id="floor" placeholder="Etage" th:value="${selectedCustomerAddress.floor}">
+            <section class="create-customer-box-section">
+                <h3>Adresse info:</h3>
+                <div class="input-field">
+                    <label for="streetName">Gade:</label>
+                    <input type="text" name="streetName" id="streetName" placeholder="Vejnavn" th:value="${selectedCustomerAddress.streetName}" required>
+                </div>
+                <div class="input-field">
+                    <label for="houseNumber">Hus nr:</label>
+                    <input type="text" name="houseNumber" id="houseNumber" placeholder="Husnummer" th:value="${selectedCustomerAddress.houseNumber}" required>
+                </div>
+                <div class="input-field">
+                    <label for="floor">Etage:</label>
+                    <input type="text" name="floor" id="floor" placeholder="Etage" th:value="${selectedCustomerAddress.floor}">
+                </div>
+
+                <div class="input-field">
+                    <label for="zipCode">Post nummer:</label>
+                    <input type="text" name="zipCode" id="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
+                </div>
+            </section>
         </div>
 
-        <div class="input-field">
-            <label for="zipCode">Post nummer:</label>
-            <input type="text" name="zipCode" id="zipCode" placeholder="Postnummer" th:value="${selectedCustomerAddress.zipCode}">
-        </div>
-        </section>
         <button type="submit">Gem ændringer</button>
     </form>
 </section>
+
 </body>
 </html>
