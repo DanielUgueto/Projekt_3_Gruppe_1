@@ -41,6 +41,31 @@ public class RentalContractService {
         carRepository.updateCarStatus(car.getCarId(), "Udlejet");
     }
 
+    public void updateRentalContract(RentalContract rentalContract){
+        RentalContract existingContract = rentalContractRepository.findRentalContractById(rentalContract.getRentalContractId());
+        Car car = carRepository.findCarByCarNumber(existingContract.getCarId());
+        if(existingContract == null){
+            throw new IllegalArgumentException("Lejekontrakt med id "+rentalContract.getRentalContractId()+" findes ikke i systemet");
+        }
+
+        if(car == null){
+            throw new IllegalArgumentException("Bil tilhørende lejekontrakten kunne ikke findes");
+        }
+        if(!car.getStatus().equalsIgnoreCase("Udlejet")){
+            throw new IllegalArgumentException("Bilen er ikke udlejet");
+        }
+
+        if(!existingContract.getStatus().equalsIgnoreCase("Aktive")){
+            throw new IllegalArgumentException("Lejekontrakten er ikke aktiv");
+        }
+
+        if(!rentalContract.getEndDate().isAfter(rentalContract.getStartDate())){
+            throw new IllegalArgumentException("Slutdato skal være efter startdato");
+        }
+
+        rentalContractRepository.updateRentalContract(rentalContract);
+    }
+
     public void registerReturnOfCar(int carId){
 
         Car car = carRepository.findCarByCarNumber(carId);
