@@ -19,7 +19,7 @@ public class DamageCategoryRepository {
     DataSource dataSource;
 
     public void saveDamageCategory(DamageCategory category){
-        String sql = "INSERT INTO damage_category (name, standard_price, description)" + "VALUES (?,?,?)";
+        String sql = "INSERT INTO damage_category (name, standard_price, description) VALUES (?,?,?)";
 
         try(Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
