@@ -79,9 +79,11 @@ public class PageController {
         double monthlyRevenue = rentalContractService.calculateMonthlyRevenue();
         int rentalContracts = rentalContractService.returnAmountOfContractsByStatus("Aktiv");
         int availableCars = carService.returnCarAmountByStatus("Ledig");
+        int rentedCars = carService.returnCarAmountByStatus("Udlejet");
         model.addAttribute("monthlyRevenue", monthlyRevenue);
         model.addAttribute("activeRentalContracts", rentalContracts);
         model.addAttribute("availableCars", availableCars);
+        model.addAttribute("rentedCars", rentedCars);
 
         return "business-dashboard";
     }
