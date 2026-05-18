@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class damageCategoryController {
+public class DamageCategoryController {
 
     @Autowired
     DamageCategoryService damageCategoryService;
 
-    @GetMapping("/damage-categoreis")
+    @GetMapping("/damage-categories")
     public String showDamageCategoryDashboard(@RequestParam(required = false) Integer damageCategoryId,
                                               HttpSession session, Model model){
 
@@ -124,5 +124,31 @@ public class damageCategoryController {
         model.addAttribute("success","Skadekategorien er opdateret");
         model.addAttribute("selectedDamageCategory", category);
         return "edit-damage-category";
+    }
+
+    @PostMapping("/damage-categories/delete")
+    public String deleteDamageCategory(@RequestParam int damageCategoryId,
+                                       HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee == null){
+            return "redirect:/";
+        }
+
+        String error = damageCategoryService.setDamageCategoryInactive(damageCategoryId);
+        if(error != null){
+            List<DamageCategory> list = damageCategoryService.getAllDamageCategories();
+            DamageCategory selectedDamageCategory = null;
+            for(DamageCategory dc : list){
+                if(dc.getDamageCategoryId() == damageCategoryId){
+                    selectedDamageCategory = dc;
+                    break;
+                }
+            }
+            model.addAttribute("damageCategoryList",list);
+            model.addAttribute("selectedDamageCategory",selectedDamageCategory);
+            model.addAttribute("deleteError",error);
+            return "damage-category-dashboard";
+        }
+        return "redirect:/damage-categories";
     }
 }
