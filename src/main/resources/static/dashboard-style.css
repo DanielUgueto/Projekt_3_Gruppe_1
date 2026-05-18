@@ -139,8 +139,10 @@ button:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.dashboard-greeting{
-    margin-left: 2em;
+.dashboard-actions-bar{
+    display: flex;
+    justify-content: center;
+    padding: 1em 2em;
 }
 
 .delete-btn{
