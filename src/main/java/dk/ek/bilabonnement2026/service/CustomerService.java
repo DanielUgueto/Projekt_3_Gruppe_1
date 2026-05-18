@@ -56,6 +56,14 @@ public class CustomerService {
         return customerRepository.getAllCustomers();
     }
 
+    public List<Customer> getAllActiveCustomers() {
+        return customerRepository.getAllActiveCustomers();
+    }
+
+    public List<Customer> getAllInactiveCustomers() {
+        return customerRepository.getAllInactiveCustomers();
+    }
+
     public Customer getCustomerByCustomerId(int customerId) {
         return customerRepository.findCustomerByCustomerId(customerId);
     }

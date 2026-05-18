@@ -109,7 +109,61 @@ public class CustomerRepository {
 
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
+        String sql = "SELECT * FROM customer";
+
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Customer customer = new Customer(resultSet.getInt("customer_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("drivers_license_number"),
+                        resultSet.getString("cpr_number"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        resultSet.getBoolean("is_active"));
+                customerList.add(customer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerList;
+    }
+
+    public List<Customer> getAllActiveCustomers() {
+        List<Customer> customerList = new ArrayList<>();
         String sql = "SELECT * FROM customer WHERE is_active = true";
+
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Customer customer = new Customer(resultSet.getInt("customer_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("drivers_license_number"),
+                        resultSet.getString("cpr_number"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        resultSet.getBoolean("is_active"));
+                customerList.add(customer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerList;
+    }
+
+    public List<Customer> getAllInactiveCustomers() {
+        List<Customer> customerList = new ArrayList<>();
+        String sql = "SELECT * FROM customer WHERE is_active = false";
 
 
         try (Connection connection = dataSource.getConnection();
