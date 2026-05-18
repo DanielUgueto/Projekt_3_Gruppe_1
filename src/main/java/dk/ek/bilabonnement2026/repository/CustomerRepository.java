@@ -171,6 +171,20 @@ public class CustomerRepository {
         }
     }
 
+    public void setCustomerStatusActive(int customerId) {
+        String sql = "UPDATE customer SET is_active = true WHERE customer_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Kundens status kunne ikke opdateres i databasen", e);
+        }
+    }
+
     public Customer findCustomerByCustomerCprNumber(String cprNumber) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE cpr_number = ?";
