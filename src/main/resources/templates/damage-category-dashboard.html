@@ -62,13 +62,14 @@
             </section>
 
             <section class="selected-car-section">
+                <p th:if="${error != null}" style="color: red" th:text="${error}"></p>
+                <p th:if="${success != null}" style="color: green" th:text="${success}"></p>
                 <a th:href="@{/damage-categories/edit(damageCategoryId=${selectedDamageCategory.damageCategoryId})}" class="edit-btn">
                     Rediger kategori
                 </a>
 
                 <form th:action="@{/damage-categories/delete}" onsubmit="return confirm('Er du sikker på du vil deaktivere denne kategori?');" method="post">
                     <input type="hidden" name="damageCategoryId" th:value="${selectedDamageCategory.damageCategoryId}">
-                    <p th:if="${Error != null}" style="color: red;" th:text="{Error}"></p>
                     <button class="delete-btn">Deaktiver kategori</button>
                 </form>
             </section>

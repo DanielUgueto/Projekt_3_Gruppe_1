@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class DamageCategoryController {
                                        @RequestParam("name") String name,
                                        @RequestParam("standardPrice") double standardPrice,
                                        @RequestParam(required = false) String description,
-                                       HttpSession session, Model model){
+                                       HttpSession session, Model model, RedirectAttributes redirectAttributes){
         Employee employee = (Employee) session.getAttribute("employee");
         if(employee == null){
             return "redirect:/";
@@ -121,9 +122,9 @@ public class DamageCategoryController {
             return "edit-damage-category";
         }
 
-        model.addAttribute("success","Skadekategorien er opdateret");
-        model.addAttribute("selectedDamageCategory", category);
-        return "edit-damage-category";
+        redirectAttributes.addFlashAttribute("success","Skadekategorien er opdateret");
+        redirectAttributes.addFlashAttribute("selectedDamageCategory", category);
+        return "redirect:/damage-categories";
     }
 
     @PostMapping("/damage-categories/delete")
@@ -146,7 +147,7 @@ public class DamageCategoryController {
             }
             model.addAttribute("damageCategoryList",list);
             model.addAttribute("selectedDamageCategory",selectedDamageCategory);
-            model.addAttribute("Error",error);
+            model.addAttribute("error",error);
             return "damage-category-dashboard";
         }
         return "redirect:/damage-categories";
