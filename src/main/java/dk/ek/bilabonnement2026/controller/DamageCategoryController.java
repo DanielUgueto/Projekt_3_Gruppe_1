@@ -146,7 +146,7 @@ public class DamageCategoryController {
             }
             model.addAttribute("damageCategoryList",list);
             model.addAttribute("selectedDamageCategory",selectedDamageCategory);
-            model.addAttribute("deleteError",error);
+            model.addAttribute("Error",error);
             return "damage-category-dashboard";
         }
         return "redirect:/damage-categories";
