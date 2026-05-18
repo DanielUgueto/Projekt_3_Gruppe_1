@@ -217,6 +217,31 @@ public class CustomerController {
         return "redirect:/customer/dashboard";
     }
 
+    @PostMapping("/customer/delete")
+    public String reactivateCustomer(@RequestParam("customerId") int customerId,
+                                 HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        String error = customerService.setCustomerStatusActive(customerId);
+        if (error != null) {
+            List<Customer> list = customerService.getAllCustomers();
+            Customer selectedCustomer = null;
+            for (Customer c : list) {
+                if (c.getCustomerId() == customerId) {
+                    selectedCustomer = c;
+                    break;
+                }
+            }
+            model.addAttribute("customerList", list);
+            model.addAttribute("selectedCustomer", selectedCustomer);
+            model.addAttribute("reactivationError", error);
+            return "customer-dashboard";
+        }
+        return "redirect:/customer/dashboard";
+    }
+
 
     @GetMapping("/customer/dashboard")
     public String showCustomerDashboard(@RequestParam(required = false) String status,
