@@ -101,7 +101,7 @@
                     <button class="delete-btn" type="submit">Slet kunde</button>
                 </form>
                 <form
-                        th:unless="${selectedCustomer.isActive}"
+                        th:if="${!selectedCustomer.isActive}"
                         th:action="@{/customer/reactivate}"
                         onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som aktiv?'); "
                         method="post">

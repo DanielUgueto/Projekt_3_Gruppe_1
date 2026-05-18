@@ -42,7 +42,7 @@ public class CarRepository {
         }
 
     }
-
+    
     public Car findCarByVinNumber(String vinNumber){
         Car car = null;
         String sql = "SELECT * FROM car WHERE vin_number = ?";
