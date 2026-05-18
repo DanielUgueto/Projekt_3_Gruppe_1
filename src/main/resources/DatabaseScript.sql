@@ -19,7 +19,7 @@ CREATE TABLE customer
     cpr_number             VARCHAR(20)  NOT NULL UNIQUE,
     email                  VARCHAR(255) NOT NULL,
     phone_number           VARCHAR(25),
-    is_active              BOOLEAN
+    is_active              BOOLEAN  NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE customer_address
@@ -115,9 +115,10 @@ CREATE TABLE damage_report
 CREATE TABLE damage_category
 (
     damage_category_id INT PRIMARY KEY AUTO_INCREMENT,
-    name               VARCHAR(255)   NOT NULL,
+    name               VARCHAR(255)   NOT NULL UNIQUE,
     standard_price     DECIMAL(10, 2) NOT NULL,
-    description        VARCHAR(255)
+    description        VARCHAR(255),
+    is_active          BOOLEAN      NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE damage
