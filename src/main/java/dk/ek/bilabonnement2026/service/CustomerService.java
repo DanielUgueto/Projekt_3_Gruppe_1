@@ -47,6 +47,11 @@ public class CustomerService {
         return null;
     }
 
+    public String setCustomerStatusActive(int customerId) {
+        customerRepository.setCustomerStatusActive(customerId);
+        return null;
+    }
+
     public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();
     }
