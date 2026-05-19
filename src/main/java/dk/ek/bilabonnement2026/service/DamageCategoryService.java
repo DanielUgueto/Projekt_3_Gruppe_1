@@ -13,8 +13,8 @@ public class DamageCategoryService {
     @Autowired
     DamageCategoryRepository damageCategoryRepository;
 
-    public List<DamageCategory> getAllDamageCategories(){
-        return damageCategoryRepository.getAllDamageCategories();
+    public List<DamageCategory> getAllActiveDamageCategories(){
+        return damageCategoryRepository.getAllActiveDamageCategories();
     }
 
     public DamageCategory getDamageCategoryById(int damageCategoryId){

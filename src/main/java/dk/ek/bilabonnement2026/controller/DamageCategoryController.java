@@ -29,7 +29,7 @@ public class DamageCategoryController {
             return "redirect:/";
         }
 
-        List<DamageCategory> list = damageCategoryService.getAllDamageCategories();
+        List<DamageCategory> list = damageCategoryService.getAllActiveDamageCategories();
         model.addAttribute("damageCategoryList", list);
 
         if(damageCategoryId != null){
@@ -137,7 +137,7 @@ public class DamageCategoryController {
 
         String error = damageCategoryService.setDamageCategoryInactive(damageCategoryId);
         if(error != null){
-            List<DamageCategory> list = damageCategoryService.getAllDamageCategories();
+            List<DamageCategory> list = damageCategoryService.getAllActiveDamageCategories();
             DamageCategory selectedDamageCategory = null;
             for(DamageCategory dc : list){
                 if(dc.getDamageCategoryId() == damageCategoryId){

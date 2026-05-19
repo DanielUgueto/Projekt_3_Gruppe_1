@@ -57,7 +57,7 @@ public class DamageReportController {
         model.addAttribute("rentalContract", rentalContract);
         model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("createdAt", LocalDate.now());
-        model.addAttribute("categories", damageCategoryService.getAllDamageCategories());
+        model.addAttribute("categories", damageCategoryService.getAllActiveDamageCategories());
         model.addAttribute("selectedDamages", selectedDamages);
         model.addAttribute("totalPrice", totalPrice);
 
@@ -111,7 +111,7 @@ public class DamageReportController {
             model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("employeeId", employeeId);
             model.addAttribute("createdAt", LocalDate.now());
-            model.addAttribute("categories", damageCategoryService.getAllDamageCategories());
+            model.addAttribute("categories", damageCategoryService.getAllActiveDamageCategories());
             model.addAttribute("selectedDamages", selectedDamages);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("fejl", e.getMessage());

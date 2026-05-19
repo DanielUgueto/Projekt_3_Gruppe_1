@@ -76,7 +76,7 @@ public class DamageCategoryRepository {
         }
     }
 
-    public List<DamageCategory> getAllDamageCategories() {
+    public List<DamageCategory> getAllActiveDamageCategories() {
         List<DamageCategory> categoryList = new ArrayList<>();
         String sql = "SELECT * FROM damage_category WHERE is_active = true";
 
