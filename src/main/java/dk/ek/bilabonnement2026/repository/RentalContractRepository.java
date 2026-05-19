@@ -138,25 +138,25 @@ public class RentalContractRepository {
         return cars;
     }
 
-    public void updateRentalContract(RentalContract rentalContract){
+    public void updateRentalContract(RentalContract rentalContract) {
         String sql = """
                 UPDATE rental_contract
                 SET start_date = ?, end_date = ?, pickup_location = ?, subscription_type = ?
                 WHERE rental_contract_id = ? AND status = 'Aktiv'
                 """;
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setDate(1,Date.valueOf(rentalContract.getStartDate()));
+            statement.setDate(1, Date.valueOf(rentalContract.getStartDate()));
             statement.setDate(2, Date.valueOf(rentalContract.getEndDate()));
-            statement.setString(3,rentalContract.getPickupLocation());
-            statement.setString(4,rentalContract.getSubscriptionType());
+            statement.setString(3, rentalContract.getPickupLocation());
+            statement.setString(4, rentalContract.getSubscriptionType());
             statement.setInt(5, rentalContract.getRentalContractId());
 
             statement.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Rental contract kunne ikke opdateres i databasen", e);
         }
     }
@@ -196,6 +196,17 @@ public class RentalContractRepository {
         }
 
         return monthlyRevenue;
+    }
+
+    //kun et estimat
+    public double projectedYearlyRevenue() {
+        double monthlyRevenue = calculateMonthlyRevenue();
+
+        if (calculateMonthlyRevenue() < 0) {
+            throw new RuntimeException("Omsætning kan ikke være negativ");
+        }
+
+        return monthlyRevenue * 12;
     }
 
     public List<RentalContractOverview> findAllRentalContractOverviews(String statusFilter) {
@@ -282,13 +293,13 @@ public class RentalContractRepository {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)
-             ) {
-            statement.setInt(1,contractId);
+        ) {
+            statement.setInt(1, contractId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
 
                 if (resultSet.next()) {
-                  rentalContractOverview = new RentalContractOverview(resultSet.getInt("rental_contract_id"),
+                    rentalContractOverview = new RentalContractOverview(resultSet.getInt("rental_contract_id"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
                             resultSet.getString("brand_name"),
@@ -338,7 +349,7 @@ public class RentalContractRepository {
         String sql = "SELECT COUNT(*) FROM rental_contract WHERE status = ?";
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status);
 
