@@ -1,0 +1,33 @@
+package dk.ek.bilabonnement2026.repository;
+
+import dk.ek.bilabonnement2026.model.Car;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@SpringBootTest
+@ActiveProfiles("test")
+public class CarRepositoryIntegrationTest {
+
+    @Autowired
+    CarRepository carRepository;
+
+    @Test
+    @DisplayName("findCarByVinNuber() Happy flow")
+    public void findCarByVinNumberHappyFlow(){
+        //Preconditions
+        String vinNumber = "JT100000000000001";
+
+        //Execution
+        Car car = carRepository.findCarByVinNumber(vinNumber);
+
+        //Postconditions
+        assertNotNull(car, "Bilen blev ikke fundet i databasen");
+        assertEquals(vinNumber, car.getVinNumber());
+    }
+}
