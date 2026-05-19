@@ -73,6 +73,7 @@ public class EmployeeService {
     }
 
     public String changeEmployeeStatus(int employeeId, int sessionEmployeeId) {
+
         if (employeeId == sessionEmployeeId) {
             return "Ikke muligt at slette dig selv";
         }
@@ -90,7 +91,8 @@ public class EmployeeService {
     }
 
     //sætter altid aktiv for genaktivering modsat metoden ligeover der fungerer som en toggle
-    public String setEmployeeStatusActive(boolean isActive, int employeeId) {
+    public String setEmployeeStatusActive(int employeeId) {
+
         Employee deletedEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
         if (deletedEmployee == null) {
             return "Medarbejder findes ikke i systemet";
@@ -98,6 +100,8 @@ public class EmployeeService {
         if (deletedEmployee.getIsActive()) {
             return "Medarbejder er allerede aktiv i systemet";
         }
+
         return employeeRepository.updateEmployeeStatus(true, employeeId);
     }
+
 }
