@@ -1,6 +1,5 @@
 package dk.ek.bilabonnement2026.controller;
 
-import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
