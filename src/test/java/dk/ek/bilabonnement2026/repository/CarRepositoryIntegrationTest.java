@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -18,7 +17,7 @@ public class CarRepositoryIntegrationTest {
     CarRepository carRepository;
 
     @Test
-    @DisplayName("findCarByVinNuber() Happy flow")
+    @DisplayName("findCarByVinNumber() Happy flow")
     public void findCarByVinNumberHappyFlow(){
         //Preconditions
         String vinNumber = "JT100000000000001";
@@ -29,5 +28,18 @@ public class CarRepositoryIntegrationTest {
         //Postconditions
         assertNotNull(car, "Bilen blev ikke fundet i databasen");
         assertEquals(vinNumber, car.getVinNumber());
+    }
+
+    @Test
+    @DisplayName("findCarByVinNumber() Exception flow")
+    public void findCarByVinNumberExceptionFlow(){
+        //Preconditions
+        String vinNumber ="XX300000000000003";
+
+        //Execution
+        Car car = carRepository.findCarByVinNumber(vinNumber);
+
+        //Postconditions
+        assertNull(car);
     }
 }
