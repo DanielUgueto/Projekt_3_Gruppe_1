@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Skadekategorier</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-split">
+    <div class="dashboard-split-car">
+        <section class="dashboard-car-filter">
+            <div>
+                <h2>Skadekategorier</h2>
+                <a th:href="@{/damage-categories/create}" class="edit-btn">Opret ny Kategori</a>
+            </div>
+        </section>
+
+        <div class="dashboard-car-box">
+            <article class="dashboard-car-info" th:each="category : ${damageCategoryList}">
+                <a th:href="@{/damage-categories(damageCategoryId=${category.damageCategoryId})}">
+                <div>
+                    <h4 th:text="${category.name}"></h4>
+                </div>
+                <div>
+                    <span><strong>Standardpris:</strong></span>
+                    <span th:text="${category.standardPrice}"></span>
+                    <span> kr.</span>
+                </div>
+                <div>
+                    <span th:text="${category.description}"></span>
+                </div>
+                </a>
+            </article>
+        </div>
+    </div>
+
+    <div class="dashboard-split-single-car">
+        <article class="selected-car-panel" th:if="${selectedDamageCategory != null}">
+            <header class="selected-car-header">
+                <h2 th:text="${selectedDamageCategory.name}"></h2>
+                <p><strong>Standardpris:</strong>
+                    <span th:text="${selectedDamageCategory.standardPrice}"></span> kr.
+                </p>
+            </header>
+
+            <section class="selected-car-section">
+                <h3>Detaljer</h3>
+                <p><strong>Navn:</strong> <span th:text="${selectedDamageCategory.name}"></span></p>
+                <p><strong>Standardpris:</strong>
+                    <span th:text="${selectedDamageCategory.standardPrice}"></span> kr.
+                </p>
+                <p><strong>Beskrivelse:</strong>
+                    <span th:text="${selectedDamageCategory.description}"></span>
+                </p>
+                <p><strong>Status:</strong>
+                    <span th:text="${selectedDamageCategory.isActive} ? 'Aktiv' : 'Inaktiv'"></span>
+                </p>
+            </section>
+
+            <section class="selected-car-section">
+                <p th:if="${error != null}" style="color: red" th:text="${error}"></p>
+                <p th:if="${success != null}" style="color: green" th:text="${success}"></p>
+                <a th:href="@{/damage-categories/edit(damageCategoryId=${selectedDamageCategory.damageCategoryId})}" class="edit-btn">
+                    Rediger kategori
+                </a>
+
+                <form th:action="@{/damage-categories/delete}" onsubmit="return confirm('Er du sikker på du vil deaktivere denne kategori?');" method="post">
+                    <input type="hidden" name="damageCategoryId" th:value="${selectedDamageCategory.damageCategoryId}">
+                    <button class="delete-btn">Deaktiver kategori</button>
+                </form>
+            </section>
+        </article>
+
+        <article class="selected-car-placeholder" th:if="${selectedDamageCategory == null}">
+            <h2>Ingen kategori valgt</h2>
+            <p>Vælg en skadekategori i oversigten til venstre for at se detaljer her.</p>
+
+        </article>
+    </div>
+</div>
+</body>
+</html>

@@ -9,10 +9,10 @@
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
-<div class="dashboard-greeting">
-    <h1><span th:text="${'Velkommen '+employee.getFirstName() + ' ' + employee.getLastName()}"></span></h1>
 
-</div>
+<section class="dashboard-actions-bar">
+    <a th:href="@{/damage-categories}" class="edit-btn">Administrer skadekategorier</a>
+</section>
 
 <div class="dashboard-split">
     <div class="dashboard-split-car">
