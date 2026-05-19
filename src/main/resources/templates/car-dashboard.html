@@ -118,6 +118,13 @@
                 </form>
             </div>
 
+            <div class="delete-car-btn selected-car-section" th:if="${employee.role.equals('dataregistrering')} and ${selectedCar.status.equals('Klar til transport')}">
+                <form th:action="@{/dashboard/car/activate(carId=${selectedCar.carId})}" method="post"
+                      onsubmit="return confirm('Er du sikker på, at du vil sætte bilen til at være ledig igen?')">
+                    <button type="submit">Sæt bil som ledig</button>
+                </form>
+            </div>
+
             <div class="selected-car-section" th:if="${error != null or sucess != null}">
                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
