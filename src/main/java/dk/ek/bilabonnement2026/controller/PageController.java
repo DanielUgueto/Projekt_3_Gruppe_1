@@ -32,10 +32,10 @@ public class PageController {
     CustomerService customerService;
 
     @GetMapping("/")
-    public String loginPage(HttpSession session){
+    public String loginPage(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
 
-        if (employee != null){
+        if (employee != null) {
             return employeeService.redirectByRole(employee);
         }
 
@@ -45,16 +45,16 @@ public class PageController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
-                        HttpSession session, Model model){
+                        HttpSession session, Model model) {
 
         Employee employee = employeeService.login(email, password);
 
-        if (employee == null){
-            model.addAttribute("error","Du er ikke logget ind.");
+        if (employee == null) {
+            model.addAttribute("error", "Du er ikke logget ind.");
             return "login";
         }
-        if(!employee.getIs_active()){
-            model.addAttribute("error","Din bruger er inaktiv, kontakt en administrator.");
+        if (!employee.getIs_active()) {
+            model.addAttribute("error", "Din bruger er inaktiv, kontakt en administrator.");
             return "login";
         }
 
@@ -64,13 +64,13 @@ public class PageController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
     @GetMapping("/dashboard/forretningsudvikling")
-    public String showBusinessInfo(HttpSession session, Model model){
+    public String showBusinessInfo(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
@@ -80,20 +80,34 @@ public class PageController {
         int rentalContracts = rentalContractService.returnAmountOfContractsByStatus("Aktiv");
         int availableCars = carService.returnCarAmountByStatus("Ledig");
         int rentedCars = carService.returnCarAmountByStatus("Udlejet");
-        model.addAttribute("monthlyRevenue", monthlyRevenue);
+        double projectedYearlyRevenue = rentalContractService.projectedYearlyRevenue();
+
+        model.addAttribute("monthlyRevenue", formatRevenue(monthlyRevenue));
         model.addAttribute("activeRentalContracts", rentalContracts);
         model.addAttribute("availableCars", availableCars);
         model.addAttribute("rentedCars", rentedCars);
+        model.addAttribute("projectedYearlyRevenue", formatRevenue(projectedYearlyRevenue));
 
         return "business-dashboard";
     }
 
     @GetMapping("/dashboard/dataregistrering")
-    public String showDataDashboard(HttpSession session, Model model){
+    public String showDataDashboard(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
         }
         return "dataregistration-dashboard";
     }
+
+    //hjælpe metode til formaterin
+    public String formatRevenue(double amount) {
+
+        if (amount % 1 == 0) {
+            return String.format("%,.0f", amount).replace(',', '.');
+        } else {
+            return String.format("%,.2f", amount).replace(',', '.');
+        }
+    }
+
 }
