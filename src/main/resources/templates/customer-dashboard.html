@@ -16,6 +16,21 @@
         <section class="dashboard-car-filter">
             <div>
                 <form th:action="@{/customer/dashboard}" method="get">
+                    <label for="status">Filtrer efter kunde status:</label>
+                    <select name="status" id="status">
+                        <option value="">Alle</option>
+                        <option value="aktiv" th:selected="${status == 'aktiv'}">Aktiv</option>
+                        <option value="inaktiv" th:selected="${status == 'inaktiv'}">Inaktiv</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                    <div>
+                        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                        <p th:if="${success != null}" th:text="${success}" style="color:green"></p>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form th:action="@{/customer/dashboard}" method="get">
                     <label for="fullName">Søg efter kundens navn:</label>
                     <input type="text" id="fullName" name="query" th:value="${query}" placeholder="Indtast navn..."/>
                     <button type="submit">Søg</button>
@@ -26,7 +41,7 @@
 
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="customer : ${customerList}">
-                <a th:href="@{/customer/dashboard(customerId=${customer.customerId})}">
+                <a th:href="@{/customer/dashboard(customerId=${customer.customerId}, status=${status})}">
                     <div>
                         <h4>
                             <span th:text="${customer.firstName}"></span>
@@ -62,8 +77,10 @@
                 <p><strong>Fornavn:</strong> <span th:text="${selectedCustomer.firstName}"></span></p>
                 <p><strong>Efternavn:</strong> <span th:text="${selectedCustomer.lastName}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${selectedCustomer.email}"></span></p>
-                <p><strong>Tlf-nummer:</strong><span>+45 </span> <span th:text="${selectedCustomer.phoneNumber}"></span></p>
-                <p><strong>Status:</strong> <span th:text="${selectedCustomer.isActive} ? 'Aktiv' : 'Inaktiv'"></span></p>
+                <p><strong>Tlf-nummer:</strong><span>+45 </span> <span th:text="${selectedCustomer.phoneNumber}"></span>
+                </p>
+                <p><strong>Status:</strong> <span th:text="${selectedCustomer.isActive} ? 'Aktiv' : 'Inaktiv'"></span>
+                </p>
             </section>
 
             <section class="selected-car-section">
@@ -71,14 +88,28 @@
                     Rediger kunde
                 </a>
 
-                <form th:action="@{/customer/delete}"
-                      onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som inaktiv?'); "
-                      method="post">
+                <form
+                        th:if="${selectedCustomer.isActive}"
+                        th:action="@{/customer/delete}"
+                        onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som inaktiv?'); "
+                        method="post">
                     <input type="hidden" name="customerId" th:value="${selectedCustomer.customerId}">
+                    <input type="hidden" name="status" th:value="${status}">
 
                     <p th:if="${deleteError != null}" style="color: red;" th:text="${deleteError}"></p>
 
                     <button class="delete-btn" type="submit">Slet kunde</button>
+                </form>
+                <form
+                        th:if="${!selectedCustomer.isActive}"
+                        th:action="@{/customer/reactivate}"
+                        onsubmit="return confirm('Er du sikker på du vil sætte denne kunde som aktiv?'); "
+                        method="post">
+                    <input type="hidden" name="customerId" th:value="${selectedCustomer.customerId}">
+                    <input type="hidden" name="status" th:value="${status}">
+                    <p th:if="${reactivationError != null}" style="color: red;" th:text="${reactivationError}"></p>
+
+                    <button class="delete-btn" type="submit">Aktiver kunde</button>
                 </form>
             </section>
 

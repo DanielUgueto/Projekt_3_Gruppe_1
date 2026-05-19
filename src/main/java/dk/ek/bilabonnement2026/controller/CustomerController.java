@@ -194,6 +194,7 @@ public class CustomerController {
 
     @PostMapping("/customer/delete")
     public String deleteCustomer(@RequestParam("customerId") int customerId,
+                                 @RequestParam(value = "status", required = false) String status,
                                  HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
@@ -214,7 +215,34 @@ public class CustomerController {
             model.addAttribute("deleteError", error);
             return "customer-dashboard";
         }
-        return "redirect:/customer/dashboard";
+        return "redirect:/customer/dashboard?status=" + (status != null ? status : "");
+    }
+
+    @PostMapping("/customer/reactivate")
+    public String reactivateCustomer(@RequestParam("customerId") int customerId,
+                                     @RequestParam(value = "status", required = false) String status,
+                                     HttpSession session, Model model) {
+
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null) {
+            return "redirect:/";
+        }
+        String error = customerService.setCustomerStatusActive(customerId);
+        if (error != null) {
+            List<Customer> list = customerService.getAllCustomers();
+            Customer selectedCustomer = null;
+            for (Customer c : list) {
+                if (c.getCustomerId() == customerId) {
+                    selectedCustomer = c;
+                    break;
+                }
+            }
+            model.addAttribute("customerList", list);
+            model.addAttribute("selectedCustomer", selectedCustomer);
+            model.addAttribute("reactivationError", error);
+            return "customer-dashboard";
+        }
+        return "redirect:/customer/dashboard?status=" + (status != null ? status : "");
     }
 
 
@@ -237,6 +265,13 @@ public class CustomerController {
             if (list.isEmpty()) {
                 model.addAttribute("error", "Ingen kunder fundet med navnet: \"" + query + "\"");
             }
+
+        } else if ("aktiv".equals(status)) {
+            list = customerService.getAllActiveCustomers();
+
+        } else if ("inaktiv".equals(status)) {
+            list = customerService.getAllInactiveCustomers();
+
         } else {
             list = customerService.getAllCustomers();
         }
@@ -252,6 +287,7 @@ public class CustomerController {
             model.addAttribute("selectedCustomer", selectedCustomer);
         }
 
+        model.addAttribute("status", status);
         model.addAttribute("customerList", list);
 
         return "customer-dashboard";
