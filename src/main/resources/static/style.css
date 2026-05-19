@@ -4,6 +4,7 @@
     --color-muted: #d0d0d0;
     --color-text: #1a1a1a;
     --color-dark: #3a3a3a;
+    font-family: Arial, sans-serif;
 }
 
 body {
@@ -55,4 +56,8 @@ body {
 
 .site-nav a:hover {
     background-color: var(--color-bg);
+}
+
+button {
+    min-width: 104px;
 }

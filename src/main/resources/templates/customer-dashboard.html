@@ -100,6 +100,7 @@
 
                     <button class="delete-btn" type="submit">Slet kunde</button>
                 </form>
+
                 <form
                         th:if="${!selectedCustomer.isActive}"
                         th:action="@{/customer/reactivate}"
