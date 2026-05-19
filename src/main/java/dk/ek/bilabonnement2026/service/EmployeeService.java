@@ -104,4 +104,8 @@ public class EmployeeService {
         return employeeRepository.updateEmployeeStatus(true, employeeId);
     }
 
+    public Employee getEmployeeById(int employeeId) {
+        return employeeRepository.findEmployeeByEmployeeId(employeeId);
+    }
+
 }

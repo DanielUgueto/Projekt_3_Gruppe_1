@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>EmployeeDashboard</title>
@@ -14,12 +14,12 @@
     <div class="dashboard-split-car">
         <section class="dashboard-car-filter">
             <div>
-                <form>
+                <form th:action="@{/employee/dashboard}" method="get">
                     <label for="status">Filtrer efter medarbejder status:</label>
                     <select name="status" id="status">
                         <option value="">Alle</option>
-                        <option value="Aktiv">Aktiv</option>
-                        <option value="Inaktiv">Inaktiv</option>
+                        <option value="aktiv" th:selected="${status == 'aktiv'}">Aktiv</option>
+                        <option value="inaktiv" th:selected="${status == 'inaktiv'}">Inaktiv</option>
                     </select>
                     <button type="submit">Filtrer</button>
                     <div>
@@ -32,7 +32,7 @@
 
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="employee : ${employeeList}">
-                <a th:href="@{/employee/dashboard(employeeId=${employee.employeeId})}">
+                <a th:href="@{/employee/dashboard(employeeId=${employee.employeeId}, status=${status})}">
                     <div>
                         <h4>
                             <span th:text="${employee.firstName}"></span>
@@ -43,7 +43,7 @@
                         <span th:text="${employee.role}"></span>
                     </div>
                     <div>
-                        <span th:text="${employee.isActive}"></span>
+                        <span th:text="${employee.email}"></span>
                     </div>
                 </a>
             </article>
@@ -57,23 +57,43 @@
                     <span th:text="${selectedEmployee.firstName}"></span>
                     <span th:text="${selectedEmployee.lastName}"></span>
                 </h2>
-                <p th:text="${selectedEmployee.role}"></p>
+               <strong><p th:text="${selectedEmployee.role}"></p></strong>
             </header>
 
             <section class="selected-car-section">
-                <p><strong>ID:</strong> <span th:text="${selectedEmployee.employeeId}"></span></p>
-                <p><strong>Email:</strong> <span th:text="${selectedEmployee.email}"></span></p>
-                <p><strong>Rolle:</strong> <span th:text="${selectedEmployee.role}"></span></p>
-                <p><strong>Status:</strong> <span th:text="${selectedEmployee.isActive} ? 'Aktiv' : 'Inaktiv'"></span></p>
+                <h3>Medarbejder oplysninger</h3>
+                <p><strong>Fornavn:</strong> <span th:text="${selectedEmployee.firstName}"></span></p>
+                <p><strong>Efternavn:</strong> <span th:text="${selectedEmployee.lastName}"></span></p>
+                <p><strong>Work-email:</strong> <span th:text="${selectedEmployee.email}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${selectedEmployee.isActive}"></span></p>
             </section>
 
-            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.isActive == true}">
-                <form th:action="@{/employee/delete(employeeId=${selectedEmployee.employeeId})}" method="post"
-                      onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
-                    <button type="submit">Sæt medarbejder som inaktiv</button>
-                </form>
-            </div>
+            <section class="selected-car-section"
+                     th:if="${employee.role.equalsIgnoreCase('dataregistrering')}">
 
+                <form
+                        th:if="${selectedEmployee.isActive}"
+                        th:action="@{/employee/delete}"
+                        onsubmit="return confirm('Er du sikker på du vil sætte denne medarbejder som inaktiv?');"
+                        method="post">
+                    <input type="hidden" name="employeeId" th:value="${selectedEmployee.employeeId}">
+                    <input type="hidden" name="status" th:value="${status}">
+                    <p th:if="${error != null}" style="color: red;" th:text="${error}"></p>
+                    <button class="delete-btn" type="submit">Sæt medarbejder som inaktiv</button>
+                </form>
+
+                <form
+                        th:if="${!selectedEmployee.isActive}"
+                        th:action="@{/employee/reactivate}"
+                        onsubmit="return confirm('Er du sikker på du vil genaktivere denne medarbejder?');"
+                        method="post">
+                    <input type="hidden" name="employeeId" th:value="${selectedEmployee.employeeId}">
+                    <input type="hidden" name="status" th:value="${status}">
+                    <p th:if="${reactivationError != null}" style="color: red;" th:text="${reactivationError}"></p>
+                    <button class="delete-btn" type="submit">Genaktiver medarbejder</button>
+                </form>
+
+            </section>
 
         </article>
 

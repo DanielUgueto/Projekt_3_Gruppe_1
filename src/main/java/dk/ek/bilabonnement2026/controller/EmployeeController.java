@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.controller;
 
+import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -64,6 +65,7 @@ public class EmployeeController {
             return "redirect:/";
         }
         List<Employee> employeeList;
+
         if (status == null || status.isBlank()) {
             employeeList = employeeService.getAllEmployees();
         } else {
@@ -71,24 +73,20 @@ public class EmployeeController {
         }
 
         if (employeeId != null) {
-            Employee selectedEmployee = null;
-            for (Employee e : employeeList) {
-                if (e.getEmployeeId() == employeeId) {
-                    selectedEmployee = e;
-                    break;
-                }
-            }
+            Employee selectedEmployee = employeeService.getEmployeeById(employeeId);
             model.addAttribute("selectedEmployee", selectedEmployee);
         }
 
         model.addAttribute("employee", employee);
         model.addAttribute("employeeList", employeeList);
+        model.addAttribute("status", status);
 
         return "employee-dashboard";
     }
 
     @PostMapping("/employee/delete")
     public String deleteEmployee(@RequestParam("employeeId") int employeeId,
+                                 @RequestParam(value = "status", required = false) String status,
                                  HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
@@ -99,7 +97,8 @@ public class EmployeeController {
             model.addAttribute("error", message);
         }
         model.addAttribute("success", "Medarbejderens status er sat til inaktiv");
-        return "redirect:/employee/dashboard";
+
+        return "redirect:/employee/dashboard?status=" + (status != null ? status : "");
     }
 
     @PostMapping("/employee/reactivate")
