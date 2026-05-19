@@ -13,8 +13,8 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public boolean addEmployeeToDatabase(Employee employee){
-        if (employeeRepository.doesEmailExist(employee.getEmail())){ // checks if user already exists
+    public boolean addEmployeeToDatabase(Employee employee) {
+        if (employeeRepository.doesEmailExist(employee.getEmail())) { // checks if user already exists
             System.out.println("User already exists in database");
             return false;
         }
@@ -23,28 +23,28 @@ public class EmployeeService {
         return true;
     }
 
-    public String redirectByRole(Employee employee){
-        if (employee.getRole().equalsIgnoreCase("dataregistrering")){
+    public String redirectByRole(Employee employee) {
+        if (employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/dataregistrering";
         }
-        if (employee.getRole().equalsIgnoreCase("skade-udbedring")){
+        if (employee.getRole().equalsIgnoreCase("skade-udbedring")) {
             return "redirect:/dashboard/damage";
         }
-        if (employee.getRole().equalsIgnoreCase("forretningsudvikler")){
+        if (employee.getRole().equalsIgnoreCase("forretningsudvikler")) {
             return "redirect:/dashboard/forretningsudvikling";
         }
         return "/index";
     }
 
-    public Employee login(String email, String password){
+    public Employee login(String email, String password) {
         Employee employee = employeeRepository.findEmployeeByEmail(email);
 
-        if (employee == null){
+        if (employee == null) {
             System.out.println("Employee not found");
             return null;
         }
 
-        if (!employee.getPassword().equals(password)){
+        if (!employee.getPassword().equals(password)) {
             System.out.println("Wrong password");
             return null;
         }
@@ -52,39 +52,52 @@ public class EmployeeService {
         return employee;
     }
 
-    public List<Employee> getAllEmployees(){
-     return employeeRepository.findAllEmployees();
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAllEmployees();
     }
 
-    public List<Employee> getAllEmployeesByStatus(String status){
-        if(status == null){
+    public List<Employee> getAllEmployeesByStatus(String status) {
+        if (status == null) {
             return null;
         }
         boolean employeeStatus;
-        if(status.equalsIgnoreCase("aktiv")){
+        if (status.equalsIgnoreCase("aktiv")) {
             employeeStatus = true;
-        } else if (status.equalsIgnoreCase("inaktiv")){
+        } else if (status.equalsIgnoreCase("inaktiv")) {
             employeeStatus = false;
-        }else {
+        } else {
             return null;
         }
 
         return employeeRepository.findAllEmployeesByStatus(employeeStatus);
     }
 
-    public String changeEmployeeStatus(int employeeId, int sessionEmployeeId){
-        if(employeeId == sessionEmployeeId){
+    public String changeEmployeeStatus(int employeeId, int sessionEmployeeId) {
+        if (employeeId == sessionEmployeeId) {
             return "Ikke muligt at slette dig selv";
         }
         boolean isActive = true;
+
         Employee givenEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
-        if(givenEmployee == null){
+        if (givenEmployee == null) {
             return "Medarbejderen kunne ikke findes i systemet";
         }
 
-        if(givenEmployee.getIsActive()){
+        if (givenEmployee.getIsActive()) {
             isActive = false;
         }
-       return employeeRepository.updateEmployeeIsActive(isActive,givenEmployee.getEmployeeId());
+        return employeeRepository.updateEmployeeStatus(isActive, givenEmployee.getEmployeeId());
+    }
+
+    //sætter altid aktiv for genaktivering modsat metoden ligeover der fungerer som en toggle
+    public String setEmployeeStatusActive(boolean isActive, int employeeId) {
+        Employee deletedEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
+        if (deletedEmployee == null) {
+            return "Medarbejder findes ikke i systemet";
+        }
+        if (deletedEmployee.getIsActive()) {
+            return "Medarbejder er allerede aktiv i systemet";
+        }
+        return employeeRepository.updateEmployeeStatus(true, employeeId);
     }
 }

@@ -36,7 +36,7 @@ public class EmployeeRepository {
         }
     }
 
-    public String updateEmployeeIsActive(boolean isActive, int employeeId) {
+    public String updateEmployeeStatus(boolean isActive, int employeeId) {
         String sql = "UPDATE employee SET is_active = ? WHERE employee_id = ?";
 
         try(Connection connection = dataSource.getConnection();
