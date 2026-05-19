@@ -53,7 +53,7 @@ public class PageController {
             model.addAttribute("error", "Du er ikke logget ind.");
             return "login";
         }
-        if (!employee.getIs_active()) {
+        if (!employee.getIsActive()) {
             model.addAttribute("error", "Din bruger er inaktiv, kontakt en administrator.");
             return "login";
         }

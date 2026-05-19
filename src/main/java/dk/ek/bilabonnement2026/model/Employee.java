@@ -1,47 +1,28 @@
 package dk.ek.bilabonnement2026.model;
 
-public class Employee {
+public class Employee extends Person {
     int employeeId;
-    String firstName;
-    String lastName;
     String password;
-    String workEmail;
     String role;
-    boolean is_active;
 
-    public Employee(int employeeId, String firstName, String lastName, String password, String workEmail, String role, boolean is_active) {
+    public Employee(int employeeId, String firstName, String lastName, String password, String email, String role, boolean isActive) {
+        super(firstName, lastName,email,isActive);
         this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.password = password;
-        this.workEmail = workEmail;
-        this.role = role;
-        this.is_active = is_active;
-    }
-
-    public Employee(String firstName, String lastName, String password, String workEmail, String role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.workEmail = workEmail;
         this.role = role;
     }
 
-    public Employee(int employeeId, String firstName, String lastName, String workEmail, String role, boolean is_active){
+    public Employee(String firstName, String lastName, String password, String email, String role) {
+        super(firstName, lastName,email, true);
+        this.password = password;
+        this.role = role;
+    }
+
+    public Employee(int employeeId, String firstName, String lastName, String email, String role, boolean isActive){
+        super(firstName, lastName,email,isActive);
         this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.workEmail = workEmail;
         this.role = role;
-        this.is_active = is_active;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+        this.isActive = isActive;
     }
 
     public String getPassword() {
@@ -52,15 +33,7 @@ public class Employee {
         return role;
     }
 
-    public String getWorkEmail() {
-        return workEmail;
-    }
-
     public int getEmployeeId() {
         return employeeId;
-    }
-
-    public boolean getIs_active(){
-        return is_active;
     }
 }
