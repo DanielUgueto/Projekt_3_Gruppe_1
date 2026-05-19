@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Business info</title>
@@ -53,6 +53,16 @@
                     <p class="stat-text">Biler med aktiv lejekontrakt</p>
                 </div>
             </article>
+
+            <article class="stat-card">
+                <img src="/img/balance.png" alt="">
+                <div>
+                    <h4>Estimeret årlig indtægt</h4>
+                    <p class="stat-value" th:text="${projectedYearlyRevenue} + ' kr.'"></p>
+                    <p class="stat-text">Baseret på nuværende lejeaftaler</p>
+                </div>
+            </article>
+
         </section>
 
         <section class="actions-panel">
