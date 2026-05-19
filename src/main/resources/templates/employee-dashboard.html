@@ -43,7 +43,7 @@
                         <span th:text="${employee.role}"></span>
                     </div>
                     <div>
-                        <span th:text="${employee.is_active}"></span>
+                        <span th:text="${employee.isActive}"></span>
                     </div>
                 </a>
             </article>
@@ -67,7 +67,7 @@
                 <p><strong>Status:</strong> <span th:text="${selectedEmployee.isActive} ? 'Aktiv' : 'Inaktiv'"></span></p>
             </section>
 
-            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.is_active == true}">
+            <div class="delete-car-btn" th:if="${employee.role.equals('dataregistrering')} and ${employee.employeeId != selectedEmployee.employeeId} and ${selectedEmployee.isActive == true}">
                 <form th:action="@{/employee/delete(employeeId=${selectedEmployee.employeeId})}" method="post"
                       onsubmit="return confirm('Er du sikker på, at du vil sætte medarbejderens status til inaktiv?')">
                     <button type="submit">Sæt medarbejder som inaktiv</button>

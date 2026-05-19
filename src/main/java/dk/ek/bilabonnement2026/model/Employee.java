@@ -7,16 +7,16 @@ public class Employee {
     String password;
     String workEmail;
     String role;
-    boolean is_active;
+    boolean isActive;
 
-    public Employee(int employeeId, String firstName, String lastName, String password, String workEmail, String role, boolean is_active) {
+    public Employee(int employeeId, String firstName, String lastName, String password, String workEmail, String role, boolean isActive) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.workEmail = workEmail;
         this.role = role;
-        this.is_active = is_active;
+        this.isActive = isActive;
     }
 
     public Employee(String firstName, String lastName, String password, String workEmail, String role) {
@@ -27,13 +27,13 @@ public class Employee {
         this.role = role;
     }
 
-    public Employee(int employeeId, String firstName, String lastName, String workEmail, String role, boolean is_active){
+    public Employee(int employeeId, String firstName, String lastName, String workEmail, String role, boolean isActive){
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.workEmail = workEmail;
         this.role = role;
-        this.is_active = is_active;
+        this.isActive = isActive;
     }
 
     public String getFirstName() {
@@ -60,7 +60,7 @@ public class Employee {
         return employeeId;
     }
 
-    public boolean getIs_active(){
-        return is_active;
+    public boolean getIsActive(){
+        return isActive;
     }
 }

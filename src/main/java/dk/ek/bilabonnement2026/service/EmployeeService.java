@@ -82,7 +82,7 @@ public class EmployeeService {
             return "Medarbejderen kunne ikke findes i systemet";
         }
 
-        if(givenEmployee.getIs_active()){
+        if(givenEmployee.getIsActive()){
             is_active = false;
         }
        return employeeRepository.updateEmployeeIsActive(is_active,givenEmployee.getEmployeeId());
