@@ -14,7 +14,7 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     public boolean addEmployeeToDatabase(Employee employee){
-        if (employeeRepository.doesEmailExist(employee.getWorkEmail())){ // checks if user already exists
+        if (employeeRepository.doesEmailExist(employee.getEmail())){ // checks if user already exists
             System.out.println("User already exists in database");
             return false;
         }
@@ -76,15 +76,15 @@ public class EmployeeService {
         if(employeeId == sessionEmployeeId){
             return "Ikke muligt at slette dig selv";
         }
-        boolean is_active = true;
+        boolean isActive = true;
         Employee givenEmployee = employeeRepository.findEmployeeByEmployeeId(employeeId);
         if(givenEmployee == null){
             return "Medarbejderen kunne ikke findes i systemet";
         }
 
         if(givenEmployee.getIsActive()){
-            is_active = false;
+            isActive = false;
         }
-       return employeeRepository.updateEmployeeIsActive(is_active,givenEmployee.getEmployeeId());
+       return employeeRepository.updateEmployeeIsActive(isActive,givenEmployee.getEmployeeId());
     }
 }

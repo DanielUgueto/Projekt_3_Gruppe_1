@@ -27,7 +27,7 @@ public class EmployeeRepository {
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());
             statement.setString(3, employee.getPassword());
-            statement.setString(4, employee.getWorkEmail());
+            statement.setString(4, employee.getEmail());
             statement.setString(5, employee.getRole());
 
             statement.executeUpdate();
