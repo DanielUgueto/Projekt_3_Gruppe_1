@@ -24,6 +24,7 @@ main {
     display: flex;
     align-items: center;
     gap: 1em;
+    flex-wrap: wrap;
 }
 
 .stat-card {

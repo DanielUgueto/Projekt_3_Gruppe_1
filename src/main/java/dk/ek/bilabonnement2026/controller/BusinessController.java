@@ -14,24 +14,24 @@ import java.util.List;
 
 @Controller
 public class BusinessController {
-    
+
     @Autowired
     RentalContractService rentalContractService;
 
     @GetMapping("/rental-contracts/overview")
     public String showRentalContractOverview(@RequestParam(required = false) String status,
                                              @RequestParam(required = false) Integer contractId,
-                                             HttpSession session, Model model){
+                                             HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
         RentalContractOverview selectedContract = null;
-        if(contractId != null){
+        if (contractId != null) {
             selectedContract = rentalContractService.getRentalContractOverviewById(contractId);
         }
 
-        List<RentalContractOverview>  rentalContractOverviewList = rentalContractService.getAllRentalContractOverviews(status);
+        List<RentalContractOverview> rentalContractOverviewList = rentalContractService.getAllRentalContractOverviews(status);
         model.addAttribute("rentalContracts", rentalContractOverviewList);
         model.addAttribute("selectedStatus", status);
         model.addAttribute("selectedContract", selectedContract);

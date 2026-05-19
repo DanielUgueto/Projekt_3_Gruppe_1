@@ -97,7 +97,13 @@ public class RentalContractService {
     }
 
     public double calculateMonthlyRevenue() {
+
         return rentalContractRepository.calculateMonthlyRevenue();
+    }
+
+    public double projectedYearlyRevenue() {
+
+        return rentalContractRepository.projectedYearlyRevenue();
     }
 
     public RentalContract getRentalContractByContractId(int contractId) {
