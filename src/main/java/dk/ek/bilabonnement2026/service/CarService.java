@@ -81,4 +81,15 @@ public class CarService {
     public int returnCarAmountByStatus(String status) {
         return carRepository.returnCarAmountByStatus(status);
     }
+
+    public boolean changeCarStatusToAvailable(int carId) { // this method could definitely be combined with changeCarStatusToExpired
+        Car car = carRepository.findCarByCarNumber(carId);
+
+        if (!car.getStatus().equalsIgnoreCase("Klar til transport")) { // check car status to make sure it's not already rented
+            return false;
+        }
+
+        carRepository.updateCarStatus(carId, "Ledig");
+        return true;
+    }
 }

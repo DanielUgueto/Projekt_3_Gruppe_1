@@ -153,6 +153,28 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 
+    @PostMapping("/dashboard/car/activate")
+    public String setStatusAsAvailable(@RequestParam("carId") int carId, HttpSession session,
+                                       RedirectAttributes redirectAttributes) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee == null){
+            return "redirect:/";
+        }
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+            return "redirect:/dashboard/car";
+        }
+
+        boolean statusUpdated = carService.changeCarStatusToAvailable(carId);
+
+        if (!statusUpdated) {
+            redirectAttributes.addFlashAttribute("error", "Bilens status kunne ikke ændres til ledig!");
+        } else {
+            redirectAttributes.addFlashAttribute("success", "Bilens status blev ændret til ledig.");
+        }
+
+        return "redirect:/dashboard/car?carId=" + carId;
+    }
+
     @GetMapping("/dashboard/car/edit")
     public String getCarEditHTML(@RequestParam("carId") int carId, HttpSession session,
                                  Model model, RedirectAttributes redirectAttributes){
