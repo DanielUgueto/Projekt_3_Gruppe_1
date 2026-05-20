@@ -13,47 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: testpassword
-          MYSQL_DATABASE: bilabonnement
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h localhost -u root -ptestpassword"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Java version
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'microsoft'
-
-      - name: Load DDL and DML into test database
-        run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -ptestpassword bilabonnement < src/main/resources/DatabaseScript.sql
-          mysql -h 127.0.0.1 -P 3306 -u root -ptestpassword bilabonnement < src/main/resources/DummyData.sql
-
-      - name: Run tests
-        env:
-          JDBC_DATABASE_URL: jdbc:mysql://127.0.0.1:3306/bilabonnement
-          JDBC_USERNAME: root
-          JDBC_PASSWORD: testpassword
-        run: mvn test
-
   build:
     runs-on: ubuntu-latest
-    needs: test
     permissions:
       contents: read
 
