@@ -12,12 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Nico
 @Repository
 public class CarBrandRepository {
 
     @Autowired
     DataSource dataSource;
 
+    // Nico
     public List<CarBrand> getAllBrands(){
         String sql = "Select * FROM car_brand";
 
@@ -42,6 +44,7 @@ public class CarBrandRepository {
         return list;
     }
 
+    // Nico
     public void saveBrand(String brandName) {
         String sql = "INSERT INTO car_brand (brand_name) VALUES (?)";
 
@@ -56,6 +59,7 @@ public class CarBrandRepository {
         }
     }
 
+    // Nico
     public CarBrand getCarBrandByBrandName(String brandName) {
         String sql = "SELECT * FROM car_brand WHERE brand_name = ?";
 

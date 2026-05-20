@@ -31,6 +31,7 @@ public class PageController {
     @Autowired
     CustomerService customerService;
 
+    // Nico
     @GetMapping("/")
     public String loginPage(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -42,6 +43,7 @@ public class PageController {
         return "login";
     }
 
+    // Nico
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
@@ -63,12 +65,14 @@ public class PageController {
         return employeeService.redirectByRole(employee);
     }
 
+    // Nico
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
+    // Nico
     @GetMapping("/dashboard/forretningsudvikling")
     public String showBusinessInfo(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -91,6 +95,7 @@ public class PageController {
         return "business-dashboard";
     }
 
+    // Nico
     @GetMapping("/dashboard/dataregistrering")
     public String showDataDashboard(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");

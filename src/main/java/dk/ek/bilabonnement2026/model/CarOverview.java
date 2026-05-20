@@ -1,7 +1,7 @@
 package dk.ek.bilabonnement2026.model;
 
 import java.time.LocalDate;
-
+// Nico
 public class CarOverview {
     private int carId;
     private String brandName;

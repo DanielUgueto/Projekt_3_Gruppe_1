@@ -13,6 +13,7 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    // Nico
     public boolean addEmployeeToDatabase(Employee employee) {
         if (employeeRepository.doesEmailExist(employee.getEmail())) { // checks if user already exists
             System.out.println("User already exists in database");
@@ -23,6 +24,7 @@ public class EmployeeService {
         return true;
     }
 
+    // Nico
     public String redirectByRole(Employee employee) {
         if (employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/dataregistrering";
@@ -36,6 +38,7 @@ public class EmployeeService {
         return "/index";
     }
 
+    // Nico
     public Employee login(String email, String password) {
         Employee employee = employeeRepository.findEmployeeByEmail(email);
 

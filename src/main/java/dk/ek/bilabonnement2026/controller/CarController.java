@@ -80,6 +80,7 @@ public class CarController {
         }
     }
 
+    // Nico
     @GetMapping("/dashboard/car")
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
@@ -131,6 +132,7 @@ public class CarController {
         return "car-dashboard";
     }
 
+    // Nico
     @PostMapping("/dashboard/car/remove")
     public String setCarStatusAsExpired(@RequestParam("carId") int carId,
                                         HttpSession session,
@@ -154,6 +156,7 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 
+    // Nico
     @PostMapping("/dashboard/car/activate")
     public String setStatusAsAvailable(@RequestParam("carId") int carId, HttpSession session,
                                        RedirectAttributes redirectAttributes) {
@@ -176,6 +179,7 @@ public class CarController {
         return "redirect:/dashboard/car?carId=" + carId;
     }
 
+    // Nico
     @GetMapping("/dashboard/car/edit")
     public String getCarEditHTML(@RequestParam("carId") int carId, HttpSession session,
                                  Model model, RedirectAttributes redirectAttributes){
@@ -230,6 +234,7 @@ public class CarController {
         return "edit-car";
     }
 
+    // Nico
     @PostMapping("/dashboard/car/edit")
     public String editCar(@RequestParam("brandName") String brandName,
                           @RequestParam("modelName") String modelName,
