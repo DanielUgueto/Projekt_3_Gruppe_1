@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Rune
 @Service
 public class DamageCategoryService {
 

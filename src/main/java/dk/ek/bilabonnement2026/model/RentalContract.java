@@ -2,6 +2,7 @@ package dk.ek.bilabonnement2026.model;
 
 import java.time.LocalDate;
 
+//Rune
 public class RentalContract {
     private int rentalContractId;
     private int employeeId;

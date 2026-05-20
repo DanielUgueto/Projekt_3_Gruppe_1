@@ -58,10 +58,12 @@ public class EmployeeService {
         return employee;
     }
 
+    //Rune
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAllEmployees();
     }
 
+    //Rune
     public List<Employee> getAllEmployeesByStatus(String status) {
         if (status == null) {
             return null;
@@ -78,6 +80,7 @@ public class EmployeeService {
         return employeeRepository.findAllEmployeesByStatus(employeeStatus);
     }
 
+    //Rune
     public String changeEmployeeStatus(int employeeId, int sessionEmployeeId) {
 
         if (employeeId == sessionEmployeeId) {

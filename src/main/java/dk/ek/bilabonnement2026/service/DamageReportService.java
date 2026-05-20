@@ -24,6 +24,7 @@ public class DamageReportService {
     CarRepository carRepository;
 
 
+    //Rune
     public void createDamageReport(int rentalContractId, int employeeId, String description, List<DamageCategory> selectedDamages) {
 
         RentalContract rentalContract = rentalContractRepository.findRentalContractById(rentalContractId);

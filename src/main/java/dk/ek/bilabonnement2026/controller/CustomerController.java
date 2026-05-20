@@ -26,6 +26,7 @@ public class CustomerController {
     EmployeeService employeeService;
 
 
+    //Rune
     @GetMapping("/customer/register")
     public String showRegisterCustomer(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -36,6 +37,7 @@ public class CustomerController {
         return "register-customer";
     }
 
+    //Rune
     @PostMapping("/customer/register")
     public String registerCustomer(
             @RequestParam("firstName") String firstName,
@@ -101,6 +103,7 @@ public class CustomerController {
         return employeeService.redirectByRole(employee);
     }
 
+    //Rune
     @GetMapping("/customer/edit")
     public String showEditCustomer(@RequestParam int customerId,
                                    HttpSession session,
@@ -124,6 +127,7 @@ public class CustomerController {
         return "edit-customer";
     }
 
+    //Rune
     @PostMapping("/customer/edit")
     public String updateCustomer(@RequestParam int customerId,
                                  @RequestParam("firstName") String firstName,
@@ -297,7 +301,9 @@ public class CustomerController {
     }
 
 
+
     //Denne metode sætter alle model attributterne for createCustomer. Lavet for at undgå for meget redundans
+    //Rune
     private void addFormDataToCustomerModel(Model model,
                                             String firstName, String lastName,
                                             String driversLicenseNumber, String cprNumber,
@@ -317,6 +323,7 @@ public class CustomerController {
     }
 
     //Denne metode sætter alle model attributter for updateCustomer, med de parameter de kan opdatere.
+    //Rune
     private void addEditFormDataToCustomerEditModel(Model model, int customerId,
                                                     String firstName, String lastName,
                                                     String email, String phoneNumber, String cprNumber,

@@ -15,6 +15,7 @@ public class CarModelRepository {
     @Autowired
     DataSource dataSource;
 
+    //Rune
     public void saveCarModel(CarModel carModel){
         String sql = "INSERT INTO car_model (car_brand_id, model_name, equipment_level, shift_gear_type, fuel_type) " +
                 "VALUES (?,?,?,?,?)";
@@ -35,6 +36,7 @@ public class CarModelRepository {
         }
     }
 
+    //Rune
     public CarModel getCarModelByModelName(String modelName){
         String sql = "SELECT * FROM car_model WHERE model_name = ?";
 
@@ -58,6 +60,7 @@ public class CarModelRepository {
         return null;
     }
 
+    //Rune
     public List<CarModel> getAllCarModels(){
         List<CarModel> carModelsList = new ArrayList<>();
         String sql = "SELECT * FROM car_model";

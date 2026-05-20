@@ -13,13 +13,17 @@ public class CarModelService {
     @Autowired
     CarModelRepository carModelRepository;
 
+    //Rune
     public void saveCarModel(CarModel carModel){
         carModelRepository.saveCarModel(carModel);
     }
 
+    //Rune
     public CarModel getCarModelByModelName(String modelName){
         return carModelRepository.getCarModelByModelName(modelName);
     }
+
+    //Rune
     public List<CarModel> getAllCarModels(){
         return carModelRepository.getAllCarModels();
     }

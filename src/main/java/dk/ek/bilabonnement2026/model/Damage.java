@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.model;
 
+//Rune
 public class Damage {
     private int damageId;
     private int damageReportId;

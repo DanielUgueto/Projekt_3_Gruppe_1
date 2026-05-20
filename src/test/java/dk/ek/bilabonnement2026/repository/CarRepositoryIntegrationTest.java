@@ -8,14 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+//Rune
 @SpringBootTest
 @ActiveProfiles("test")
 public class CarRepositoryIntegrationTest {
 
     @Autowired
     CarRepository carRepository;
-
+    //Rune
     @Test
     @DisplayName("findCarByVinNumber() Happy flow")
     public void findCarByVinNumberHappyFlow(){
@@ -29,7 +29,7 @@ public class CarRepositoryIntegrationTest {
         assertNotNull(car, "Bilen blev ikke fundet i databasen");
         assertEquals(vinNumber, car.getVinNumber());
     }
-
+    //Rune
     @Test
     @DisplayName("findCarByVinNumber() Exception flow")
     public void findCarByVinNumberExceptionFlow(){

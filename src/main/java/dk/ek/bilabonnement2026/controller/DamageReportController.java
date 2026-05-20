@@ -29,6 +29,7 @@ public class DamageReportController {
     @Autowired
     DamageCategoryService damageCategoryService;
 
+    //Rune
     @GetMapping("/damage-reports/create")
     public String showCreateDamageReportForm(@RequestParam int rentalContractId,
                                              HttpSession session,
@@ -63,6 +64,7 @@ public class DamageReportController {
         return "create-damage-report";
     }
 
+    //Rune
     @PostMapping("/damage-reports/add-damage")
     public String addDamageToSession(@RequestParam int rentalContractId,
                                      @RequestParam("damageCategoryId") int damageCategoryId,
@@ -80,6 +82,7 @@ public class DamageReportController {
         return "redirect:/damage-reports/create?rentalContractId=" + rentalContractId;
     }
 
+    //Rune
     @PostMapping("/damage-reports/create")
     public String createDamageReport(@RequestParam int rentalContractId,
                                      @RequestParam("employeeId") int employeeId,
@@ -120,6 +123,7 @@ public class DamageReportController {
         }
     }
 
+    //Rune
     @GetMapping("/dashboard/damage")
     public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");

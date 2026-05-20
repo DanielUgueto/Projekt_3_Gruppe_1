@@ -37,6 +37,7 @@ public class EmployeeRepository {
         }
     }
 
+    //Rune
     public String updateEmployeeStatus(boolean isActive, int employeeId) {
         String sql = "UPDATE employee SET is_active = ? WHERE employee_id = ?";
 
@@ -103,6 +104,7 @@ public class EmployeeRepository {
         return null;
     }
 
+    //Rune
     public Employee findEmployeeByEmployeeId(int id) {
         String sql = "Select * FROM employee WHERE employee_id = ?";
 
@@ -130,6 +132,7 @@ public class EmployeeRepository {
         return null;
     }
 
+    //Rune
     public List<Employee> findAllEmployees() {
         String sql = "SELECT * FROM employee";
 
@@ -156,6 +159,7 @@ public class EmployeeRepository {
         return employeeList;
     }
 
+    //Rune
     public List<Employee> findAllEmployeesByStatus(boolean status) {
         String sql = "SELECT * FROM employee WHERE is_active = ?";
         List<Employee> employeeList = new ArrayList<>();

@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.model;
 
+//Rune
 public class ZipCode {
     private String zipCode;
     private String country;

@@ -20,6 +20,7 @@ public class DamageCategoryController {
     @Autowired
     DamageCategoryService damageCategoryService;
 
+    //Rune
     @GetMapping("/damage-categories")
     public String showDamageCategoryDashboard(@RequestParam(required = false) Integer damageCategoryId,
                                               HttpSession session, Model model){
@@ -80,6 +81,7 @@ public class DamageCategoryController {
     }
 
 
+    //Rune
     @GetMapping("/damage-categories/edit")
     public String showEditDamageCategory(@RequestParam int damageCategoryId,
                                          HttpSession session, Model model){
@@ -97,6 +99,7 @@ public class DamageCategoryController {
         return "edit-damage-category";
     }
 
+    //Rune
     @PostMapping("/damage-categories/edit")
     public String updateDamageCategory(@RequestParam int damageCategoryId,
                                        @RequestParam("name") String name,
@@ -127,6 +130,7 @@ public class DamageCategoryController {
         return "redirect:/damage-categories";
     }
 
+    //Rune
     @PostMapping("/damage-categories/delete")
     public String deleteDamageCategory(@RequestParam int damageCategoryId,
                                        HttpSession session, Model model){

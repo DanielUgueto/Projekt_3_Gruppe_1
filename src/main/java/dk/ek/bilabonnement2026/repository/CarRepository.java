@@ -27,6 +27,7 @@ Try-with-resources sikrer at både Connection, Statement og ResultSet lukkes
 ved exceptions.
  */
 
+    //Rune
     public void saveCar(Car car){
         String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price, registration_date)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -48,7 +49,8 @@ ved exceptions.
         }
 
     }
-    
+
+    //Rune
     public Car findCarByVinNumber(String vinNumber){
         Car car = null;
         String sql = "SELECT * FROM car WHERE vin_number = ?";
@@ -77,6 +79,7 @@ ved exceptions.
         return car;
     }
 
+    //Rune
     public Car findCarByCarNumber(int carNumber){
         Car car = null;
         String sql = "SELECT * FROM car WHERE car_id = ?";
@@ -105,6 +108,7 @@ ved exceptions.
         return car;
     }
 
+    //Rune
     public void updateCarStatus(int carId, String status) {
         String sql = "UPDATE car SET status = ? WHERE car_id = ?";
 
@@ -120,6 +124,7 @@ ved exceptions.
         }
     }
 
+    //Rune
     public List<Car> findCarsByStatus(String status){
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM car WHERE status = ?";

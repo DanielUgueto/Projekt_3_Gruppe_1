@@ -17,6 +17,7 @@ public class RentalContractRepository {
     @Autowired
     DataSource dataSource;
 
+    //Rune
     public void saveRentalContract(RentalContract rentalContract) {
         String sql = "INSERT INTO rental_contract (employee_id, customer_id, car_id, start_date, end_date, pickup_location, status, subscription_type)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -40,6 +41,7 @@ public class RentalContractRepository {
         }
     }
 
+    //Rune
     public RentalContract findRentalContractByCarId(int carId) {
         RentalContract rentalContract = null;
         String sql = "SELECT * FROM rental_contract WHERE car_id = ? AND status = 'Aktiv'";
@@ -68,6 +70,7 @@ public class RentalContractRepository {
         return rentalContract;
     }
 
+    //Rune
     public RentalContract findRentalContractById(int rentalContractId) {
         RentalContract rentalContract = null;
         String sql = "SELECT * FROM rental_contract WHERE rental_contract_id = ? ";
@@ -96,6 +99,7 @@ public class RentalContractRepository {
         return rentalContract;
     }
 
+    //Rune
     public List<CarOverview> findReturnedCarsWithContract() {
         List<CarOverview> cars = new ArrayList<>();
         /*
@@ -146,6 +150,7 @@ public class RentalContractRepository {
         return cars;
     }
 
+    //Rune
     public void updateRentalContract(RentalContract rentalContract) {
         String sql = """
                 UPDATE rental_contract
@@ -169,6 +174,7 @@ public class RentalContractRepository {
         }
     }
 
+    //Rune
     public void updateRentalContractStatus(int rentalContractId, String newStatus) {
         String sql = "UPDATE rental_contract SET status = ? WHERE rental_contract_id = ?";
 
@@ -218,6 +224,7 @@ public class RentalContractRepository {
         return monthlyRevenue * 12;
     }
 
+    //Rune
     public List<RentalContractOverview> findAllRentalContractOverviews(String statusFilter) {
         /*
         rentalContractId -> rental_contract
@@ -236,8 +243,6 @@ public class RentalContractRepository {
         car_brand = cb
         car_model = cm
         car = c
-
-        5 tabels total to join
 */
 
         List<RentalContractOverview> rentalContractOverviewList = new ArrayList<>();
@@ -285,6 +290,7 @@ public class RentalContractRepository {
         return rentalContractOverviewList;
     }
 
+    //Rune
     public RentalContractOverview findRentalContractOverviewById(int contractId) {
 
         RentalContractOverview rentalContractOverview = null;

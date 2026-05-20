@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CustomerServiceTest {
 
     private final CustomerService service = new CustomerService();
-
+    //Rune
     @Test
     void isValidPhoneNumber_happyFlow(){
         String validNumber = "+45 12345678";
@@ -18,7 +18,7 @@ public class CustomerServiceTest {
 
         assertTrue(result,"Et gyldigt dansk nummer skal accepteres");
     }
-
+    //Rune
     @Test
     void isValidPhoneNumber_exceptionFlow(){
         String invalidNumber = "+45 1234567a";

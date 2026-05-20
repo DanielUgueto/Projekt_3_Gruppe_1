@@ -28,6 +28,7 @@ public class CarController {
     @Autowired
     CarBrandService carBrandService;
 
+    //Rune
     @GetMapping("/cars/create")
     public String showCreateCarForm(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -39,6 +40,7 @@ public class CarController {
         return "createCar";
     }
 
+    //Rune
     @PostMapping("/cars/create")
     public String createCar(@RequestParam("brandName") String brandName,
                             @RequestParam("modelName") String modelName,

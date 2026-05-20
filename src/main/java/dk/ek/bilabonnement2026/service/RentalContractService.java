@@ -23,6 +23,7 @@ public class RentalContractService {
     @Autowired
     CustomerRepository customerRepository;
 
+    //Rune
     public void createRentalContract(RentalContract rentalContract) {
         //Valider bilen findes
         Car car = carRepository.findCarByCarNumber(rentalContract.getCarId());
@@ -44,6 +45,7 @@ public class RentalContractService {
         carRepository.updateCarStatus(car.getCarId(), "Udlejet");
     }
 
+    //Rune
     public void updateRentalContract(RentalContract rentalContract) {
         RentalContract existingContract = rentalContractRepository.findRentalContractById(rentalContract.getRentalContractId());
         if (existingContract == null) {
@@ -70,6 +72,7 @@ public class RentalContractService {
         rentalContractRepository.updateRentalContract(rentalContract);
     }
 
+    //Rune
     public void registerReturnOfCar(int carId) {
 
         Car car = carRepository.findCarByCarNumber(carId);
@@ -105,11 +108,13 @@ public class RentalContractService {
         return rentalContractRepository.projectedYearlyRevenue();
     }
 
+    //Rune
     public RentalContract getRentalContractByContractId(int contractId) {
         RentalContract rentalContract = rentalContractRepository.findRentalContractById(contractId);
         return rentalContract;
     }
 
+    //Rune
     public List<CarOverview> getReturnedCarsWithContractByFilter(String filter) {
         List<CarOverview> allCars = rentalContractRepository.findReturnedCarsWithContract();
         List<CarOverview> filteredCars = new ArrayList<>();
@@ -125,10 +130,12 @@ public class RentalContractService {
         return filteredCars;
     }
 
+    //Rune
     public List<RentalContractOverview> getAllRentalContractOverviews(String statusFilter) {
         return rentalContractRepository.findAllRentalContractOverviews(statusFilter);
     }
 
+    //Rune
     public RentalContractOverview getRentalContractOverviewById(int contractId) {
         return rentalContractRepository.findRentalContractOverviewById(contractId);
     }
