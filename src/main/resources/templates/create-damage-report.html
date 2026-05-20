@@ -17,7 +17,7 @@
         <h1>Opret Skadesrapport</h1>
 
         <section>
-            <form th:action="@{/damage-reports/add-damage/{id}(id=${rentalContract.rentalContractId})}" method="post">
+            <form th:action="@{/damage-reports/add-damage(rentalContractId=${rentalContract.rentalContractId})}" method="post">
                 <label for="damageCategoryId">Skadekategori:</label>
                 <select id="damageCategoryId" name="damageCategoryId" required>
                     <option value="">-- Vælg kategori --</option>
@@ -38,7 +38,7 @@
         </section>
 
         <section>
-            <form th:action="@{/damage-reports/create/{id}(id=${rentalContract.rentalContractId})}" method="post">
+            <form th:action="@{/damage-reports/create(rentalContractId=${rentalContract.rentalContractId})}" method="post">
                 <input type="hidden" name="employeeId" th:value="${employeeId}">
                 <label for="description">Beskrivelse:</label>
                 <input type="text" id="description" name="description" placeholder="Skriv information om skader her" required>

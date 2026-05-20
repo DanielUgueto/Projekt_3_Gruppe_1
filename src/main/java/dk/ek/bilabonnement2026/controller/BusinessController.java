@@ -26,6 +26,7 @@ public class BusinessController {
         if (employee == null) {
             return "redirect:/";
         }
+
         RentalContractOverview selectedContract = null;
         if (contractId != null) {
             selectedContract = rentalContractService.getRentalContractOverviewById(contractId);
