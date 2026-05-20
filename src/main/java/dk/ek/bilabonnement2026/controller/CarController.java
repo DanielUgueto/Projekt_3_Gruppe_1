@@ -52,13 +52,13 @@ public class CarController {
                             @RequestParam("monthlyPrice") double monthlyPrice,
                             @RequestParam("registrationDate") LocalDate registrationDate,
                             Model model){
-
+        //Tjek om det car brand allerede finde i systemet
         CarBrand brand = carBrandService.getCarBrandByBrandName(brandName);
         if(brand == null){
             carBrandService.saveBrand(brandName);
             brand = carBrandService.getCarBrandByBrandName(brandName);
         }
-
+        //tjek om den car model allerede findes i systemet
         CarModel carModel = carModelService.getCarModelByModelName(modelName);
         if(carModel == null){
             CarModel newModel = new CarModel(brand.getCarBrandId(), modelName, equipmentLevel, shiftGearType, fuelType);
@@ -68,6 +68,7 @@ public class CarController {
 
         Car car = new Car(carModel.getCarModelId(),vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
 
+        //Try and catch for at fange fej som bobler op gennem lagene. og send dem videre med en model til HTML.
         try{
             carService.createCar(car);
             return "redirect:/";
@@ -90,7 +91,7 @@ public class CarController {
         }
 
         List<CarOverview> list;
-
+        //Hvis ikke der vælges en status fra html, så fyldes listen med alle biler og ellers biler med en given status
         if (status == null || status.isBlank()) {
             list = carService.findCarsWithDetails();
         } else {
@@ -98,7 +99,7 @@ public class CarController {
         }
 
         CarOverview selectedCar = null;
-
+        //Finder den bil som bliver trykket på fra html og bliver sendt med som model.
         if (carId != null) {
             for (CarOverview c : list){
                 if (c.getCarId() == carId) {
@@ -108,7 +109,7 @@ public class CarController {
             }
             model.addAttribute("selectedCar", selectedCar);
         }
-
+        //Hvis man søger på et vinNumber fra HTML så køres denne if-sætning og vælger den aktuelle bil.
         if (vinNumber != null){
             for (CarOverview c : list){
                 if (c.getVinNumber().equals(vinNumber)) {
