@@ -39,10 +39,12 @@ public class CarService {
         carRepository.saveCar(car);
     }
 
+    // Nico
     public List<CarOverview> findCarsWithDetails() {
         return carRepository.findAllCarsWithDetails();
     }
 
+    // Nico
     public List<CarOverview> findCarsWithDetailsByStatus(String status){
         return carRepository.findAllCarsWithDetailsByStatus(status);
     }
@@ -51,6 +53,7 @@ public class CarService {
         return carRepository.findCarsByStatus(status);
     }
 
+    // Nico
     public boolean changeCarStatusToExpired(int carId){
         Car car = carRepository.findCarByCarNumber(carId);
 
@@ -66,23 +69,30 @@ public class CarService {
         return true;
     }
 
+    // Nico
     public Car getCarByCarId(int carId){
         return carRepository.findCarByCarNumber(carId);
     }
 
+    // Nico
     public void updateCar(Car car) {
         carRepository.updateCar(car);
     }
 
+    // Nico
     public Car getCarByLicensePlate(String licensePlate) {
         return carRepository.findCarByLicensePlate(licensePlate);
     }
 
+    // Nico
     public int returnCarAmountByStatus(String status) {
         return carRepository.returnCarAmountByStatus(status);
     }
 
-    public boolean changeCarStatusToAvailable(int carId) { // this method could definitely be combined with changeCarStatusToExpired
+    // Nico
+    public boolean changeCarStatusToAvailable(int carId) {
+        // this method could definitely be combined with changeCarStatusToExpired
+        // but I wont
         Car car = carRepository.findCarByCarNumber(carId);
 
         if (!car.getStatus().equalsIgnoreCase("Klar til transport")) { // check car status to make sure it's not already rented

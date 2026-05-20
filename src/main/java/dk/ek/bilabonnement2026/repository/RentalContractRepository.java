@@ -177,6 +177,7 @@ public class RentalContractRepository {
         }
     }
 
+    // Nico
     public double calculateMonthlyRevenue() {
         String sql = "SELECT monthly_price FROM rental_contract JOIN car ON rental_contract.car_id = car.car_id WHERE rental_contract.status = ?";
 
@@ -345,6 +346,7 @@ public class RentalContractRepository {
         return rentalContract;
     }
 
+    // Nico
     public int returnAmountOfContractsByStatus(String status) {
         String sql = "SELECT COUNT(*) FROM rental_contract WHERE status = ?";
 

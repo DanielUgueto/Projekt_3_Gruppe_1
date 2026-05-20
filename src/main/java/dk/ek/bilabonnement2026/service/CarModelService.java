@@ -24,10 +24,12 @@ public class CarModelService {
         return carModelRepository.getAllCarModels();
     }
 
+    // Nico
     public CarModel getCarModelByCarModelId(int carModelId){
         return carModelRepository.getCarModelByCarModelId(carModelId);
     }
 
+    // Nico
     public void updateCarModel(CarModel carModel) {
         carModelRepository.updateCarModel(carModel);
     }

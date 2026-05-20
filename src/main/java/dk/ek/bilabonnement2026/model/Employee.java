@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.model;
 
+// Nico
 public class Employee extends Person {
     int employeeId;
     String password;

@@ -19,6 +19,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    // Nico
     @GetMapping("/addEmployee")
     public String addEmployee(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -30,6 +31,7 @@ public class EmployeeController {
         return "addEmployee";
     }
 
+    // Nico
     @PostMapping("/addEmployee")
     public String addEmployeeToDatabase(@RequestParam("firstName") String firstName,
                                         @RequestParam("lastName") String lastName,
