@@ -162,7 +162,7 @@ button:hover {
     border-color: var(--color-text);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-
+/*Rune*/
 .dashboard-actions-bar{
     display: flex;
     justify-content: center;
@@ -172,7 +172,7 @@ button:hover {
 .delete-btn{
     margin-top: 1rem;
 }
-
+/*Rune*/
 .edit-btn{
     display: inline-block;
     padding: 6px;
@@ -184,7 +184,7 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
+/*Rune*/
 .edit-btn:hover{
     background-color: var(--color-bg);
     border-color: var(--color-muted);

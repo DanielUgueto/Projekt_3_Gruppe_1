@@ -1,5 +1,14 @@
 package dk.ek.bilabonnement2026.model;
 
+/*
+Fælles superklasse for personer i systemet (Customer og Employee).
+
+Klassen er abstract så en person i sig selv ikke kan instansieres, det skal være
+Customer eller Employee
+
+Protected felter så sub-klasserne kan læse dem.
+ */
+//Rune
 public abstract class Person {
     protected  String firstName;
     protected String lastName;

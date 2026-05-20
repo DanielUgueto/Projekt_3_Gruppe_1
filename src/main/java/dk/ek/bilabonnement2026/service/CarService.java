@@ -18,6 +18,7 @@ public class CarService {
     @Autowired
     RentalContractRepository rentalContractRepository;
 
+    //Rune
     public void createCar(Car car){
         Car validatorCar = carRepository.findCarByVinNumber(car.getVinNumber());
         if(validatorCar != null){

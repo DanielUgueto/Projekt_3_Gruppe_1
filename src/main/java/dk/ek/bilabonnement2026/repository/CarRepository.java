@@ -19,8 +19,15 @@ public class CarRepository {
 
     @Autowired
     DataSource dataSource;
+/*
+Gælder alle metoder i denne klasse.
+Vi bruger JDBC via DataSource + Connection + PreparedStatement for at beskytte mod SQL injections
 
+Try-with-resources sikrer at både Connection, Statement og ResultSet lukkes
+ved exceptions.
+ */
 
+    //Rune
     public void saveCar(Car car){
         String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price, registration_date)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -42,7 +49,8 @@ public class CarRepository {
         }
 
     }
-    
+
+    //Rune
     public Car findCarByVinNumber(String vinNumber){
         Car car = null;
         String sql = "SELECT * FROM car WHERE vin_number = ?";
@@ -71,6 +79,7 @@ public class CarRepository {
         return car;
     }
 
+    //Rune
     public Car findCarByCarNumber(int carNumber){
         Car car = null;
         String sql = "SELECT * FROM car WHERE car_id = ?";
@@ -99,6 +108,7 @@ public class CarRepository {
         return car;
     }
 
+    //Rune
     public void updateCarStatus(int carId, String status) {
         String sql = "UPDATE car SET status = ? WHERE car_id = ?";
 
@@ -114,6 +124,7 @@ public class CarRepository {
         }
     }
 
+    //Rune
     public List<Car> findCarsByStatus(String status){
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM car WHERE status = ?";

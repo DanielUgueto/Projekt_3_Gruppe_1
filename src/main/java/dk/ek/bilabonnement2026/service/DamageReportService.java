@@ -24,6 +24,7 @@ public class DamageReportService {
     CarRepository carRepository;
 
 
+    //Rune
     public void createDamageReport(int rentalContractId, int employeeId, String description, List<DamageCategory> selectedDamages) {
 
         RentalContract rentalContract = rentalContractRepository.findRentalContractById(rentalContractId);
@@ -39,7 +40,7 @@ public class DamageReportService {
         if (existing != null) {
             throw new IllegalArgumentException("Der findes allerede en skadesrapport på denne lejeaftale");
         }
-
+        //totalprisen begregnes ud fra de aktuelle standarpriser og gemmer beløbet på selve rapporten
         double totalPrice = 0;
         for (DamageCategory category : selectedDamages) {
             totalPrice += category.getStandardPrice();
@@ -48,7 +49,7 @@ public class DamageReportService {
         DamageReport damageReport = new DamageReport(
                 rentalContractId, employeeId, LocalDate.now(), totalPrice, description
         );
-
+        //rapporten gemmes først og bliver så læst tilbage for at få den PK tilhørende rapporten
         damageReportRepository.saveDamageReport(damageReport);
         DamageReport savedReport = damageReportRepository.findDamageReportByRentalContractId(rentalContractId);
 

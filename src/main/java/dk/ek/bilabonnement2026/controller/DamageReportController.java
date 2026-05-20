@@ -29,6 +29,7 @@ public class DamageReportController {
     @Autowired
     DamageCategoryService damageCategoryService;
 
+    //Rune
     @GetMapping("/damage-reports/create")
     public String showCreateDamageReportForm(@RequestParam int rentalContractId,
                                              HttpSession session,
@@ -37,16 +38,16 @@ public class DamageReportController {
         if (employee == null) {
             return "redirect:/";
         }
-
+        //Hvis session ikke har en liste af DamageCategory så laves den og mappes.
         if (session.getAttribute("selectedDamages") == null) {
             session.setAttribute("selectedDamages", new ArrayList<DamageCategory>());
         }
-
+        //Tjekker om der findes en rentalContract med det aktuelle id
         RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
         if (rentalContract == null) {
             return "redirect:/dashboard";
         }
-
+        //En liste af skader oprettes med skader fra session og loopes igennem med for each for at vise en total pris
         List<DamageCategory> selectedDamages = (List<DamageCategory>) session.getAttribute("selectedDamages");
         double totalPrice = 0;
         for (DamageCategory category : selectedDamages) {
@@ -63,6 +64,7 @@ public class DamageReportController {
         return "create-damage-report";
     }
 
+    //Rune
     @PostMapping("/damage-reports/add-damage")
     public String addDamageToSession(@RequestParam int rentalContractId,
                                      @RequestParam("damageCategoryId") int damageCategoryId,
@@ -80,6 +82,7 @@ public class DamageReportController {
         return "redirect:/damage-reports/create?rentalContractId=" + rentalContractId;
     }
 
+    //Rune
     @PostMapping("/damage-reports/create")
     public String createDamageReport(@RequestParam int rentalContractId,
                                      @RequestParam("employeeId") int employeeId,
@@ -90,9 +93,10 @@ public class DamageReportController {
         if (employee == null) {
             return "redirect:/";
         }
-
+        //List fyldes med indholdet fra session listen
         List<DamageCategory> selectedDamages = (List<DamageCategory>) session.getAttribute("selectedDamages");
 
+        // try for at lave skaderapporten og session fjerne så indholdet af selectedDamages
         try {
             damageReportService.createDamageReport(rentalContractId, employeeId, description, selectedDamages);
 
@@ -100,7 +104,7 @@ public class DamageReportController {
 
             return "redirect:/dashboard/damage";
 
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) { // Hvis der sker en fejl under flowet bliver kontrakten fundet og sendt tilbage med alle medhørende modeller.
             RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
             double totalPrice = 0;
             for (DamageCategory category : selectedDamages) {
@@ -119,18 +123,19 @@ public class DamageReportController {
         }
     }
 
+    //Rune
     @GetMapping("/dashboard/damage")
     public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model){
         Employee employee = (Employee) session.getAttribute("employee");
         if(employee == null){
             return "redirect:/";
         }
-
+        //sender liste af biler som er filtreret samt filter og employee til view
         List<CarOverview> carList = rentalContractService.getReturnedCarsWithContractByFilter(filter);
         model.addAttribute("carList", carList);
         model.addAttribute("filter", filter);
         model.addAttribute("employee",employee);
-
+        //Hvis der er et id sendt med itereres der gennem carList og sætter selectedCar til matchende car
         if(carId != null){
             CarOverview selectedCar = null;
             for(CarOverview car : carList){

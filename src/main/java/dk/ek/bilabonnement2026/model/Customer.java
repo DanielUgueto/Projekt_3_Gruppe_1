@@ -7,6 +7,7 @@ public class Customer extends Person {
     private String phoneNumber;
     private CustomerAddress address;
 
+    //Bruges til at hente Customer fra DB
     public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber, String cprNumber, String email, String phoneNumber, Boolean isActive) {
         super(firstName, lastName,email,isActive);
         this.customerId = customerId;
@@ -22,7 +23,7 @@ public class Customer extends Person {
         this.phoneNumber = phoneNumber;
     }
 
-
+    //Bruges til at hente en Customer fra DB, bruges når controller skal vise et overview.
     public Customer(int customerId, String firstName, String lastName, String driversLicenseNumber,
                     String cprNumber, String email, String phoneNumber, boolean isActive, CustomerAddress address) {
         super(firstName, lastName,email,isActive);

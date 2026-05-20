@@ -64,14 +64,17 @@ public class CustomerService {
         return customerRepository.getAllInactiveCustomers();
     }
 
+    //Rune
     public Customer getCustomerByCustomerId(int customerId) {
         return customerRepository.findCustomerByCustomerId(customerId);
     }
 
+    //Rune
     public CustomerAddress getCustomerAddressByCustomerId(int customerId) {
         return customerAddressRepository.findCustomerAddressByCustomerId(customerId);
     }
 
+    //Rune
     public String updateCustomer(Customer customer, CustomerAddress customerAddress) {
         //tjekke kunden er der
         Customer existingCustomer = customerRepository.findCustomerByCustomerId(customer.getCustomerId());
@@ -112,10 +115,19 @@ public class CustomerService {
         return null;
     }
 
+    //Daniel
+    public List<Customer> searchCustomerByName(String query) {
+        //returnerer tom list med det samme
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        query = query.trim();
 
-    // Service methods
+        return customerRepository.findCustomerByName(query.trim());
+    }
 
-    //validating
+//Validerings metoder
+    //Rune
     public boolean isValidPhoneNumber(String number) {
         if (number == null || number.isBlank()) {
             return false;
@@ -123,6 +135,7 @@ public class CustomerService {
         return number.trim().matches(PHONE_PATTERN);
     }
 
+    //Rune
     public boolean isValidCpr(String cpr) {
         if (cpr == null || cpr.isBlank()) {
             return false;
@@ -130,6 +143,7 @@ public class CustomerService {
         return cpr.trim().matches(CPR_PATTERN);
     }
 
+    //Rune
     public boolean isValidDriversLicense(String licenseNumber) {
         if (licenseNumber == null || licenseNumber.isBlank()) {
             return false;
@@ -140,6 +154,7 @@ public class CustomerService {
 
     // normalisering
 
+    //Rune
     public String normalizePhoneNumber(String number) {
         String numberOnlyDigits = number.replaceAll("\\D", "");
         if (numberOnlyDigits.startsWith("45") && numberOnlyDigits.length() == 10) {
@@ -148,23 +163,13 @@ public class CustomerService {
         return numberOnlyDigits.trim();
     }
 
+    //Rune
     public String normalizeDriversLicense(String licenseNumber) {
         return licenseNumber.trim();
     }
 
+    //Rune
     public String normalizeCpr(String cpr) {
         return cpr.replaceAll("-", "").trim();
     }
-
-
-    public List<Customer> searchCustomerByName(String query) {
-        //returnerer tom list med det samme
-        if (query == null || query.isBlank()) {
-            return List.of();
-        }
-        query = query.trim();
-
-        return customerRepository.findCustomerByName(query.trim());
-    }
 }
-

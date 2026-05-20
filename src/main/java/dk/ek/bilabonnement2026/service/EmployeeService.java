@@ -24,7 +24,10 @@ public class EmployeeService {
         return true;
     }
 
-    // Nico
+    // metoden retunere en redirect string baseret på medarbejderens rolle.
+    //Bruges efter login og efter succesfulde POST for at sende brugeren tilbage til
+    //det dashboard der høre til dem.
+    //Nico
     public String redirectByRole(Employee employee) {
         if (employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/dataregistrering";
@@ -55,10 +58,12 @@ public class EmployeeService {
         return employee;
     }
 
+    //Rune
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAllEmployees();
     }
 
+    //Rune
     public List<Employee> getAllEmployeesByStatus(String status) {
         if (status == null) {
             return null;
@@ -75,6 +80,7 @@ public class EmployeeService {
         return employeeRepository.findAllEmployeesByStatus(employeeStatus);
     }
 
+    //Rune
     public String changeEmployeeStatus(int employeeId, int sessionEmployeeId) {
 
         if (employeeId == sessionEmployeeId) {

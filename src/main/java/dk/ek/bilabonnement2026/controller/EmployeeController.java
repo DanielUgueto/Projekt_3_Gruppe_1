@@ -57,6 +57,7 @@ public class EmployeeController {
         return employeeService.redirectByRole(loggedInEmployee);
     }
 
+    //Rune
     @GetMapping("/employee/dashboard")
     public String showEmployeeDashboard(@RequestParam(required = false) Integer employeeId,
                                         @RequestParam(required = false) String status,
@@ -85,7 +86,7 @@ public class EmployeeController {
 
         return "employee-dashboard";
     }
-
+    //Rune
     @PostMapping("/employee/delete")
     public String deleteEmployee(@RequestParam("employeeId") int employeeId,
                                  @RequestParam(value = "status", required = false) String status,

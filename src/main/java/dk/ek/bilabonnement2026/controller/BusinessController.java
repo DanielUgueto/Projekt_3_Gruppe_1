@@ -18,6 +18,7 @@ public class BusinessController {
     @Autowired
     RentalContractService rentalContractService;
 
+    //Rune
     @GetMapping("/rental-contracts/overview")
     public String showRentalContractOverview(@RequestParam(required = false) String status,
                                              @RequestParam(required = false) Integer contractId,

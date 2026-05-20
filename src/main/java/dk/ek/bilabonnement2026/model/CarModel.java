@@ -1,5 +1,6 @@
 package dk.ek.bilabonnement2026.model;
 
+//Rune
 public class CarModel {
     private int carModelId;
     private int carBrandId;

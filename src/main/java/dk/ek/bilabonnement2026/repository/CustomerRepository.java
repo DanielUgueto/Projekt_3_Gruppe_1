@@ -74,6 +74,7 @@ public class CustomerRepository {
         return null;
     }
 
+    //Rune
     public Customer findCustomerByCustomerId(int customerId) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
@@ -188,6 +189,7 @@ public class CustomerRepository {
         return customerList;
     }
 
+    //Rune
     public void updateCustomer(Customer customer){
         String sql = """
                 UPDATE customer
@@ -211,6 +213,7 @@ public class CustomerRepository {
         }
     }
 
+    //Rune
     public void setCustomerStatusInactive(int customerId) {
         String sql = "UPDATE customer SET is_active = false WHERE customer_id = ?";
 
@@ -239,6 +242,7 @@ public class CustomerRepository {
         }
     }
 
+    //Rune
     public Customer findCustomerByCustomerCprNumber(String cprNumber) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE cpr_number = ?";
@@ -272,6 +276,7 @@ public class CustomerRepository {
         return customer;
     }
 
+    //Rune
     public Customer findCustomerByCustomerPhoneNumber(String phoneNumber) {
         Customer customer = null;
         String sql = "SELECT * FROM customer WHERE phone_number = ?";

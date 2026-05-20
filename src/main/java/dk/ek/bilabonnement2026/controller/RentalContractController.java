@@ -35,6 +35,7 @@ public class RentalContractController {
     @Autowired
     EmployeeService employeeService;
 
+    //Rune
     @GetMapping("/rental-contracts/create")
     public String showCreateRentalContractForm(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -50,6 +51,7 @@ public class RentalContractController {
         return "createRentalContract";
     }
 
+    //Rune
     @PostMapping("/rental-contracts/create")
     public String createRentalContract(@RequestParam("employeeId") int employeeId,
                                        @RequestParam("customerId") int customerId,
@@ -86,6 +88,7 @@ public class RentalContractController {
         }
     }
 
+    //Rune
     @GetMapping("/rental-contracts/edit")
     public String showEditContractForm(@RequestParam("rentalContractId") int rentalContractId,
                                        HttpSession session, Model model,
@@ -108,6 +111,7 @@ public class RentalContractController {
         return "edit-rental-contract";
     }
 
+    //Rune
     @PostMapping("/rental-contracts/edit")
     public String editRentalContract(@RequestParam("rentalContractId") int rentalContractId,
                                      @RequestParam("startDate") LocalDate startDate,
@@ -143,6 +147,7 @@ public class RentalContractController {
 
     }
 
+    //Rune
     @GetMapping("/rental-contracts/return")
     public String showReturnCarForm(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -157,6 +162,7 @@ public class RentalContractController {
         return "returnCar";
     }
 
+    //Rune
     @PostMapping("/rental-contracts/return")
     public String returnCar(HttpSession session, @RequestParam("carId") int carId, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
