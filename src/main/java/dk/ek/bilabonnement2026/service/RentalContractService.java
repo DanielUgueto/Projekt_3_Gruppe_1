@@ -24,17 +24,17 @@ public class RentalContractService {
     CustomerRepository customerRepository;
 
     public void createRentalContract(RentalContract rentalContract) {
-
+        //Valider bilen findes
         Car car = carRepository.findCarByCarNumber(rentalContract.getCarId());
         if (car == null) {
             throw new IllegalArgumentException("Bilen eksistere ikke");
         }
-
+        //Bilen må ikke have en aktiv lejeaftale
         RentalContract existingContract = rentalContractRepository.findRentalContractByCarId(rentalContract.getCarId());
         if (existingContract != null) {
             throw new IllegalArgumentException("Bilen har allerede en aktiv lejeaftale");
         }
-
+        //Slutdato skal være efter startdato
         if (!rentalContract.getEndDate().isAfter(rentalContract.getStartDate())) {
             throw new IllegalArgumentException("Slutdato skal være efter startdato");
         }

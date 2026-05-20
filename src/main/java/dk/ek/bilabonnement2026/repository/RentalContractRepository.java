@@ -98,6 +98,14 @@ public class RentalContractRepository {
 
     public List<CarOverview> findReturnedCarsWithContract() {
         List<CarOverview> cars = new ArrayList<>();
+        /*
+        Her joiner vi 4 tabeller.
+        car = c
+        car_brand = cb
+        car_model = cm
+        rental_contract = rc
+        og retunere biler der kan ende på skade dashboardet. Selv om der er eller ikke er lavet rapport for dem
+         */
         String sql = """
                 SELECT c.car_id, cb.brand_name, cm.model_name, cm.equipment_level,
                        cm.shift_gear_type, cm.fuel_type, c.vin_number, c.license_plate,

@@ -23,6 +23,9 @@ public class EmployeeService {
         return true;
     }
 
+    // metoden retunere en redirect string baseret på medarbejderens rolle.
+    //Bruges efter login og efter succesfulde POST for at sende brugeren tilbage til
+    //det dashboard der høre til dem.
     public String redirectByRole(Employee employee){
         if (employee.getRole().equalsIgnoreCase("dataregistrering")){
             return "redirect:/dashboard/dataregistrering";

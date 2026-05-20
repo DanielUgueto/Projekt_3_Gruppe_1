@@ -19,7 +19,13 @@ public class CarRepository {
 
     @Autowired
     DataSource dataSource;
+/*
+Gælder alle metoder i denne klasse.
+Vi bruger JDBC via DataSource + Connection + PreparedStatement for at beskytte mod SQL injections
 
+Try-with-resources sikrer at både Connection, Statement og ResultSet lukkes
+ved exceptions.
+ */
 
     public void saveCar(Car car){
         String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price, registration_date)"
