@@ -1,9 +1,12 @@
+/*Nico - hele filen*/
+
 :root {
     --color-bg: #f3f3f3;
     --color-surface: #ffffff;
     --color-muted: #d0d0d0;
     --color-text: #1a1a1a;
     --color-dark: #3a3a3a;
+    font-family: Arial, sans-serif;
 }
 
 body {
@@ -37,6 +40,11 @@ body {
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.15);
 }
 
 .site-nav {
@@ -55,4 +63,8 @@ body {
 
 .site-nav a:hover {
     background-color: var(--color-bg);
+}
+
+button {
+    min-width: 104px;
 }

@@ -96,13 +96,12 @@ public class RentalContractService {
 
     }
 
+    // Nico
     public double calculateMonthlyRevenue() {
-
         return rentalContractRepository.calculateMonthlyRevenue();
     }
 
     public double projectedYearlyRevenue() {
-
         return rentalContractRepository.projectedYearlyRevenue();
     }
 
@@ -134,6 +133,7 @@ public class RentalContractService {
         return rentalContractRepository.findRentalContractOverviewById(contractId);
     }
 
+    // Nico
     public int returnAmountOfContractsByStatus(String status) {
         return rentalContractRepository.returnAmountOfContractsByStatus(status);
     }

@@ -1,3 +1,5 @@
+<!--Nico - hele filen-->
+
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -18,51 +20,53 @@
         </div>
 
         <section class="dashboard-stats">
-            <article class="stat-card">
-                <img src="/img/balance.png" alt="">
-                <div>
-                    <h4>Månedlig indtægt</h4>
-                    <p class="stat-value" th:text="${monthlyRevenue} + ' kr.'"></p>
-                    <p class="stat-text">Månedlig indtægt fra lejekontrakter</p>
-                </div>
-            </article>
+            <div class="dashboard-stats-grouping">
+                <article class="stat-card">
+                    <img src="/img/balance.png" alt="">
+                    <div>
+                        <h4>Månedlig indtægt</h4>
+                        <p class="stat-value" th:text="${monthlyRevenue} + ' kr.'"></p>
+                        <p class="stat-text">Månedlig indtægt fra lejekontrakter</p>
+                    </div>
+                </article>
 
-            <article class="stat-card">
-                <img src="/img/rental.png" alt="">
-                <div>
-                    <h4>Aktive lejeaftaler</h4>
-                    <p class="stat-value" th:text="${activeRentalContracts}"></p>
-                    <p class="stat-text">Igangværende aftaler</p>
-                </div>
-            </article>
+                <article class="stat-card">
+                    <img src="/img/balance.png" alt="">
+                    <div>
+                        <h4>Estimeret årlig indtægt</h4>
+                        <p class="stat-value" th:text="${projectedYearlyRevenue} + ' kr.'"></p>
+                        <p class="stat-text">Baseret på nuværende lejeaftaler</p>
+                    </div>
+                </article>
 
-            <article class="stat-card">
-                <img src="/img/car.png" alt="">
-                <div>
-                    <h4>Ledige biler</h4>
-                    <p class="stat-value" th:text="${availableCars}"></p>
-                    <p class="stat-text">Klar til udlejning</p>
-                </div>
-            </article>
+                <article class="stat-card">
+                    <img src="/img/rental.png" alt="">
+                    <div>
+                        <h4>Aktive lejeaftaler</h4>
+                        <p class="stat-value" th:text="${activeRentalContracts}"></p>
+                        <p class="stat-text">Igangværende aftaler</p>
+                    </div>
+                </article>
+            </div>
+            <div class="dashboard-stats-grouping">
+                <article class="stat-card">
+                    <img src="/img/car.png" alt="">
+                    <div>
+                        <h4>Ledige biler</h4>
+                        <p class="stat-value" th:text="${availableCars}"></p>
+                        <p class="stat-text">Klar til udlejning</p>
+                    </div>
+                </article>
 
-            <article class="stat-card">
-                <img src="/img/car.png" alt="">
-                <div>
-                    <h4>Udlejede biler</h4>
-                    <p class="stat-value" th:text="${rentedCars}"></p>
-                    <p class="stat-text">Biler med aktiv lejekontrakt</p>
-                </div>
-            </article>
-
-            <article class="stat-card">
-                <img src="/img/balance.png" alt="">
-                <div>
-                    <h4>Estimeret årlig indtægt</h4>
-                    <p class="stat-value" th:text="${projectedYearlyRevenue} + ' kr.'"></p>
-                    <p class="stat-text">Baseret på nuværende lejeaftaler</p>
-                </div>
-            </article>
-
+                <article class="stat-card">
+                    <img src="/img/car.png" alt="">
+                    <div>
+                        <h4>Udlejede biler</h4>
+                        <p class="stat-value" th:text="${rentedCars}"></p>
+                        <p class="stat-text">Biler med aktiv lejekontrakt</p>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <section class="actions-panel">

@@ -147,6 +147,7 @@ ved exceptions.
         return cars;
     }
 
+    // Nico
     public List<CarOverview> findAllCarsWithDetails(){
         String sql = "SELECT * FROM car " +
                 "JOIN car_model ON car.car_model_id = car_model.car_model_id " +
@@ -183,6 +184,7 @@ ved exceptions.
         return list;
     }
 
+    // Nico
     public List<CarOverview> findAllCarsWithDetailsByStatus(String status){
         String sql = "SELECT * FROM car c " +
                 "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
@@ -222,6 +224,7 @@ ved exceptions.
         return list;
     }
 
+    // Nico
     public CarOverview findCarOverviewByCarId(int carId){
         String sql = "SELECT * FROM car c " +
                 "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
@@ -258,6 +261,7 @@ ved exceptions.
         return null;
     }
 
+    // Nico
     public void updateCar(Car car) {
         String sql = "UPDATE car " +
                 "SET car_model_id = ?, vin_number = ?, license_plate = ?, monthly_price = ?, status = ?, colour = ?, registration_date = ? " +
@@ -278,10 +282,11 @@ ved exceptions.
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Bilens kunne ikke opdateres i databasen", e);
+            throw new RuntimeException("Bilen kunne ikke opdateres i databasen", e);
         }
     }
 
+    // Nico
     public Car findCarByLicensePlate(String licensePlate){
         String sql = "SELECT * FROM car WHERE license_plate = ?";
 
@@ -309,6 +314,7 @@ ved exceptions.
         return null;
     }
 
+    // Nico
     public int returnCarAmountByStatus(String status) {
         String sql = "SELECT COUNT(*) FROM car WHERE status = ?";
 

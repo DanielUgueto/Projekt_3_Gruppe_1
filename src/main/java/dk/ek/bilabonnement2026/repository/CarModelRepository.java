@@ -82,6 +82,7 @@ public class CarModelRepository {
         return carModelsList;
     }
 
+    // Nico
     public CarModel getCarModelByCarModelId(int carModelId){
         String sql = "SELECT * FROM car_model WHERE car_model_id = ?";
 
@@ -105,6 +106,7 @@ public class CarModelRepository {
         return null;
     }
 
+    // Nico
     public void updateCarModel(CarModel carModel){
         String sql = "UPDATE car_model " +
                 "SET car_brand_id = ?, model_name = ?, equipment_level = ?, shift_gear_type = ?, fuel_type = ? " +

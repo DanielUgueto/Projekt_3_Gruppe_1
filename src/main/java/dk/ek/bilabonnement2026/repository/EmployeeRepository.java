@@ -18,6 +18,7 @@ public class EmployeeRepository {
     @Autowired
     DataSource dataSource;
 
+    // Nico
     public void addEmployeeToDatabase(Employee employee) {
         String sql = "INSERT INTO employee (first_name, last_name, password, work_email, role) VALUES (?, ?, ?, ?, ?)";
 
@@ -36,7 +37,7 @@ public class EmployeeRepository {
         }
     }
 
-    public String updateEmployeeIsActive(boolean isActive, int employeeId) {
+    public String updateEmployeeStatus(boolean isActive, int employeeId) {
         String sql = "UPDATE employee SET is_active = ? WHERE employee_id = ?";
 
         try(Connection connection = dataSource.getConnection();
@@ -52,6 +53,7 @@ public class EmployeeRepository {
         return null;
     }
 
+    // Nico
     public Boolean doesEmailExist(String email) {
         String sql = "Select * FROM employee WHERE work_email = ?";
 
@@ -72,6 +74,7 @@ public class EmployeeRepository {
         return false;
     }
 
+    // Nico
     public Employee findEmployeeByEmail(String email) {
         String sql = "Select * FROM employee WHERE work_email = ?";
 
