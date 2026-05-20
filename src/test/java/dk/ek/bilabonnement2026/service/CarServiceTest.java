@@ -24,9 +24,6 @@ public class CarServiceTest {
     @Mock
     private CarRepository carRepository;
 
-    @Mock
-    private RentalContractRepository rentalContractRepository;
-
     @InjectMocks
     private CarService carService;
 
