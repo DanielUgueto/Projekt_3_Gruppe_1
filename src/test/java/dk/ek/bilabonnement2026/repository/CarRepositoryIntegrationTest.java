@@ -20,7 +20,7 @@ public class CarRepositoryIntegrationTest {
     @DisplayName("findCarByVinNumber() Happy flow")
     public void findCarByVinNumberHappyFlow(){
         //Preconditions
-        String vinNumber = "JT100000000000001";
+        String vinNumber = "MB100000000000001";
 
         //Execution
         Car car = carRepository.findCarByVinNumber(vinNumber);
