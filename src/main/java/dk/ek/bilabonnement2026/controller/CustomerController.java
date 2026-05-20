@@ -27,7 +27,7 @@ public class CustomerController {
 
 
     @GetMapping("/customer/register")
-    public String showRegisterCustomer(HttpSession session, Model model) {
+    public String showRegisterCustomer(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
         if (employee == null) {
             return "redirect:/";
@@ -53,7 +53,7 @@ public class CustomerController {
         if (employee == null) {
             return "redirect:/";
         }
-
+        //Tjek om mobilnummer er valid
         if (!customerService.isValidPhoneNumber(phoneNumber)) {
             model.addAttribute("error", "Ugyldigt telefonnummer");
             addFormDataToCustomerModel(model, firstName, lastName,
@@ -61,6 +61,7 @@ public class CustomerController {
                     phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
+        //Tjek om cpr-nummer er valid
         if (!customerService.isValidCpr(cprNumber)) {
             model.addAttribute("error", "Ugyldigt CPR-nummer");
             addFormDataToCustomerModel(model, firstName, lastName,
@@ -68,6 +69,7 @@ public class CustomerController {
                     phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
+        //Tjek om kørekort nummer er valid
         if (!customerService.isValidDriversLicense(driversLicenseNumber)) {
             model.addAttribute("error", "Ugyldigt Kørekort nummer");
             addFormDataToCustomerModel(model, firstName, lastName,
@@ -75,7 +77,7 @@ public class CustomerController {
                     phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
-
+        //Tjek om post nummer er valid
         if (!zipCodeService.zipcodeExists(zipCode)) {
             model.addAttribute("wrongZipcode", "Postnummer ikke fundet");
             addFormDataToCustomerModel(model, firstName, lastName,
@@ -83,13 +85,14 @@ public class CustomerController {
                     phoneNumber, streetName, houseNumber, floor, zipCode);
             return "register-customer";
         }
+        //Tildeler normaliseret data til variablerne og bygger customer, customerAdress.
         driversLicenseNumber = customerService.normalizeDriversLicense(driversLicenseNumber);
         cprNumber = customerService.normalizeCpr(cprNumber);
         phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
         CustomerAddress customerAddress = new CustomerAddress(0, zipCode, streetName, houseNumber, floor);
         String error = customerService.registerCustomer(customer, customerAddress);
-
+        //Hvis strengen error ikke er null så der sket en fejl
         if (error != null) {
             model.addAttribute("error", error);
             return "register-customer";
@@ -258,14 +261,14 @@ public class CustomerController {
         }
 
         List<Customer> list;
-
+        //hvis der er sendt et søge parameter med i parameter så søges der på det navn.
         if (query != null && !query.isBlank()) {
             list = customerService.searchCustomerByName(query);
             model.addAttribute("query", query);
             if (list.isEmpty()) {
                 model.addAttribute("error", "Ingen kunder fundet med navnet: \"" + query + "\"");
             }
-
+            //Hvis der søges efter aktive eller inaktive kunder og hvis ingen så sendes alle kunder
         } else if ("aktiv".equals(status)) {
             list = customerService.getAllActiveCustomers();
 
@@ -275,7 +278,7 @@ public class CustomerController {
         } else {
             list = customerService.getAllCustomers();
         }
-
+        //Den valgte kunde sendes med tilbage som model atrribut.
         if (customerId != null) {
             Customer selectedCustomer = null;
             for (Customer c : list) {
@@ -294,6 +297,7 @@ public class CustomerController {
     }
 
 
+    //Denne metode sætter alle model attributterne for createCustomer. Lavet for at undgå for meget redundans
     private void addFormDataToCustomerModel(Model model,
                                             String firstName, String lastName,
                                             String driversLicenseNumber, String cprNumber,
@@ -312,6 +316,7 @@ public class CustomerController {
         model.addAttribute("zipCode", zipCode);
     }
 
+    //Denne metode sætter alle model attributter for updateCustomer, med de parameter de kan opdatere.
     private void addEditFormDataToCustomerEditModel(Model model, int customerId,
                                                     String firstName, String lastName,
                                                     String email, String phoneNumber, String cprNumber,
