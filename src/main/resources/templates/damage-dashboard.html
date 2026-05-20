@@ -83,7 +83,7 @@
             </section>
 
             <section class="selected-car-section" th:if="${selectedCar.status == 'Tilbageleveret'}">
-                <a th:href="@{/damage-reports/create/{id}(id=${selectedCar.rentalContractId})}">
+                <a th:href="@{/damage-reports/create(rentalContractId=${selectedCar.rentalContractId})}">
                     <button>Opret skadesrapport</button>
                 </a>
             </section>
