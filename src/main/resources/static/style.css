@@ -37,6 +37,11 @@ body {
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.15);
 }
 
 .site-nav {
