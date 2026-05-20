@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,8 +29,8 @@ public class DamageReportController {
     @Autowired
     DamageCategoryService damageCategoryService;
 
-    @GetMapping("/damage-reports/create/{rentalContractId}")
-    public String showCreateDamageReportForm(@PathVariable int rentalContractId,
+    @GetMapping("/damage-reports/create")
+    public String showCreateDamageReportForm(@RequestParam int rentalContractId,
                                              HttpSession session,
                                              Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -64,8 +63,8 @@ public class DamageReportController {
         return "create-damage-report";
     }
 
-    @PostMapping("/damage-reports/add-damage/{rentalContractId}")
-    public String addDamageToSession(@PathVariable int rentalContractId,
+    @PostMapping("/damage-reports/add-damage")
+    public String addDamageToSession(@RequestParam int rentalContractId,
                                      @RequestParam("damageCategoryId") int damageCategoryId,
                                      HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -78,11 +77,11 @@ public class DamageReportController {
         List<DamageCategory> selectedDamages = (List<DamageCategory>) session.getAttribute("selectedDamages");
         selectedDamages.add(category);
 
-        return "redirect:/damage-reports/create/" + rentalContractId;
+        return "redirect:/damage-reports/create?rentalContractId=" + rentalContractId;
     }
 
-    @PostMapping("/damage-reports/create/{rentalContractId}")
-    public String createDamageReport(@PathVariable int rentalContractId,
+    @PostMapping("/damage-reports/create")
+    public String createDamageReport(@RequestParam int rentalContractId,
                                      @RequestParam("employeeId") int employeeId,
                                      @RequestParam("description") String description,
                                      HttpSession session,
