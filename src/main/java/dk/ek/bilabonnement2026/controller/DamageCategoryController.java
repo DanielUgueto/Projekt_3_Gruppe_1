@@ -23,7 +23,7 @@ public class DamageCategoryController {
     @GetMapping("/damage-categories")
     public String showDamageCategoryDashboard(@RequestParam(required = false) Integer damageCategoryId,
                                               HttpSession session, Model model){
-
+        //Tjek om session holder en emplyee
         Employee employee = (Employee) session.getAttribute("employee");
         if(employee == null){
             return "redirect:/";
