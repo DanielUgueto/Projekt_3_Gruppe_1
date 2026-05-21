@@ -68,21 +68,32 @@ Servie laget testes isoleret med mockede repositories, mens repository laget tes
 Deployment (CI/CD)
 Deployment er automatiseret via GitHub Actions.
 
+
 Projektstruktur
-src/
- main/
-    java/dk/ek/bilabonnement2026/
-      controller/    HTTP endpoints og view
-      service/       Forretningslogik og validering 
-      repository/    Dataadgang 
-      model/         Domæneklasser (Person, Customer, Car, ...)
-    resources/
-      templates/      Thymeleaf views
-      static/         CSS, billeder
-      DatabaseScript.sql
-      DummyData.sql
-      application.properties
-test/                  Junit og Mockito tests
+├───src
+    ├───main
+    │   ├───java
+    │   │   └───dk
+    │   │       └───ek
+    │   │           └───bilabonnement2026
+    │   │               ├───controller
+    │   │               ├───model
+    │   │               ├───repository
+    │   │               └───service
+    │   └───resources
+    │       ├───static
+    │       │   └───img
+    │       └───templates
+    │           └───fragments
+    └───test
+        ├───java
+        │   └───dk
+        │       └───ek
+        │           └───bilabonnement2026
+        │               ├───repository
+        │               └───service
+        └───resources
+        
 
 
 Holdinformation
