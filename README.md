@@ -70,51 +70,21 @@ Deployment er automatiseret via GitHub Actions.
 
 
 Projektstruktur
-├───src
 
-    ├───main
-
-    │   ├───java
-
-    │   │   └───dk
-
-    │   │       └───ek
-
-    │   │           └───bilabonnement2026
-
-    │   │               ├───controller
-
-    │   │               ├───model
-
-    │   │               ├───repository
-
-    │   │               └───service
-
-    │   └───resources
-
-    │       ├───static
-
-    │       │   └───img
-
-    │       └───templates
-
-    │           └───fragments
-
-    └───test
-
-        ├───java
-
-        │   └───dk
-
-        │       └───ek
-
-        │           └───bilabonnement2026
-
-        │               ├───repository
-
-        │               └───service
-
-        └───resources
+src/
+├── main/
+│   ├── java/dk/ek/bilabonnement2026/
+│   │   ├── controller/   HTTP-endpoints og viewvalg
+│   │   ├── service/      Forretningslogik og validering
+│   │   ├── repository/   Dataadgang (JdbcTemplate)
+│   │   └── model/        Domæneklasser (Person, Customer, Car, ...)
+│   └── resources/
+│       ├── templates/    Thymeleaf-views
+│       ├── static/       CSS, billeder
+│       ├── DatabaseScript.sql
+│       ├── DummyData.sql
+│       └── application.properties
+└── test/                 JUnit- og Mockito-tests
         
 
 
