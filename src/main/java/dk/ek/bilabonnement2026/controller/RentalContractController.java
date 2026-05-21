@@ -4,8 +4,6 @@ import dk.ek.bilabonnement2026.model.Car;
 import dk.ek.bilabonnement2026.model.Customer;
 import dk.ek.bilabonnement2026.model.Employee;
 import dk.ek.bilabonnement2026.model.RentalContract;
-import dk.ek.bilabonnement2026.repository.CarRepository;
-import dk.ek.bilabonnement2026.repository.CustomerRepository;
 import dk.ek.bilabonnement2026.service.CarService;
 import dk.ek.bilabonnement2026.service.CustomerService;
 import dk.ek.bilabonnement2026.service.EmployeeService;

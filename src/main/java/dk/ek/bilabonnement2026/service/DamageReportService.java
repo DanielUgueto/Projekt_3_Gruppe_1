@@ -1,7 +1,10 @@
 package dk.ek.bilabonnement2026.service;
 
 import dk.ek.bilabonnement2026.model.*;
-import dk.ek.bilabonnement2026.repository.*;
+import dk.ek.bilabonnement2026.repository.CarRepository;
+import dk.ek.bilabonnement2026.repository.DamageReportRepository;
+import dk.ek.bilabonnement2026.repository.DamageRepository;
+import dk.ek.bilabonnement2026.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
