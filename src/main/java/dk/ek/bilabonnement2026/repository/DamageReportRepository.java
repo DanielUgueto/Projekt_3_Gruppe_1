@@ -15,6 +15,7 @@ public class DamageReportRepository {
     @Autowired
     DataSource dataSource;
 
+    //Daniel
     public void saveDamageReport(DamageReport damageReport) {
         String sql = "INSERT INTO damage_report (rental_contract_id, employee_id, created_at, total_price, description) VALUES (?, ?, ?, ?, ?)";
 

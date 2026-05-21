@@ -19,21 +19,21 @@ public class CarService {
     RentalContractRepository rentalContractRepository;
 
     //Rune
-    public void createCar(Car car){
+    public void createCar(Car car) {
         Car validatorCar = carRepository.findCarByVinNumber(car.getVinNumber());
-        if(validatorCar != null){
+        if (validatorCar != null) {
             throw new IllegalArgumentException("En bil med dette stelnummer eksistere allerede");
         }
 
         validatorCar = carRepository.findCarByLicensePlate(car.getLicensePlate());
-        if(validatorCar != null){
+        if (validatorCar != null) {
             throw new IllegalArgumentException("En bil med denne nummerplade eksisterer allerede");
         }
 
-        if(car.getLicensePlate().length() != 7){
+        if (car.getLicensePlate().length() != 7) {
             throw new IllegalArgumentException("Nummerpladen skal være 7 tegn");
         }
-        if(car.getVinNumber().length() != 17){
+        if (car.getVinNumber().length() != 17) {
             throw new IllegalArgumentException("Stelnummeret skal være 17 tegn");
         }
 
@@ -46,24 +46,24 @@ public class CarService {
     }
 
     // Nico
-    public List<CarOverview> findCarsWithDetailsByStatus(String status){
+    public List<CarOverview> findCarsWithDetailsByStatus(String status) {
         return carRepository.findAllCarsWithDetailsByStatus(status);
     }
 
-    public List<Car> findCarsByStatus(String status){
+    public List<Car> findCarsByStatus(String status) {
         return carRepository.findCarsByStatus(status);
     }
 
     // Nico
-    public boolean changeCarStatusToExpired(int carId){
+    public boolean changeCarStatusToExpired(int carId) {
         Car car = carRepository.findCarByCarNumber(carId);
 
-        if (rentalContractRepository.findRentalContractByCarId(carId) != null){ // make sure no active rental agreement is in place
+        if (rentalContractRepository.findRentalContractByCarId(carId) != null) { // make sure no active rental agreement is in place
             return false;
         }
 
         if (!car.getStatus().equalsIgnoreCase("Ledig")) { // check car status to make sure it's not already rented
-             return false;
+            return false;
         }
 
         carRepository.updateCarStatus(carId, "Udgået");
@@ -71,7 +71,7 @@ public class CarService {
     }
 
     // Nico
-    public Car getCarByCarId(int carId){
+    public Car getCarByCarId(int carId) {
         return carRepository.findCarByCarNumber(carId);
     }
 

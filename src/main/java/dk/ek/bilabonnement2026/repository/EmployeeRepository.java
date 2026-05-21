@@ -41,14 +41,13 @@ public class EmployeeRepository {
     public String updateEmployeeStatus(boolean isActive, int employeeId) {
         String sql = "UPDATE employee SET is_active = ? WHERE employee_id = ?";
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setBoolean(1,isActive);
-            statement.setInt(2,employeeId);
+            statement.setBoolean(1, isActive);
+            statement.setInt(2, employeeId);
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Medarbejderens status kunne ikke opdateres i databasen", e);
         }
         return null;

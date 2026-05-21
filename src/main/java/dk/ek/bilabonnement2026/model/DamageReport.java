@@ -5,12 +5,12 @@ import java.time.LocalDate;
 //Rune
 public class DamageReport {
 
-private int damageReportId; //pk
-private int rentalContractId; //fk
-private int employeeId; //fk
-private LocalDate createdAt;
-private double totalPrice;
-private String description;
+    private int damageReportId; //pk
+    private int rentalContractId; //fk
+    private int employeeId; //fk
+    private LocalDate createdAt;
+    private double totalPrice;
+    private String description;
 
     public DamageReport(int damageReportId, int rentalContractId, int employeeId, LocalDate createdAt, double totalPrice, String description) {
         this.damageReportId = damageReportId;

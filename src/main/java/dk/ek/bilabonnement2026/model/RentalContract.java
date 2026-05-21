@@ -39,7 +39,7 @@ public class RentalContract {
         this.subscriptionType = subscriptionType;
     }
 
-    public RentalContract(int rentalContractId, LocalDate startDate, LocalDate endDate, String pickupLocation, String subscriptionType){
+    public RentalContract(int rentalContractId, LocalDate startDate, LocalDate endDate, String pickupLocation, String subscriptionType) {
         this.rentalContractId = rentalContractId;
         this.startDate = startDate;
         this.endDate = endDate;

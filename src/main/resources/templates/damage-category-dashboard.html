@@ -23,17 +23,17 @@
         <div class="dashboard-car-box">
             <article class="dashboard-car-info" th:each="category : ${damageCategoryList}">
                 <a th:href="@{/damage-categories(damageCategoryId=${category.damageCategoryId})}">
-                <div>
-                    <h4 th:text="${category.name}"></h4>
-                </div>
-                <div>
-                    <span><strong>Standardpris:</strong></span>
-                    <span th:text="${category.standardPrice}"></span>
-                    <span> kr.</span>
-                </div>
-                <div>
-                    <span th:text="${category.description}"></span>
-                </div>
+                    <div>
+                        <h4 th:text="${category.name}"></h4>
+                    </div>
+                    <div>
+                        <span><strong>Standardpris:</strong></span>
+                        <span th:text="${category.standardPrice}"></span>
+                        <span> kr.</span>
+                    </div>
+                    <div>
+                        <span th:text="${category.description}"></span>
+                    </div>
                 </a>
             </article>
         </div>
@@ -65,11 +65,13 @@
             <section class="selected-car-section">
                 <p th:if="${error != null}" style="color: red" th:text="${error}"></p>
                 <p th:if="${success != null}" style="color: green" th:text="${success}"></p>
-                <a th:href="@{/damage-categories/edit(damageCategoryId=${selectedDamageCategory.damageCategoryId})}" class="edit-btn">
+                <a th:href="@{/damage-categories/edit(damageCategoryId=${selectedDamageCategory.damageCategoryId})}"
+                   class="edit-btn">
                     Rediger kategori
                 </a>
 
-                <form th:action="@{/damage-categories/delete}" onsubmit="return confirm('Er du sikker på du vil deaktivere denne kategori?');" method="post">
+                <form th:action="@{/damage-categories/delete}"
+                      onsubmit="return confirm('Er du sikker på du vil deaktivere denne kategori?');" method="post">
                     <input type="hidden" name="damageCategoryId" th:value="${selectedDamageCategory.damageCategoryId}">
                     <button class="delete-btn">Deaktiver kategori</button>
                 </form>

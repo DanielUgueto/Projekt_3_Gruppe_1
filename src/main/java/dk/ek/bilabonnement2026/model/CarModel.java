@@ -18,6 +18,7 @@ public class CarModel {
         this.shiftGearType = shiftGearType;
         this.fuelType = fuelType;
     }
+
     public CarModel(int carBrandId, String modelName, String equipmentLevel,
                     String shiftGearType, String fuelType) {
         this.carBrandId = carBrandId;
@@ -47,7 +48,7 @@ public class CarModel {
         return shiftGearType;
     }
 
-    public String getFuelType(){
+    public String getFuelType() {
         return fuelType;
     }
 }

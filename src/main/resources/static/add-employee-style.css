@@ -15,12 +15,14 @@
     justify-content: center;
     padding: 3em;
 }
-.create-employee-box-section{
+
+.create-employee-box-section {
     margin-bottom: 15px;
     border-bottom: 1px solid var(--color-muted);
     padding-top: 10px;
 }
-.create-customer-box-section{
+
+.create-customer-box-section {
     margin-bottom: 15px;
     padding-top: 10px;
 }
@@ -30,7 +32,7 @@
     margin-bottom: 1em;
 }
 
-.create-employee-box select, input{
+.create-employee-box select, input {
     width: 240px;
     padding: 11px 14px;
     font-size: 14px;
@@ -58,7 +60,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.create-customer-field{
+.create-customer-field {
     display: flex;
     gap: 1em;
 }

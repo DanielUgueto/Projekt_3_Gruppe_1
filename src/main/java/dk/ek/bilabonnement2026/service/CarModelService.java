@@ -14,22 +14,22 @@ public class CarModelService {
     CarModelRepository carModelRepository;
 
     //Rune
-    public void saveCarModel(CarModel carModel){
+    public void saveCarModel(CarModel carModel) {
         carModelRepository.saveCarModel(carModel);
     }
 
     //Rune
-    public CarModel getCarModelByModelName(String modelName){
+    public CarModel getCarModelByModelName(String modelName) {
         return carModelRepository.getCarModelByModelName(modelName);
     }
 
     //Rune
-    public List<CarModel> getAllCarModels(){
+    public List<CarModel> getAllCarModels() {
         return carModelRepository.getAllCarModels();
     }
 
     // Nico
-    public CarModel getCarModelByCarModelId(int carModelId){
+    public CarModel getCarModelByCarModelId(int carModelId) {
         return carModelRepository.getCarModelByCarModelId(carModelId);
     }
 

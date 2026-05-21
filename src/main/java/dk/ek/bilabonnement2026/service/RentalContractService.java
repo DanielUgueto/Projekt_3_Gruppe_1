@@ -104,6 +104,7 @@ public class RentalContractService {
         return rentalContractRepository.calculateMonthlyRevenue();
     }
 
+    //Daniel
     public double projectedYearlyRevenue() {
         return rentalContractRepository.projectedYearlyRevenue();
     }

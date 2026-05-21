@@ -105,6 +105,7 @@ public class PageController {
         return "dataregistration-dashboard";
     }
 
+    //Daniel
     //hjælpe metode til formaterin
     public String formatRevenue(double amount) {
 

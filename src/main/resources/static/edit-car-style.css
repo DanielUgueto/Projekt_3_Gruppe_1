@@ -30,7 +30,7 @@ section {
     gap: 1em;
 }
 
-.form-input select, input{
+.form-input select, input {
     width: 240px;
     padding: 11px 14px;
     font-size: 14px;

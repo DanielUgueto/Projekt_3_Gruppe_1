@@ -213,6 +213,7 @@ public class RentalContractRepository {
         return monthlyRevenue;
     }
 
+    //Daniel
     //kun et estimat
     public double projectedYearlyRevenue() {
         double monthlyRevenue = calculateMonthlyRevenue();
@@ -333,6 +334,7 @@ public class RentalContractRepository {
         return rentalContractOverview;
     }
 
+    //Daniel
     public RentalContract findActiveContractByCustomerId(int customerId) {
         RentalContract rentalContract = null;
         String sql = "SELECT * FROM rental_contract WHERE customer_id = ? AND status = 'Aktiv'";

@@ -19,7 +19,7 @@ public class CustomerRepository {
     @Autowired
     DataSource dataSource;
 
-
+    //Daniel
     public void createCustomer(Customer customer) {
         String sql = "INSERT INTO customer (first_name, last_name, drivers_license_number, cpr_number, email, phone_number, is_active) VALUES(?,?,?,?,?,?,?)";
 
@@ -42,6 +42,7 @@ public class CustomerRepository {
 
     }
 
+    //Daniel
     public Customer findCustomerByCustomerEmail(String email) {
 
         String sql = "SELECT * FROM customer WHERE email = ?";
@@ -108,10 +109,10 @@ public class CustomerRepository {
         return customer;
     }
 
+    //Daniel
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
         String sql = "SELECT * FROM customer";
-
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -135,6 +136,7 @@ public class CustomerRepository {
         return customerList;
     }
 
+    //Daniel
     public List<Customer> getAllActiveCustomers() {
         List<Customer> customerList = new ArrayList<>();
         String sql = "SELECT * FROM customer WHERE is_active = true";
@@ -162,6 +164,7 @@ public class CustomerRepository {
         return customerList;
     }
 
+    //Daniel
     public List<Customer> getAllInactiveCustomers() {
         List<Customer> customerList = new ArrayList<>();
         String sql = "SELECT * FROM customer WHERE is_active = false";
@@ -190,25 +193,25 @@ public class CustomerRepository {
     }
 
     //Rune
-    public void updateCustomer(Customer customer){
+    public void updateCustomer(Customer customer) {
         String sql = """
                 UPDATE customer
                 SET first_name = ?, last_name = ?, cpr_number = ?, email = ?, phone_number = ?
                 WHERE customer_id = ?
                 """;
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setInt(6,customer.getCustomerId());
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(6, customer.getCustomerId());
 
-            statement.setString(1,customer.getFirstName());
+            statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
             statement.setString(3, customer.getCprNumber());
             statement.setString(4, customer.getEmail());
             statement.setString(5, customer.getPhoneNumber());
 
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Kunden kunne ikke opdateres i databasen", e);
         }
     }
@@ -228,6 +231,7 @@ public class CustomerRepository {
         }
     }
 
+    //Daniel
     public void setCustomerStatusActive(int customerId) {
         String sql = "UPDATE customer SET is_active = true WHERE customer_id = ?";
 
@@ -308,6 +312,7 @@ public class CustomerRepository {
         return customer;
     }
 
+    //Daniel
     public List<Customer> findCustomerByName(String name) {
         String sql = "SELECT c.*, ca.zip_code, ca.street_name, ca.house_number, ca.floor " +
                 "FROM customer c " +

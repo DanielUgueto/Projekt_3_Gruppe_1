@@ -28,40 +28,40 @@ ved exceptions.
  */
 
     //Rune
-    public void saveCar(Car car){
+    public void saveCar(Car car) {
         String sql = "INSERT INTO car (car_model_id, vin_number, license_plate, colour, status, monthly_price, registration_date)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1,car.getCarModelId());
+            statement.setInt(1, car.getCarModelId());
             statement.setString(2, car.getVinNumber());
             statement.setString(3, car.getLicensePlate());
             statement.setString(4, car.getColour());
             statement.setString(5, car.getStatus());
-            statement.setDouble(6,car.getMonthlyPrice());
+            statement.setDouble(6, car.getMonthlyPrice());
             statement.setDate(7, Date.valueOf(car.getRegistrationDate()));
 
             statement.executeUpdate();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Bilen kunne ikke gemmes i databasen", e);
         }
 
     }
 
     //Rune
-    public Car findCarByVinNumber(String vinNumber){
+    public Car findCarByVinNumber(String vinNumber) {
         Car car = null;
         String sql = "SELECT * FROM car WHERE vin_number = ?";
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1,vinNumber);
+            statement.setString(1, vinNumber);
 
-            try(ResultSet resultSet = statement.executeQuery()){
-                if(resultSet.next()){
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
                     car = new Car(resultSet.getInt("car_id"),
                             resultSet.getInt("car_model_id"),
                             resultSet.getString("vin_number"),
@@ -73,24 +73,24 @@ ved exceptions.
                 }
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return car;
     }
 
     //Rune
-    public Car findCarByCarNumber(int carNumber){
+    public Car findCarByCarNumber(int carNumber) {
         Car car = null;
         String sql = "SELECT * FROM car WHERE car_id = ?";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1,carNumber);
+            statement.setInt(1, carNumber);
 
-            try(ResultSet resultSet = statement.executeQuery()){
-                if(resultSet.next()){
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
                     car = new Car(resultSet.getInt("car_id"),
                             resultSet.getInt("car_model_id"),
                             resultSet.getString("vin_number"),
@@ -102,7 +102,7 @@ ved exceptions.
                 }
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return car;
@@ -112,30 +112,30 @@ ved exceptions.
     public void updateCarStatus(int carId, String status) {
         String sql = "UPDATE car SET status = ? WHERE car_id = ?";
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status);
             statement.setInt(2, carId);
 
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Bilens status kunne ikke opdateres i databasen", e);
         }
     }
 
     //Rune
-    public List<Car> findCarsByStatus(String status){
+    public List<Car> findCarsByStatus(String status) {
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM car WHERE status = ?";
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1,status);
+            statement.setString(1, status);
 
-            try(ResultSet resultSet = statement.executeQuery()){
-                while(resultSet.next()){
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
                     cars.add(new Car(resultSet.getInt("car_id"),
                             resultSet.getInt("car_model_id"),
                             resultSet.getString("vin_number"),
@@ -146,14 +146,14 @@ ved exceptions.
                             resultSet.getDate("registration_date").toLocalDate()));
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cars;
     }
 
     // Nico
-    public List<CarOverview> findAllCarsWithDetails(){
+    public List<CarOverview> findAllCarsWithDetails() {
         String sql = "SELECT * FROM car " +
                 "JOIN car_model ON car.car_model_id = car_model.car_model_id " +
                 "JOIN car_brand ON car_model.car_brand_id = car_brand.car_brand_id";
@@ -161,11 +161,11 @@ ved exceptions.
         List<CarOverview> list = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             ResultSet rs = statement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 CarOverview carOverview = new CarOverview(
                         rs.getString("brand_name"),
                         rs.getInt("car_id"),
@@ -190,7 +190,7 @@ ved exceptions.
     }
 
     // Nico
-    public List<CarOverview> findAllCarsWithDetailsByStatus(String status){
+    public List<CarOverview> findAllCarsWithDetailsByStatus(String status) {
         String sql = "SELECT * FROM car c " +
                 "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
                 "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
@@ -199,13 +199,13 @@ ved exceptions.
         List<CarOverview> list = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status);
 
             ResultSet rs = statement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 CarOverview carOverview = new CarOverview(
                         rs.getString("brand_name"),
                         rs.getInt("car_id"),
@@ -230,14 +230,14 @@ ved exceptions.
     }
 
     // Nico
-    public CarOverview findCarOverviewByCarId(int carId){
+    public CarOverview findCarOverviewByCarId(int carId) {
         String sql = "SELECT * FROM car c " +
                 "JOIN car_model cm ON c.car_model_id = cm.car_model_id " +
                 "JOIN car_brand cb ON cm.car_brand_id = cb.car_brand_id " +
                 "WHERE c.car_id = ?";
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, carId);
 
@@ -273,7 +273,7 @@ ved exceptions.
                 "WHERE car_id = ?";
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, car.getCarModelId());
             statement.setString(2, car.getVinNumber());
@@ -292,16 +292,16 @@ ved exceptions.
     }
 
     // Nico
-    public Car findCarByLicensePlate(String licensePlate){
+    public Car findCarByLicensePlate(String licensePlate) {
         String sql = "SELECT * FROM car WHERE license_plate = ?";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, licensePlate);
 
-            try(ResultSet resultSet = statement.executeQuery()){
-                if(resultSet.next()){
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
                     return new Car(resultSet.getInt("car_id"),
                             resultSet.getInt("car_model_id"),
                             resultSet.getString("vin_number"),
@@ -313,7 +313,7 @@ ved exceptions.
                 }
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -324,7 +324,7 @@ ved exceptions.
         String sql = "SELECT COUNT(*) FROM car WHERE status = ?";
 
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status);
 

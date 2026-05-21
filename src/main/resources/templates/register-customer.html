@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret kunde</title>
-    <link rel="stylesheet"  th:href="@{/style.css}">
-    <link rel="stylesheet"  th:href="@{/add-employee-style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/add-employee-style.css}">
 
 </head>
 <body>
@@ -23,27 +23,33 @@
                 <h3>Person info:</h3>
                 <div class="input-field">
                     <label for="firstName">Fornavn:</label>
-                    <input type="text" name="firstName" id="firstName" th:value="${firstName}" placeholder="Fornavn" required>
+                    <input type="text" name="firstName" id="firstName" th:value="${firstName}" placeholder="Fornavn"
+                           required>
                 </div>
                 <div class="input-field">
                     <label for="lastName">Efternavn:</label>
-                    <input type="text" name="lastName" id="lastName" th:value="${lastName}" placeholder="Efternavn" required>
+                    <input type="text" name="lastName" id="lastName" th:value="${lastName}" placeholder="Efternavn"
+                           required>
                 </div>
                 <div class="input-field">
                     <label for="driversLicenseNumber">Kørekort nr. :</label>
-                    <input type="text" inputmode="numeric" name="driversLicenseNumber" id="driversLicenseNumber" th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
+                    <input type="text" inputmode="numeric" name="driversLicenseNumber" id="driversLicenseNumber"
+                           th:value="${driversLicenseNumber}" placeholder="Kørekort" required>
                 </div>
                 <div class="input-field">
                     <label for="cprNumber">CPR-Nummer:</label>
-                    <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" th:value="${cprNumber}" placeholder="CPR-nummer" required>
+                    <input type="text" inputmode="numeric" name="cprNumber" id="cprNumber" th:value="${cprNumber}"
+                           placeholder="CPR-nummer" required>
                 </div>
                 <div class="input-field">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" th:value="${email}" placeholder="Email adresse" required>
+                    <input type="email" name="email" id="email" th:value="${email}" placeholder="Email adresse"
+                           required>
                 </div>
                 <div class="input-field">
                     <label for="phoneNumber">Tlf.nr:</label>
-                    <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${phoneNumber}" placeholder="Telefon nummer" required>
+                    <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${phoneNumber}"
+                           placeholder="Telefon nummer" required>
                 </div>
             </section>
 
@@ -51,11 +57,13 @@
                 <h3>Adresse info:</h3>
                 <div class="input-field">
                     <label for="streetName">Gade:</label>
-                    <input type="text" name="streetName" id="streetName" th:value="${streetName}" placeholder="Vejnavn" required>
+                    <input type="text" name="streetName" id="streetName" th:value="${streetName}" placeholder="Vejnavn"
+                           required>
                 </div>
                 <div class="input-field">
                     <label for="houseNumber">Hus nr. :</label>
-                    <input type="text" name="houseNumber" id="houseNumber" th:value="${houseNumber}" placeholder="Husnummer" required>
+                    <input type="text" name="houseNumber" id="houseNumber" th:value="${houseNumber}"
+                           placeholder="Husnummer" required>
                 </div>
                 <div class="input-field">
                     <label for="floor">Etage:</label>
