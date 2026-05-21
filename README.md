@@ -71,28 +71,50 @@ Deployment er automatiseret via GitHub Actions.
 
 Projektstruktur
 ├───src
-    ├───main
-    │   ├───java
-    │   │   └───dk
-    │   │       └───ek
-    │   │           └───bilabonnement2026
-    │   │               ├───controller
-    │   │               ├───model
-    │   │               ├───repository
-    │   │               └───service
-    │   └───resources
-    │       ├───static
-    │       │   └───img
-    │       └───templates
-    │           └───fragments
-    └───test
-        ├───java
-        │   └───dk
-        │       └───ek
-        │           └───bilabonnement2026
-        │               ├───repository
-        │               └───service
-        └───resources
+
+    ├───main
+
+    │   ├───java
+
+    │   │   └───dk
+
+    │   │       └───ek
+
+    │   │           └───bilabonnement2026
+
+    │   │               ├───controller
+
+    │   │               ├───model
+
+    │   │               ├───repository
+
+    │   │               └───service
+
+    │   └───resources
+
+    │       ├───static
+
+    │       │   └───img
+
+    │       └───templates
+
+    │           └───fragments
+
+    └───test
+
+        ├───java
+
+        │   └───dk
+
+        │       └───ek
+
+        │           └───bilabonnement2026
+
+        │               ├───repository
+
+        │               └───service
+
+        └───resources
         
 
 
