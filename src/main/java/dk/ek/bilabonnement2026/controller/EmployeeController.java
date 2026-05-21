@@ -85,6 +85,7 @@ public class EmployeeController {
 
         return "employee-dashboard";
     }
+
     //Rune
     @PostMapping("/employee/delete")
     public String deleteEmployee(@RequestParam("employeeId") int employeeId,
@@ -103,6 +104,7 @@ public class EmployeeController {
         return "redirect:/employee/dashboard?status=" + (status != null ? status : "");
     }
 
+    //Daniel
     @PostMapping("/employee/reactivate")
     public String reactivateEmployee(@RequestParam("employeeId") int employeeId,
                                      @RequestParam(value = "status", required = false) String status,

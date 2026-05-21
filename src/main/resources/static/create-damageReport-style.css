@@ -82,7 +82,7 @@ section p {
     color: var(--color-dark);
 }
 
-.damage-report-box{
+.damage-report-box {
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -90,6 +90,7 @@ section p {
     padding: 20px;
     box-sizing: border-box;
 }
+
 .damage-report-form {
     width: 100%;
     max-width: 600px;

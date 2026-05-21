@@ -104,7 +104,8 @@ public class DamageReportController {
 
             return "redirect:/dashboard/damage";
 
-        } catch (IllegalArgumentException e) { // Hvis der sker en fejl under flowet bliver kontrakten fundet og sendt tilbage med alle medhørende modeller.
+        } catch (
+                IllegalArgumentException e) { // Hvis der sker en fejl under flowet bliver kontrakten fundet og sendt tilbage med alle medhørende modeller.
             RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
             double totalPrice = 0;
             for (DamageCategory category : selectedDamages) {
@@ -125,21 +126,21 @@ public class DamageReportController {
 
     //Rune
     @GetMapping("/dashboard/damage")
-    public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model){
+    public String showDamageDashboard(@RequestParam(required = false) Integer carId, @RequestParam(defaultValue = "afventer") String filter, HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
         //sender liste af biler som er filtreret samt filter og employee til view
         List<CarOverview> carList = rentalContractService.getReturnedCarsWithContractByFilter(filter);
         model.addAttribute("carList", carList);
         model.addAttribute("filter", filter);
-        model.addAttribute("employee",employee);
+        model.addAttribute("employee", employee);
         //Hvis der er et id sendt med itereres der gennem carList og sætter selectedCar til matchende car
-        if(carId != null){
+        if (carId != null) {
             CarOverview selectedCar = null;
-            for(CarOverview car : carList){
-                if(car.getCarId() == carId){
+            for (CarOverview car : carList) {
+                if (car.getCarId() == carId) {
                     selectedCar = car;
                     break;
                 }

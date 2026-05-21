@@ -10,7 +10,7 @@ public class ZipCodeService {
     @Autowired
     ZipCodeRepository zipCodeRepository;
 
-    public boolean zipcodeExists(String zipcode){
+    public boolean zipcodeExists(String zipcode) {
         return zipCodeRepository.zipcodeExists(zipcode);
     }
 }

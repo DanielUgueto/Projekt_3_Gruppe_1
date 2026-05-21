@@ -17,7 +17,7 @@ public class DamageCategory {
         this.isActive = isActive;
     }
 
-    public DamageCategory(String name, double standardPrice, String description){
+    public DamageCategory(String name, double standardPrice, String description) {
         this.name = name;
         this.standardPrice = standardPrice;
         this.description = description;
@@ -40,7 +40,7 @@ public class DamageCategory {
         return description;
     }
 
-    public boolean getIsActive(){
+    public boolean getIsActive() {
         return isActive;
     }
 }

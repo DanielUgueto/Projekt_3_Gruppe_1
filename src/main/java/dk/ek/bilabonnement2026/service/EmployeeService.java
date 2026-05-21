@@ -99,6 +99,7 @@ public class EmployeeService {
         return employeeRepository.updateEmployeeStatus(isActive, givenEmployee.getEmployeeId());
     }
 
+    //Daniel
     //sætter altid aktiv for genaktivering modsat metoden ligeover der fungerer som en toggle
     public String setEmployeeStatusActive(int employeeId) {
 
@@ -113,6 +114,7 @@ public class EmployeeService {
         return employeeRepository.updateEmployeeStatus(true, employeeId);
     }
 
+    //Daniel
     public Employee getEmployeeById(int employeeId) {
         return employeeRepository.findEmployeeByEmployeeId(employeeId);
     }

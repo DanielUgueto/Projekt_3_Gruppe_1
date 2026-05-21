@@ -201,6 +201,7 @@ public class CustomerController {
         return "edit-customer";
     }
 
+    //Daniel
     @PostMapping("/customer/delete")
     public String deleteCustomer(@RequestParam("customerId") int customerId,
                                  @RequestParam(value = "status", required = false) String status,
@@ -227,6 +228,7 @@ public class CustomerController {
         return "redirect:/customer/dashboard?status=" + (status != null ? status : "");
     }
 
+    //Daniel
     @PostMapping("/customer/reactivate")
     public String reactivateCustomer(@RequestParam("customerId") int customerId,
                                      @RequestParam(value = "status", required = false) String status,
@@ -254,7 +256,7 @@ public class CustomerController {
         return "redirect:/customer/dashboard?status=" + (status != null ? status : "");
     }
 
-
+    //Daniel
     @GetMapping("/customer/dashboard")
     public String showCustomerDashboard(@RequestParam(required = false) String status,
                                         @RequestParam(required = false) Integer customerId,
@@ -301,7 +303,6 @@ public class CustomerController {
 
         return "customer-dashboard";
     }
-
 
 
     //Denne metode sætter alle model attributterne for createCustomer. Lavet for at undgå for meget redundans

@@ -23,20 +23,20 @@ public class DamageCategoryController {
     //Rune
     @GetMapping("/damage-categories")
     public String showDamageCategoryDashboard(@RequestParam(required = false) Integer damageCategoryId,
-                                              HttpSession session, Model model){
+                                              HttpSession session, Model model) {
         //Tjek om session holder en emplyee
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
         List<DamageCategory> list = damageCategoryService.getAllActiveDamageCategories();
         model.addAttribute("damageCategoryList", list);
 
-        if(damageCategoryId != null){
+        if (damageCategoryId != null) {
             DamageCategory selectedDamageCategory = null;
-            for(DamageCategory dc : list){
-                if(dc.getDamageCategoryId() == damageCategoryId){
+            for (DamageCategory dc : list) {
+                if (dc.getDamageCategoryId() == damageCategoryId) {
                     selectedDamageCategory = dc;
                     break;
                 }
@@ -47,9 +47,9 @@ public class DamageCategoryController {
     }
 
     @GetMapping("/damage-categories/create")
-    public String showCreateDamageCategory(HttpSession session){
+    public String showCreateDamageCategory(HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
         return "create-damage-category";
@@ -59,16 +59,16 @@ public class DamageCategoryController {
     public String createDamageCategory(@RequestParam("name") String name,
                                        @RequestParam("standardPrice") double standardPrice,
                                        @RequestParam(required = false) String description,
-                                       HttpSession session, Model model){
+                                       HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
-        DamageCategory category = new DamageCategory(name.trim(), standardPrice,description);
+        DamageCategory category = new DamageCategory(name.trim(), standardPrice, description);
 
         String error = damageCategoryService.createDamageCategory(category);
-        if(error != null){
+        if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("name", name);
             model.addAttribute("standardPrice", standardPrice);
@@ -84,14 +84,14 @@ public class DamageCategoryController {
     //Rune
     @GetMapping("/damage-categories/edit")
     public String showEditDamageCategory(@RequestParam int damageCategoryId,
-                                         HttpSession session, Model model){
+                                         HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
         DamageCategory category = damageCategoryService.getDamageCategoryById(damageCategoryId);
-        if(category == null){
+        if (category == null) {
             return "redirect:/damage-categories";
         }
 
@@ -105,27 +105,27 @@ public class DamageCategoryController {
                                        @RequestParam("name") String name,
                                        @RequestParam("standardPrice") double standardPrice,
                                        @RequestParam(required = false) String description,
-                                       HttpSession session, Model model, RedirectAttributes redirectAttributes){
+                                       HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
         DamageCategory existing = damageCategoryService.getDamageCategoryById(damageCategoryId);
-        if(existing == null){
+        if (existing == null) {
             return "redirect:/damage-categories";
         }
 
-        DamageCategory category = new DamageCategory(damageCategoryId, name.trim(),standardPrice,description,existing.getIsActive());
+        DamageCategory category = new DamageCategory(damageCategoryId, name.trim(), standardPrice, description, existing.getIsActive());
 
         String error = damageCategoryService.updateDamageCategory(category);
-        if(error != null){
-            model.addAttribute("error",error);
+        if (error != null) {
+            model.addAttribute("error", error);
             model.addAttribute("selectedDamageCategory", category);
             return "edit-damage-category";
         }
 
-        redirectAttributes.addFlashAttribute("success","Skadekategorien er opdateret");
+        redirectAttributes.addFlashAttribute("success", "Skadekategorien er opdateret");
         redirectAttributes.addFlashAttribute("selectedDamageCategory", category);
         return "redirect:/damage-categories";
     }
@@ -133,25 +133,25 @@ public class DamageCategoryController {
     //Rune
     @PostMapping("/damage-categories/delete")
     public String deleteDamageCategory(@RequestParam int damageCategoryId,
-                                       HttpSession session, Model model){
+                                       HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
         String error = damageCategoryService.setDamageCategoryInactive(damageCategoryId);
-        if(error != null){
+        if (error != null) {
             List<DamageCategory> list = damageCategoryService.getAllActiveDamageCategories();
             DamageCategory selectedDamageCategory = null;
-            for(DamageCategory dc : list){
-                if(dc.getDamageCategoryId() == damageCategoryId){
+            for (DamageCategory dc : list) {
+                if (dc.getDamageCategoryId() == damageCategoryId) {
                     selectedDamageCategory = dc;
                     break;
                 }
             }
-            model.addAttribute("damageCategoryList",list);
-            model.addAttribute("selectedDamageCategory",selectedDamageCategory);
-            model.addAttribute("error",error);
+            model.addAttribute("damageCategoryList", list);
+            model.addAttribute("selectedDamageCategory", selectedDamageCategory);
+            model.addAttribute("error", error);
             return "damage-category-dashboard";
         }
         return "redirect:/damage-categories";

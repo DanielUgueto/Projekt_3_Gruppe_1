@@ -32,10 +32,10 @@ public class CarController {
     @GetMapping("/cars/create")
     public String showCreateCarForm(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if(employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        model.addAttribute("brands",carBrandService.getAllCarBrands());
+        model.addAttribute("brands", carBrandService.getAllCarBrands());
         model.addAttribute("models", carModelService.getAllCarModels());
         return "createCar";
     }
@@ -53,30 +53,30 @@ public class CarController {
                             @RequestParam("status") String status,
                             @RequestParam("monthlyPrice") double monthlyPrice,
                             @RequestParam("registrationDate") LocalDate registrationDate,
-                            Model model){
+                            Model model) {
         //Tjek om det car brand allerede finde i systemet
         CarBrand brand = carBrandService.getCarBrandByBrandName(brandName);
-        if(brand == null){
+        if (brand == null) {
             carBrandService.saveBrand(brandName);
             brand = carBrandService.getCarBrandByBrandName(brandName);
         }
         //tjek om den car model allerede findes i systemet
         CarModel carModel = carModelService.getCarModelByModelName(modelName);
-        if(carModel == null){
+        if (carModel == null) {
             CarModel newModel = new CarModel(brand.getCarBrandId(), modelName, equipmentLevel, shiftGearType, fuelType);
             carModelService.saveCarModel(newModel);
             carModel = carModelService.getCarModelByModelName(modelName);
         }
 
-        Car car = new Car(carModel.getCarModelId(),vinNumber,licensePlate,monthlyPrice,status,colour,registrationDate);
+        Car car = new Car(carModel.getCarModelId(), vinNumber, licensePlate, monthlyPrice, status, colour, registrationDate);
 
         //Try and catch for at fange fej som bobler op gennem lagene. og send dem videre med en model til HTML.
-        try{
+        try {
             carService.createCar(car);
             return "redirect:/";
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             model.addAttribute("fejl", e.getMessage());
-            model.addAttribute("brands",carBrandService.getAllCarBrands());
+            model.addAttribute("brands", carBrandService.getAllCarBrands());
             model.addAttribute("models", carModelService.getAllCarModels());
             return "createCar";
         }
@@ -87,9 +87,9 @@ public class CarController {
     public String showCarDashboard(@RequestParam(required = false) String status,
                                    @RequestParam(required = false) Integer carId,
                                    @RequestParam(required = false) String vinNumber,
-                                   HttpSession session, Model model){
+                                   HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
 
@@ -104,7 +104,7 @@ public class CarController {
         CarOverview selectedCar = null;
         //Finder den bil som bliver trykket på fra html og bliver sendt med som model.
         if (carId != null) {
-            for (CarOverview c : list){
+            for (CarOverview c : list) {
                 if (c.getCarId() == carId) {
                     selectedCar = c;
                     break;
@@ -113,15 +113,15 @@ public class CarController {
             model.addAttribute("selectedCar", selectedCar);
         }
         //Hvis man søger på et vinNumber fra HTML så køres denne if-sætning og vælger den aktuelle bil.
-        if (vinNumber != null){
-            for (CarOverview c : list){
+        if (vinNumber != null) {
+            for (CarOverview c : list) {
                 if (c.getVinNumber().equals(vinNumber)) {
                     selectedCar = c;
                     break;
                 }
             }
 
-            if (selectedCar == null){
+            if (selectedCar == null) {
                 model.addAttribute("notFound", "Kunne ikke finde bil med matchende stelnummer!");
             }
             model.addAttribute("selectedCar", selectedCar);
@@ -138,12 +138,12 @@ public class CarController {
     @PostMapping("/dashboard/car/remove")
     public String setCarStatusAsExpired(@RequestParam("carId") int carId,
                                         HttpSession session,
-                                        RedirectAttributes redirectAttributes){
+                                        RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/car";
         }
 
@@ -163,10 +163,10 @@ public class CarController {
     public String setStatusAsAvailable(@RequestParam("carId") int carId, HttpSession session,
                                        RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/car";
         }
 
@@ -184,13 +184,13 @@ public class CarController {
     // Nico
     @GetMapping("/dashboard/car/edit")
     public String getCarEditHTML(@RequestParam("carId") int carId, HttpSession session,
-                                 Model model, RedirectAttributes redirectAttributes){
+                                 Model model, RedirectAttributes redirectAttributes) {
 
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/car";
         }
 
@@ -252,10 +252,10 @@ public class CarController {
                           @RequestParam("carId") int carId,
                           @RequestParam("carModelId") int carModelId, HttpSession session, RedirectAttributes redirectAttributes) {
         Employee employee = (Employee) session.getAttribute("employee");
-        if (employee == null){
+        if (employee == null) {
             return "redirect:/";
         }
-        if (!employee.getRole().equalsIgnoreCase("dataregistrering")){
+        if (!employee.getRole().equalsIgnoreCase("dataregistrering")) {
             return "redirect:/dashboard/car";
         }
 

@@ -25,6 +25,7 @@ public class Car {
         this.colour = colour;
         this.registrationDate = registrationDate;
     }
+
     public Car(int carModelId, String vinNumber, String licensePlate,
                double monthlyPrice, String status, String colour, LocalDate registrationDate) {
         this.carModelId = carModelId;
@@ -64,5 +65,7 @@ public class Car {
         return monthlyPrice;
     }
 
-    public LocalDate getRegistrationDate() {return registrationDate;}
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
 }

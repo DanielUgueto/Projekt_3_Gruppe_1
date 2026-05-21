@@ -16,7 +16,7 @@ public class CustomerAddressRepository {
     @Autowired
     DataSource dataSource;
 
-    // US06-T06: saveCustomerAddress()
+    // Daniel
     public void saveCustomerAddress(CustomerAddress customerAddress) {
         String sql = "INSERT INTO customer_address (customer_id, zip_code, street_name, house_number, floor) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -65,24 +65,24 @@ public class CustomerAddressRepository {
     }
 
     //Rune
-    public void updateCustomerAddress(CustomerAddress customerAddress){
+    public void updateCustomerAddress(CustomerAddress customerAddress) {
         String sql = """
-UPDATE customer_address
-SET zip_code = ?, street_name = ?, house_number = ?, floor = ?
-WHERE customer_id = ?
-""";
+                UPDATE customer_address
+                SET zip_code = ?, street_name = ?, house_number = ?, floor = ?
+                WHERE customer_id = ?
+                """;
 
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1,customerAddress.getZipCode());
+            statement.setString(1, customerAddress.getZipCode());
             statement.setString(2, customerAddress.getStreetName());
             statement.setString(3, customerAddress.getHouseNumber());
             statement.setString(4, customerAddress.getFloor());
-            statement.setInt(5,customerAddress.getCustomerId());
+            statement.setInt(5, customerAddress.getCustomerId());
 
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Kunde adressen kunne ikke opdateres i databasen", e);
         }
     }

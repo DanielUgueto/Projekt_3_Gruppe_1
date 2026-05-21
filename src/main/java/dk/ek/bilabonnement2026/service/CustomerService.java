@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class CustomerService {
+    // Rune
     private static final String EMAIL_PATTERN = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
     private static final String PHONE_PATTERN = "^(\\+45)?[\\s-]?(\\d{2}[\\s-]?){3}\\d{2}$";
     private static final String DRIVERS_LICENSE_PATTERN = "^\\d{8}$";
@@ -25,6 +26,7 @@ public class CustomerService {
     @Autowired
     RentalContractRepository rentalContractRepository;
 
+    //Daniel
     public String registerCustomer(Customer customer, CustomerAddress address) {
 
         if (customerRepository.findCustomerByCustomerEmail(customer.getEmail()) != null) {
@@ -38,6 +40,7 @@ public class CustomerService {
         return null;
     }
 
+    //Daniel
     public String setCustomerStatusInactive(int customerId) {
         RentalContract activeContract = rentalContractRepository.findActiveContractByCustomerId(customerId);
         if (activeContract != null) {
@@ -47,6 +50,7 @@ public class CustomerService {
         return null;
     }
 
+    //Daniel
     public String setCustomerStatusActive(int customerId) {
         customerRepository.setCustomerStatusActive(customerId);
         return null;
@@ -56,10 +60,12 @@ public class CustomerService {
         return customerRepository.getAllCustomers();
     }
 
+    //Daniel
     public List<Customer> getAllActiveCustomers() {
         return customerRepository.getAllActiveCustomers();
     }
 
+    //Daniel
     public List<Customer> getAllInactiveCustomers() {
         return customerRepository.getAllInactiveCustomers();
     }
@@ -126,7 +132,7 @@ public class CustomerService {
         return customerRepository.findCustomerByName(query.trim());
     }
 
-//Validerings metoder
+    //Validerings metoder
     //Rune
     public boolean isValidPhoneNumber(String number) {
         if (number == null || number.isBlank()) {

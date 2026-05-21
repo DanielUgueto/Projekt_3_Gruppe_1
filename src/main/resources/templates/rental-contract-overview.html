@@ -30,7 +30,8 @@
                 <a th:href="@{/rental-contracts/overview(contractId=${contract.rentalContractId}, status=${selectedStatus})}">
 
                     <span class="contract-id" th:text="'#' + ${contract.rentalContractId}"></span>
-                    <h2 class="customer-name" th:text="${contract.customerFirstName}+ ' '+${contract.customerLastName}"></h2>
+                    <h2 class="customer-name"
+                        th:text="${contract.customerFirstName}+ ' '+${contract.customerLastName}"></h2>
 
                     <div class="car-info">
                         <p th:text="${contract.brandName}+' '+${contract.modelName}"></p>
@@ -63,7 +64,7 @@
             <section class="selected-car-section">
                 <h3>Aftale-detaljer</h3>
                 <p><strong>Startdato:</strong>
-                <span th:text="${selectedContract.startDate}"></span></p>
+                    <span th:text="${selectedContract.startDate}"></span></p>
                 <p><strong>Slutdato:</strong>
                     <span th:text="${selectedContract.endDate}"></span></p>
                 <p><strong>Afhentningssted:</strong> <span th:text="${selectedContract.pickupLocation}"></span></p>
@@ -76,7 +77,7 @@
             </section>
 
             <section class="selected-car-section" th:if="${selectedContract.status == 'Aktiv'}">
-                <form  th:action="@{/rental-contracts/edit}" method="get">
+                <form th:action="@{/rental-contracts/edit}" method="get">
                     <input type="hidden" name="rentalContractId" th:value="${selectedContract.rentalContractId}">
                     <div th:if="${success}" th:text="${success}" style="color: green"></div>
                     <button type="submit">Rediger lejekontrakt</button>

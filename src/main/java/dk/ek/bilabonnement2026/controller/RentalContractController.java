@@ -100,8 +100,8 @@ public class RentalContractController {
         }
 
         RentalContract rentalContract = rentalContractService.getRentalContractByContractId(rentalContractId);
-        if(rentalContract == null){
-            redirectAttributes.addFlashAttribute("error", "Lejeaftalen med ID "+rentalContractId+" blev ikke fundet");
+        if (rentalContract == null) {
+            redirectAttributes.addFlashAttribute("error", "Lejeaftalen med ID " + rentalContractId + " blev ikke fundet");
             return "redirect:/rental-contracts";
         }
         model.addAttribute("rcOverview", rentalContractService.getRentalContractOverviewById(rentalContractId));
@@ -131,12 +131,12 @@ public class RentalContractController {
             rentalContractService.updateRentalContract(rentalContract);
             redirectAttributes.addFlashAttribute("success", "Kontrakten blev opdateret");
             return "redirect:/rental-contracts/overview?contractId=" + rentalContractId;
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             model.addAttribute("rcOverview", rentalContractService.getRentalContractOverviewById(rentalContractId));
             model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("error", e.getMessage());
             return "edit-rental-contract";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("rcOverview", rentalContractService.getRentalContractOverviewById(rentalContractId));
             model.addAttribute("rentalContract", rentalContract);
             model.addAttribute("error", "Der opstod en uventet fejl.");

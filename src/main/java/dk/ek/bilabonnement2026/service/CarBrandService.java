@@ -15,7 +15,7 @@ public class CarBrandService {
     CarBrandRepository carBrandRepository;
 
     // Nico
-    public List<CarBrand> getAllCarBrands(){
+    public List<CarBrand> getAllCarBrands() {
         return carBrandRepository.getAllBrands();
     }
 

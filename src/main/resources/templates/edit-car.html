@@ -15,7 +15,7 @@
 
 <main>
     <h2>
-       Foretag ændringer for bil
+        Foretag ændringer for bil
     </h2>
     <section>
         <form th:action="@{/dashboard/car/edit}" method="post">
@@ -23,7 +23,8 @@
                 <div>
                     <div class="input-field">
                         <label for="brandName">Mærke</label>
-                        <input type="text" id="brandName" name="brandName" list="brands" th:value="${carBrand.brandName}">
+                        <input type="text" id="brandName" name="brandName" list="brands"
+                               th:value="${carBrand.brandName}">
                         <datalist id="brands">
                             <option th:each="brand : ${brands}"
                                     th:value="${brand.brandName}"></option>
@@ -35,7 +36,8 @@
                     </div>
                     <div class="input-field">
                         <label for="equipmentLevel">Udstyrsniveau</label>
-                        <input type="text" id="equipmentLevel" name="equipmentLevel" th:value="${carModel.equipmentLevel}">
+                        <input type="text" id="equipmentLevel" name="equipmentLevel"
+                               th:value="${carModel.equipmentLevel}">
                     </div>
                     <div class="input-field">
                         <label for="fuelType">Brændstof</label>
@@ -50,7 +52,8 @@
                         <label for="shiftGearType">Gear type</label>
                         <select id="shiftGearType" name="shiftGearType">
                             <option value="Manual" th:selected="${carModel.shiftGearType == 'Manual'}">Manual</option>
-                            <option value="Automatic" th:selected="${carModel.shiftGearType == 'Automatic'}">Automatic</option>
+                            <option value="Automatic" th:selected="${carModel.shiftGearType == 'Automatic'}">Automatic
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -66,11 +69,13 @@
                     </div>
                     <div class="input-field">
                         <label for="monthlyPrice">Månedlig pris</label>
-                        <input type="number" id="monthlyPrice" name="monthlyPrice" th:value="${car.monthlyPrice}" step="0.01">
+                        <input type="number" id="monthlyPrice" name="monthlyPrice" th:value="${car.monthlyPrice}"
+                               step="0.01">
                     </div>
                     <div class="input-field">
                         <label for="registrationDate">Registreringsdato</label>
-                        <input type="date" id="registrationDate" name="registrationDate" th:value="${car.registrationDate}">
+                        <input type="date" id="registrationDate" name="registrationDate"
+                               th:value="${car.registrationDate}">
                     </div>
                     <div class="input-field">
                         <label for="colour">Farve</label>
@@ -89,7 +94,9 @@
 
             <div>
                 <div class="create-employee-box">
-                    <button type="submit" onclick="confirm('Er du sikker på at du vil ændre dataen for bilen?')">Gem ændringer</button>
+                    <button type="submit" onclick="confirm('Er du sikker på at du vil ændre dataen for bilen?')">Gem
+                        ændringer
+                    </button>
                 </div>
                 <div class="error-text">
                     <p th:if="${error != null}" th:text="${error}"></p>

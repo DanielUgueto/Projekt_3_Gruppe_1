@@ -1,6 +1,7 @@
 package dk.ek.bilabonnement2026.model;
 
 import java.time.LocalDate;
+
 // Nico
 public class CarOverview {
     private int carId;
@@ -92,11 +93,11 @@ public class CarOverview {
         return vinNumber;
     }
 
-    public LocalDate getRegistrationDate(){
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public String getFuelType(){
+    public String getFuelType() {
         return fuelType;
     }
 
