@@ -37,7 +37,7 @@ public class CarController {
         }
         model.addAttribute("brands", carBrandService.getAllCarBrands());
         model.addAttribute("models", carModelService.getAllCarModels());
-        return "createCar";
+        return "create-car";
     }
 
     //Rune
@@ -78,7 +78,7 @@ public class CarController {
             model.addAttribute("fejl", e.getMessage());
             model.addAttribute("brands", carBrandService.getAllCarBrands());
             model.addAttribute("models", carModelService.getAllCarModels());
-            return "createCar";
+            return "create-car";
         }
     }
 

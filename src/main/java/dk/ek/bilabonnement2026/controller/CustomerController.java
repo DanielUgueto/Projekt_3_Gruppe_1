@@ -90,9 +90,9 @@ public class CustomerController {
             return "register-customer";
         }
         //Tildeler normaliseret data til variablerne og bygger customer, customerAdress.
-        driversLicenseNumber = customerService.normalizeDriversLicense(driversLicenseNumber);
-        cprNumber = customerService.normalizeCpr(cprNumber);
-        phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
+        driversLicenseNumber = customerService.normaliseDriversLicense(driversLicenseNumber);
+        cprNumber = customerService.normaliseCpr(cprNumber);
+        phoneNumber = customerService.normalisePhoneNumber(phoneNumber);
         Customer customer = new Customer(firstName, lastName, driversLicenseNumber, cprNumber, email, phoneNumber, true);
         CustomerAddress customerAddress = new CustomerAddress(0, zipCode, streetName, houseNumber, floor);
         String error = customerService.registerCustomer(customer, customerAddress);
@@ -179,8 +179,8 @@ public class CustomerController {
         }
 
 
-        phoneNumber = customerService.normalizePhoneNumber(phoneNumber);
-        cprNumber = customerService.normalizeCpr(cprNumber);
+        phoneNumber = customerService.normalisePhoneNumber(phoneNumber);
+        cprNumber = customerService.normaliseCpr(cprNumber);
         Customer customer = new Customer(customerId, firstName, lastName, existingCustomer.getDriversLicenseNumber(), cprNumber, email, phoneNumber, existingCustomer.getIsActive());
         CustomerAddress customerAddress = new CustomerAddress(customerId, zipCode, streetName, houseNumber, floor);
 

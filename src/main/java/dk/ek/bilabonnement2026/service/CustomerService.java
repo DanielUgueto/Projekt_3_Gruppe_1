@@ -161,7 +161,7 @@ public class CustomerService {
     // normalisering
 
     //Rune
-    public String normalizePhoneNumber(String number) {
+    public String normalisePhoneNumber(String number) {
         String numberOnlyDigits = number.replaceAll("\\D", "");
         if (numberOnlyDigits.startsWith("45") && numberOnlyDigits.length() == 10) {
             numberOnlyDigits = numberOnlyDigits.substring(2);
@@ -170,12 +170,12 @@ public class CustomerService {
     }
 
     //Rune
-    public String normalizeDriversLicense(String licenseNumber) {
+    public String normaliseDriversLicense(String licenseNumber) {
         return licenseNumber.trim();
     }
 
     //Rune
-    public String normalizeCpr(String cpr) {
+    public String normaliseCpr(String cpr) {
         return cpr.replaceAll("-", "").trim();
     }
 }

@@ -27,7 +27,7 @@ public class EmployeeController {
             return "redirect:/";
         }
 
-        return "addEmployee";
+        return "add-employee";
     }
 
     // Nico
@@ -50,7 +50,7 @@ public class EmployeeController {
         boolean emailExists = employeeService.addEmployeeToDatabase(employee);
 
         if (!emailExists) {
-            return "addEmployee";
+            return "add-employee";
         }
 
         return employeeService.redirectByRole(loggedInEmployee);

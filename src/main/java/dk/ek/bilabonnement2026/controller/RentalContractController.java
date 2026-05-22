@@ -46,7 +46,7 @@ public class RentalContractController {
         model.addAttribute("cars", cars);
         model.addAttribute("customers", customers);
         model.addAttribute("employeeId", employee.getEmployeeId());
-        return "createRentalContract";
+        return "create-rental-contract";
     }
 
     //Rune
@@ -82,7 +82,7 @@ public class RentalContractController {
             model.addAttribute("customers", customers);
             model.addAttribute("employeeId", employee.getEmployeeId());
             model.addAttribute("fejl", e.getMessage());
-            return "createRentalContract";
+            return "create-rental-contract";
         }
     }
 
@@ -157,7 +157,7 @@ public class RentalContractController {
         model.addAttribute("carList", carList);
         model.addAttribute("employeeId", employee.getEmployeeId());
 
-        return "returnCar";
+        return "return-car";
     }
 
     //Rune
@@ -174,7 +174,7 @@ public class RentalContractController {
             List<Car> carList = carService.findCarsByStatus("Udlejet");
             model.addAttribute("carList", carList);
             model.addAttribute("fejl", e.getMessage());
-            return "returnCar";
+            return "return-car";
         }
 
     }
