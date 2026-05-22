@@ -2,9 +2,9 @@ package dk.ek.bilabonnement2026.model;
 
 // Nico
 public class Employee extends Person {
-    int employeeId;
-    String password;
-    String role;
+    private int employeeId;
+    private String password;
+    private String role;
 
     //Bruges når en Employee læses fra DB
     public Employee(int employeeId, String firstName, String lastName, String password, String email, String role, boolean isActive) {
