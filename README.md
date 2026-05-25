@@ -16,7 +16,7 @@ Controller -> Service -> Repository -> MySQL
 
 Controller modtager HTTP requests.
 Service står for forretningslogik og validering.
-Repository står for al kommunikation med SQL via jdbcTemplate.
+Repository står for al kommunikation med SQL via JDBC.
 
 
 Links
