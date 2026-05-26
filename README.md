@@ -1,3 +1,9 @@
+Holdinformation
+Gruppe:   1
+Hold:     DATA-GBG-E25C 2.semester
+Projekt:  3
+Medlemmer: Rune, Nico, Daniel
+
 Bilabonnement 2026
 Internt administrationssystem for Bilabonnement A/S.
 En webapplikation der erstatter virksomhedens Excel baseret arbejdsgange.
@@ -98,11 +104,4 @@ src/
 │       └── application.properties
 
 └── test/                 JUnit- og Mockito-tests
-        
-
-
-Holdinformation
-Gruppe:   1
-Hold:     DATA-GBG-E25C 2.semester
-Projekt:  3
-Medlemmer: Rune, Nico, Daniel
+  
